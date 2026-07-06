@@ -9,7 +9,7 @@
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: "Heebo", Arial, sans-serif;
       background: #f7f9fc;
       color: var(--text);
       line-height: 1.7;
