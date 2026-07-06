@@ -2,13 +2,426 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>3D Math Vision</title>
+
+  <style>
+    :root {
+      --blue-dark: #003b71;
+      --blue-main: #005eb8;
+      --blue-light: #eaf3fb;
+      --text: #1f2937;
+      --muted: #64748b;
+      --white: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f9fc;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    header {
+      background: var(--white);
+      border-bottom: 1px solid #dbe5ee;
+      padding: 18px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand img {
+      height: 78px;
+      width: auto;
+    }
+
+    .brand h1 {
+      margin: 0;
+      color: var(--blue-dark);
+      font-size: 1.7rem;
+    }
+
+    .brand p {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    nav a {
+      margin-inline-start: 22px;
+      text-decoration: none;
+      color: var(--blue-dark);
+      font-weight: bold;
+    }
+
+    .hero {
+      padding: 90px 8%;
+      background: linear-gradient(135deg, #ffffff, var(--blue-light));
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .hero h2 {
+      font-size: clamp(2.3rem, 5vw, 4.3rem);
+      color: var(--blue-dark);
+      margin: 0 0 14px;
+      line-height: 1.15;
+    }
+
+    .hero h3 {
+      color: var(--blue-main);
+      font-size: 1.45rem;
+      margin: 0 0 24px;
+    }
+
+    .hero p {
+      font-size: 1.12rem;
+      max-width: 720px;
+    }
+
+    .buttons {
+      margin-top: 30px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 13px 24px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--blue-dark);
+      color: white;
+    }
+
+    .btn-secondary {
+      border: 2px solid var(--blue-dark);
+      color: var(--blue-dark);
+      background: white;
+    }
+
+    .visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 280px;
+    }
+
+    .cube {
+      width: 160px;
+      height: 160px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: spin 12s infinite linear;
+    }
+
+    .face {
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      background: rgba(0, 94, 184, 0.82);
+      border: 3px solid white;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+    }
+
+    .front { transform: translateZ(80px); }
+    .back { transform: rotateY(180deg) translateZ(80px); }
+    .right { transform: rotateY(90deg) translateZ(80px); }
+    .left { transform: rotateY(-90deg) translateZ(80px); }
+    .top { transform: rotateX(90deg) translateZ(80px); }
+    .bottom { transform: rotateX(-90deg) translateZ(80px); }
+
+    @keyframes spin {
+      from { transform: rotateX(-20deg) rotateY(0deg); }
+      to { transform: rotateX(-20deg) rotateY(360deg); }
+    }
+
+    section {
+      padding: 64px 8%;
+    }
+
+    .section-title {
+      color: var(--blue-dark);
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      max-width: 780px;
+      margin-bottom: 34px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #dbe5ee;
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 10px 24px rgba(0, 59, 113, 0.06);
+    }
+
+    .card h3 {
+      color: var(--blue-dark);
+      margin-top: 0;
+    }
+
+    .icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .blue-section {
+      background: var(--blue-dark);
+      color: white;
+    }
+
+    .blue-section .section-title {
+      color: white;
+    }
+
+    .blue-section .section-subtitle {
+      color: #dbeafe;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .step {
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    footer {
+      background: #001f3f;
+      color: white;
+      padding: 36px 8%;
+    }
+
+    footer p {
+      color: #dbeafe;
+      margin: 4px 0;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .cards,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        margin-top: 16px;
+      }
+
+      nav a {
+        display: inline-block;
+        margin-top: 8px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <header>
-    <img src="logo.jpeg" alt="Faculty of Education, University of Haifa" style="height:80px;">
-    <h1>3D Math Vision</h1>
-    <p>משאב הוראה למורים למתמטיקה בנושא ראייה מרחבית</p>
-  </header>
-</body>  
+
+<header>
+  <div class="brand">
+    <img src="logo.jpeg" alt="University of Haifa Faculty of Education logo">
+    <div>
+      <h1>3D Math Vision</h1>
+      <p>המחלקה לחינוך מתמטי | הפקולטה לחינוך | אוניברסיטת חיפה</p>
+    </div>
+  </div>
+
+  <nav>
+    <a href="#about">אודות</a>
+    <a href="#curriculum">תכנית הלימודים</a>
+    <a href="#resources">משאבים למורים</a>
+    <a href="#tools">יישומונים</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div>
+      <h2>ראייה מרחבית בהוראת המתמטיקה</h2>
+      <h3>משאב הוראה למורי 3 יחידות לימוד</h3>
+      <p>
+        3D Math Vision הוא משאב מידע והוראה למורים למתמטיקה,
+        המתמקד בהוראת ראייה מרחבית לקראת שאלון 35372.
+        האתר נבנה במסגרת פרויקט עזרה לקהילה בלימודי תואר שני
+        בחינוך מתמטי בהתמחות טכנולוגיות באוניברסיטת חיפה.
+      </p>
+
+      <div class="buttons">
+        <a class="btn btn-primary" href="#resources">כניסה למשאבי ההוראה</a>
+        <a class="btn btn-secondary" href="#curriculum">מיפוי תכנית הלימודים</a>
+      </div>
+    </div>
+
+    <div class="visual">
+      <div class="cube">
+        <div class="face front"></div>
+        <div class="face back"></div>
+        <div class="face right"></div>
+        <div class="face left"></div>
+        <div class="face top"></div>
+        <div class="face bottom"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2 class="section-title">מטרת הפרויקט</h2>
+    <p class="section-subtitle">
+      לסייע למורים להמחיש לתלמידים קשרים בין ייצוגים דו־ממדיים ותלת־ממדיים,
+      לפתח שיח מתמטי סביב גופים במרחב, ולתמוך בהכנה ממוקדת ומשמעותית לבגרות.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="icon">👩‍🏫</div>
+        <h3>קהל היעד</h3>
+        <p>מורי מתמטיקה המלמדים 3 יחידות לימוד בחטיבה העליונה.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🧠</div>
+        <h3>הצורך הפדגוגי</h3>
+        <p>תלמידים רבים מתקשים לדמיין גופים, לזהות מבטים, להבין פריסות ולפרש שרטוטים מרחביים.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">💻</div>
+        <h3>הערך הטכנולוגי</h3>
+        <p>שימוש בהמחשות, מודלים ופעילויות דיגיטליות כדי להפוך את המרחב לנראה ונגיש.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="curriculum" class="blue-section">
+    <h2 class="section-title">מיפוי ראשוני של תכנית הלימודים</h2>
+    <p class="section-subtitle">
+      האתר יתמקד בנושאים מרכזיים בראייה מרחבית: גופים במרחב, מבטים, פריסות,
+      חתכים, מבני קוביות, נפח, שטח פנים ושאלות בגרות.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <h3>1. זיהוי גופים</h3>
+        <p>קובייה, תיבה, מנסרה, פירמידה, גליל, חרוט וכדור.</p>
+      </div>
+
+      <div class="step">
+        <h3>2. מבטים וייצוגים</h3>
+        <p>מבט קדמי, מבט צד, מבט על ומעבר בין ייצוגים.</p>
+      </div>
+
+      <div class="step">
+        <h3>3. פריסות וחתכים</h3>
+        <p>זיהוי פריסות מתאימות והבנת חיתוך של גופים במרחב.</p>
+      </div>
+
+      <div class="step">
+        <h3>4. חישובים</h3>
+        <p>נפח, שטח פנים ופירוק גופים מורכבים.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="resources">
+    <h2 class="section-title">משאבים למורים</h2>
+    <p class="section-subtitle">
+      כל יחידה באתר תכלול הסבר למורה, פעילות כיתה, שאלות לדוגמה,
+      הצעות לשיח מתמטי ויישומון תומך.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="icon">📘</div>
+        <h3>הסברים למורה</h3>
+        <p>רקע קצר, מטרות הוראה, קשיים צפויים ודגשים פדגוגיים.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🧩</div>
+        <h3>פעילויות כיתה</h3>
+        <p>משימות קצרות לעבודה אישית, בזוגות או בדיון כיתתי.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">📝</div>
+        <h3>שאלות בגרות</h3>
+        <p>דוגמאות לשאלות רלוונטיות משאלון 35372 עם הערות הוראה.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="tools">
+    <h2 class="section-title">יישומונים אינטראקטיביים</h2>
+    <p class="section-subtitle">
+      בהמשך יתווספו כלים שיאפשרו סיבוב גופים, פתיחת פריסות,
+      בדיקת מבטים וחקירת מבני קוביות.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="icon">🔄</div>
+        <h3>סיבוב גופים</h3>
+        <p>המחשה דינמית של גופים תלת־ממדיים מזוויות שונות.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">📦</div>
+        <h3>פריסות</h3>
+        <p>מעבר בין גוף סגור לבין פריסה דו־ממדית.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">👁️</div>
+        <h3>מבטים</h3>
+        <p>תרגול זיהוי מבט על, מבט צד ומבט קדמי.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <h3>3D Math Vision</h3>
+  <p>משאב הוראה פתוח בנושא ראייה מרחבית במתמטיקה.</p>
+  <p>המחלקה לחינוך מתמטי | הפקולטה לחינוך | אוניברסיטת חיפה</p>
+</footer>
+
+</body>
 </html>
