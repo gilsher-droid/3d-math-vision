@@ -304,3 +304,21 @@
     margin-top:55px;
     margin-bottom:35px;
 }
+.info-note{
+    background:#f8fafc;
+    border:1px solid #dbeafe;
+    border-radius:18px;
+    padding:24px;
+    margin:30px 0;
+}
+
+.info-note h3{
+    color:#0f4c81;
+    margin-top:0;
+}
+
+.info-note p{
+    color:#475569;
+    line-height:1.8;
+    margin-bottom:0;
+}
