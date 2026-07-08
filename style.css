@@ -239,6 +239,7 @@
         display: inline-block;
         margin-top: 8px;
       }
+    }
           .curriculum-note {
   margin-top: 34px;
   background: rgba(255, 255, 255, 0.1);
@@ -255,5 +256,4 @@
 .curriculum-note p {
   color: #dbeafe;
 }
-    }
 
