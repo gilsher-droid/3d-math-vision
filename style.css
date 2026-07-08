@@ -285,3 +285,12 @@
     font-weight:700;
     color:#1e3a8a;
 }
+.curriculum-list {
+  margin: 0;
+  padding-right: 22px;
+  color: #dbeafe;
+}
+
+.curriculum-list li {
+  margin-bottom: 8px;
+}
