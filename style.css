@@ -375,3 +375,13 @@
   display: grid;
   gap: 8px;
 }
+.resource-links{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-top:20px;
+}
+
+.resource-links .btn{
+    text-align:center;
+}
