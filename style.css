@@ -322,13 +322,6 @@
     line-height:1.8;
     margin-bottom:0;
 }
-מצוין.
-
-### צעד 0.2 — עיצוב בורר השפה
-
-פתח את `style.css` והדבק **בסוף הקובץ, מחוץ לכל `@media`**:
-
-```css
 .language-switcher {
   position: relative;
 }
