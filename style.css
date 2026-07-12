@@ -322,3 +322,59 @@
     line-height:1.8;
     margin-bottom:0;
 }
+מצוין.
+
+### צעד 0.2 — עיצוב בורר השפה
+
+פתח את `style.css` והדבק **בסוף הקובץ, מחוץ לכל `@media`**:
+
+```css
+.language-switcher {
+  position: relative;
+}
+
+.language-button {
+  border: 1px solid #dbe5ee;
+  background: #ffffff;
+  color: var(--blue-dark);
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.language-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  min-width: 170px;
+  background: #ffffff;
+  border: 1px solid #dbe5ee;
+  border-radius: 14px;
+  padding: 10px;
+  box-shadow: 0 12px 30px rgba(0, 59, 113, 0.14);
+  z-index: 20;
+}
+
+.language-switcher:hover .language-menu,
+.language-switcher:focus-within .language-menu {
+  display: grid;
+  gap: 8px;
+}
+
+.language-menu span {
+  display: block;
+  padding: 9px 10px;
+  border-radius: 10px;
+}
+
+.active-language {
+  color: var(--blue-dark);
+  font-weight: 700;
+  background: var(--blue-light);
+}
+
+.coming-soon {
+  color: var(--muted);
+}
