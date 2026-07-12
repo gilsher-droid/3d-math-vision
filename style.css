@@ -378,3 +378,7 @@
 .coming-soon {
   color: var(--muted);
 }
+.language-menu.open {
+  display: grid;
+  gap: 8px;
+}
