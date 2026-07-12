@@ -42,11 +42,6 @@
     </div>
   </div>
 </header>
-```
-
-כרגע זה יוסיף את המבנה בלבד. אחרי שתבצע, נעצב אותו ב־CSS כך שייראה כמו תפריט שפה מקצועי.
-
-
 <main>
 
 <section id="home" class="hero">
@@ -412,6 +407,19 @@ target="_blank">
   <p>משאב הוראה פתוח בנושא ראייה מרחבית במתמטיקה.</p>
   <p>המחלקה לחינוך מתמטי | הפקולטה לחינוך | אוניברסיטת חיפה</p>
 </footer>
+<script>
+  const languageButton = document.querySelector('.language-button');
+  const languageMenu = document.querySelector('.language-menu');
 
+  languageButton.addEventListener('click', function () {
+    languageMenu.classList.toggle('open');
+  });
+
+  document.addEventListener('click', function (event) {
+    if (!event.target.closest('.language-switcher')) {
+      languageMenu.classList.remove('open');
+    }
+  });
+</script>
 </body>
 </html>
