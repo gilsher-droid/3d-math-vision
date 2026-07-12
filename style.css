@@ -481,3 +481,12 @@
     padding: 26px;
   }
 }
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.card .resource-links {
+  margin-top: auto;
+  padding-top: 20px;
+}
