@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ראייה מרחבית · שאלון 35372 · קיץ תשפ״ה 2025 · מועד א׳</title>
+<style>
+  /* ============ עיצוב כללי – כחול/לבן, RTL ============ */
+  :root{
+    --bg:#eef5ff; --card:#ffffff; --ink:#13243d; --muted:#5a6b85;
+    --line:#d6e4ff; --blue:#1e63d0; --blue-d:#174f9f; --blue-soft:#eaf2ff;
+    --ok:#1b9e57; --ok-bg:#e7f7ef; --bad:#d23b3b; --bad-bg:#fdecec;
+    --fill:#6b7d9c; --fill-l:#9fb0cc; --shadow:0 6px 22px rgba(23,79,159,.10);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:linear-gradient(180deg,#f5f9ff,#eaf2ff 280px,#eef5ff 280px);
+    color:var(--ink); font-family:system-ui,"Segoe UI","Helvetica Neue",Arial,"Noto Sans Hebrew",sans-serif;
+    line-height:1.6; -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:18px 16px 80px}
+
+  /* ---------- כותרת ---------- */
+  header.top{display:flex;flex-wrap:wrap;align-items:center;gap:12px;
+    justify-content:space-between;margin-bottom:14px}
+  .titles h1{font-size:1.35rem;margin:0;letter-spacing:.2px}
+  .titles p{margin:2px 0 0;color:var(--muted);font-size:.92rem}
+  .timer{background:var(--blue);color:#fff;border-radius:999px;
+    padding:7px 14px;font-weight:700;font-variant-numeric:tabular-nums;
+    box-shadow:var(--shadow);white-space:nowrap}
+  .timer small{font-weight:500;opacity:.85}
+  .head-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .langbar{display:flex;background:#fff;border:1px solid var(--line);border-radius:999px;
+    padding:3px;box-shadow:var(--shadow)}
+  .lang-btn{font:inherit;font-weight:700;font-size:.88rem;border:0;background:transparent;
+    color:var(--blue-d);padding:6px 14px;border-radius:999px;cursor:pointer;transition:.15s}
+  .lang-btn:hover{background:var(--blue-soft)}
+  .lang-btn.active{background:var(--blue);color:#fff}
+
+  /* ---------- כרטיסים ---------- */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:18px 18px 16px;margin:16px 0;box-shadow:var(--shadow)}
+  .sec-head{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .badge{display:grid;place-items:center;min-width:34px;height:34px;border-radius:10px;
+    background:var(--blue);color:#fff;font-weight:800;padding:0 8px}
+  .sec-head h2{font-size:1.12rem;margin:0}
+  .prompt{margin:.4rem 0 1rem;color:#26344d}
+  .lead-line{margin:0 0 14px;color:#26344d;padding-bottom:12px;
+    border-bottom:1px solid var(--line)}
+  .hint{font-size:.86rem;color:var(--muted);margin:.2rem 0 .8rem}
+
+  /* ---------- כפתורים ---------- */
+  .controls{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+  .btn{font:inherit;font-weight:700;border-radius:11px;padding:10px 16px;cursor:pointer;
+    border:1px solid transparent;transition:.15s;line-height:1}
+  .btn:active{transform:translateY(1px)}
+  .btn.primary{background:var(--blue);color:#fff}
+  .btn.primary:hover{background:var(--blue-d)}
+  .btn.ghost{background:#fff;color:var(--blue-d);border-color:var(--line)}
+  .btn.ghost:hover{background:var(--blue-soft)}
+  .btn.tiny{padding:7px 12px;border-radius:9px;font-size:.88rem}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .hidden{display:none !important}
+
+  /* ---------- משוב ---------- */
+  .feedback{margin-top:14px;border-radius:12px;padding:12px 14px;font-size:.95rem;
+    border:1px solid var(--line);background:#fbfdff}
+  .feedback.ok{border-color:#bce8d2;background:var(--ok-bg)}
+  .feedback.bad{border-color:#f3c4c4;background:var(--bad-bg)}
+  .feedback .res{font-weight:800;display:flex;align-items:center;gap:7px}
+  .feedback.ok .res{color:var(--ok)} .feedback.bad .res{color:var(--bad)}
+  .feedback .exp{margin-top:7px;color:#33425d}
+  .reveal-box{margin-top:12px;padding:12px;border:1px dashed var(--blue);
+    border-radius:12px;background:var(--blue-soft)}
+  .reveal-box h4{margin:0 0 8px;font-size:.95rem;color:var(--blue-d)}
+
+  /* ============ רשתות – תמיד LTR, עמודה 0 בשמאל ============ */
+  .grid{direction:ltr;display:inline-grid;gap:3px;background:#c9d6ee;
+    padding:3px;border-radius:8px;border:1px solid #b9cbea}
+  .grid .cell{width:46px;height:46px;background:#fff;display:grid;place-items:center;
+    font-weight:700;font-size:1.15rem;color:var(--ink);border-radius:4px;
+    font-variant-numeric:tabular-nums;user-select:none}
+  .grid.click .cell{cursor:pointer;transition:background .12s}
+  .grid.click .cell:hover{background:var(--blue-soft)}
+  .grid .cell.fill{background:var(--fill)}
+  .grid .cell.empty{background:#fff}
+  .grid .cell.zerohi{outline:3px solid var(--bad);outline-offset:-3px}
+  .grid .cell.correct{background:var(--ok-bg);color:var(--ok)}
+  .grid-label{direction:rtl;text-align:center;font-size:.85rem;color:var(--muted);
+    margin:0 0 6px;font-weight:600}
+  .grid-pair{display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start}
+  .grid-block{display:inline-block}
+  .mini .cell{width:30px;height:30px;font-size:.85rem}
+  .mini-num .cell{width:32px;height:32px;font-size:.92rem}
+
+  /* ---------- תצוגת מבנה / תלת-ממד ---------- */
+  .struct-img{display:block;max-width:330px;width:100%;margin:6px auto 2px;
+    border:1px solid var(--line);border-radius:12px;background:#fff}
+  .cap{text-align:center;color:var(--muted);font-size:.85rem;margin:.2rem 0 0}
+  .viewer-wrap{margin-top:12px}
+  .canvas-box{position:relative;background:#f7faff;border:1px solid var(--line);
+    border-radius:12px;overflow:hidden;touch-action:none}
+  canvas{display:block;width:100%;height:300px;cursor:grab}
+  canvas:active{cursor:grabbing}
+  .v-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+  .compare-row{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch}
+  .compare-row .canvas-box{flex:1 1 320px}
+  .compare-img{flex:1 1 260px;display:flex;flex-direction:column;justify-content:flex-start}
+  .compare-img img{width:100%;border:1px solid var(--line);border-radius:12px;background:#fff;display:block}
+
+  /* ---------- סביבת חקר ---------- */
+  .lab{margin-top:8px;border:1px solid var(--line);border-radius:14px;
+    padding:14px;background:#fbfdff}
+  .lab-cols{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+  .lab-col{flex:1 1 260px;min-width:240px}
+  .status{display:inline-flex;align-items:center;gap:8px;font-weight:700;
+    padding:8px 13px;border-radius:999px;border:1px solid var(--line)}
+  .status.same{background:var(--ok-bg);color:var(--ok);border-color:#bce8d2}
+  .status.diff{background:var(--bad-bg);color:var(--bad);border-color:#f3c4c4}
+  .counters{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  .chip{background:#fff;border:1px solid var(--line);border-radius:10px;
+    padding:8px 12px;font-weight:700}
+  .chip b{color:var(--blue-d)}
+  .views-grid{display:flex;flex-wrap:wrap;gap:16px;margin-top:6px}
+  .num-input{font:inherit;font-weight:700;font-size:1.1rem;width:120px;padding:9px 12px;
+    border:1.5px solid var(--line);border-radius:10px;text-align:center;direction:ltr}
+  .num-input:focus{outline:none;border-color:var(--blue)}
+  .answer-inline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:.2rem 0 .6rem}
+  .answer-inline label{font-weight:700;color:#26344d}
+
+  /* מנגנון משוב חדש */
+  .verdict{margin-inline-start:auto;font-weight:800;padding:5px 13px;border-radius:999px;
+    font-size:.92rem;white-space:nowrap}
+  .verdict.ok{background:var(--ok-bg);color:var(--ok);border:1px solid #bce8d2}
+  .verdict.bad{background:var(--bad-bg);color:var(--bad);border:1px solid #f3c4c4}
+  .card.mark-ok{border-color:#bce8d2;box-shadow:0 6px 22px rgba(27,158,87,.10)}
+  .card.mark-bad{border-color:#f3c4c4;box-shadow:0 6px 22px rgba(210,59,59,.10)}
+  .sec-actions{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:14px}
+  .sec-actions .hinttxt{color:var(--bad);font-weight:600;font-size:.9rem;flex:1 1 100%}
+  .help{margin-top:12px;border:1px solid var(--line);border-radius:14px;padding:12px;background:#fbfdff}
+  .warn{max-width:620px;margin:12px auto 0;border:1px solid #f0cd7a;background:#fff7e3;
+    color:#7a5c12;border-radius:12px;padding:12px 16px;font-weight:700;text-align:center}
+  .check-bar{display:flex;justify-content:center;margin:26px 0 2px}
+  .big-btn{font-size:1.08rem;padding:14px 34px;border-radius:14px}
+  .score-line{font-size:1.2rem;font-weight:800;color:var(--blue-d);margin:.2rem 0 .9rem}
+  .fb-unit{margin-top:12px}
+  .fb-msg{margin:0;font-weight:600;border-radius:12px;padding:11px 14px;
+    border:1px solid var(--line);background:#fbfdff}
+  .fb-msg.ok{color:var(--ok);background:var(--ok-bg);border-color:#bce8d2}
+  .fb-msg.bad{color:var(--bad);background:var(--bad-bg);border-color:#f3c4c4}
+  .fb-help{margin-top:10px}
+  .done-msg{font-size:1.12rem;font-weight:800;color:var(--ok);background:var(--ok-bg);
+    border:1px solid #bce8d2;border-radius:12px;padding:14px 16px;margin:0 0 12px}
+
+  /* ---------- סיכום ---------- */
+  .summary .stats{display:flex;flex-wrap:wrap;gap:14px;margin:8px 0 6px}
+  .stat{flex:1 1 150px;background:var(--blue-soft);border:1px solid var(--line);
+    border-radius:14px;padding:14px;text-align:center}
+  .stat .big{font-size:1.8rem;font-weight:800;color:var(--blue-d);line-height:1.1}
+  .stat .lab{color:var(--muted);font-size:.85rem;margin-top:3px}
+  textarea.reflect{width:100%;min-height:84px;font:inherit;padding:11px;
+    border:1.5px solid var(--line);border-radius:12px;resize:vertical;margin-top:6px}
+  textarea.reflect:focus{outline:none;border-color:var(--blue)}
+
+  @media (max-width:520px){
+    .grid .cell{width:40px;height:40px;font-size:1rem}
+    .titles h1{font-size:1.15rem}
+    canvas{height:250px}
+  }
+</style>
+<link rel="stylesheet" href="../../assets/lab-shell.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="titles">
+      <h1 data-i18n="app.title">ראייה מרחבית · שאלון 35372</h1>
+      <p data-i18n="app.subtitle">בגרות קיץ תשפ״ה (2025) · מועד א׳</p>
+    </div>
+    <div class="head-tools">
+      <div class="langbar" role="group" aria-label="שפה / اللغة">
+        <button class="lang-btn active" data-lang="he">עברית</button>
+        <button class="lang-btn" data-lang="ar">العربية</button>
+      </div>
+      <div class="timer" id="timer"><small data-i18n="ui.timeLabel">זמן עבודה</small> 00:00</div>
+    </div>
+  </header>
+
+  <!-- ============ מסך פתיחה / מבנה ============ -->
+  <section class="card" id="intro">
+    <div class="sec-head"><span class="badge" style="background:var(--blue-d)">★</span>
+      <h2 data-i18n="intro.head">המבנה הנתון</h2></div>
+    <p class="prompt" data-i18n-html="intro.text">בסרטוט שלפניכם מתואר מבנה הבנוי מקוביות זהות. החץ בסרטוט מסמן את הכיוון של המבט מלפנים.<br>
+      כל קובייה במבנה מונחת על המשטח או על קובייה אחרת.</p>
+    <img class="struct-img" id="structImg" alt="סרטוט המבנה התלת־ממדי">
+  </section>
+
+  <!-- ============ סעיף א ============ -->
+  <section class="card" id="secA">
+    <div class="sec-head"><span class="badge" data-i18n="sec.a.badge">א</span><h2 data-i18n="sec.a.head">השלימו בתבנית שלפניכם את תרשים המספרים של המבנה.</h2></div>
+    <div class="grid-block">
+      <div class="grid click" id="gridA" data-rows="4" data-cols="3"></div>
+    </div>
+    <div class="fb-unit hidden" id="fbA">
+      <p class="fb-msg"></p>
+      <button class="btn ghost tiny fb-help hidden" data-help="A" data-i18n="ui.helpBtn">צריך עזרה? פתח תלת־ממד</button>
+    </div>
+    <div class="help hidden" id="helpA">
+      <p class="hint" style="margin:0 0 8px" data-i18n="ui.dragHint">גררו לסיבוב · גלגלת לזום · החץ = כיוון המבט מלפנים</p>
+      <div class="canvas-box"><canvas id="canvasA" style="height:260px"></canvas></div>
+      <div class="v-tools">
+        <button class="btn ghost tiny" data-vk="A" data-v="reset" data-i18n="ui.examView">יישר לתצוגת הבגרות</button>
+        <button class="btn ghost tiny" data-vk="A" data-v="zin" data-i18n="ui.zoomIn">הגדל ＋</button>
+        <button class="btn ghost tiny" data-vk="A" data-v="zout" data-i18n="ui.zoomOut">הקטן －</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ סעיף ב ============ -->
+  <section class="card" id="secB">
+    <div class="sec-head"><span class="badge" data-i18n="sec.b.badge">ב</span><h2 data-i18n="sec.b.head">השלימו בתבניות שלפניכם את המבט מימין ואת המבט משמאל של המבנה.</h2></div>
+    <div class="grid-pair">
+      <div class="grid-block">
+        <p class="grid-label" data-i18n="view.right">מבט מימין</p>
+        <div class="grid click" id="gridRight" data-rows="3" data-cols="4"></div>
+    <div class="fb-unit hidden" id="fbBright">
+      <p class="fb-msg"></p>
+      <button class="btn ghost tiny fb-help hidden" data-help="B" data-i18n="ui.helpBtn">צריך עזרה? פתח תלת־ממד</button>
+    </div>
+      </div>
+      <div class="grid-block">
+        <p class="grid-label" data-i18n="view.left">מבט משמאל</p>
+        <div class="grid click" id="gridLeft" data-rows="3" data-cols="4"></div>
+    <div class="fb-unit hidden" id="fbBleft">
+      <p class="fb-msg"></p>
+      <button class="btn ghost tiny fb-help hidden" data-help="B" data-i18n="ui.helpBtn">צריך עזרה? פתח תלת־ממד</button>
+    </div>
+      </div>
+    </div>
+
+    <div class="help hidden" id="helpB">
+      <p class="hint" style="margin:0 0 8px" data-i18n="ui.dragHint">גררו לסיבוב · גלגלת לזום · החץ = כיוון המבט מלפנים</p>
+      <div class="canvas-box"><canvas id="canvasB" style="height:260px"></canvas></div>
+      <div class="v-tools">
+        <button class="btn ghost tiny" data-vk="B" data-v="reset" data-i18n="ui.examView">יישר לתצוגת הבגרות</button>
+        <button class="btn ghost tiny" data-vk="B" data-v="zin" data-i18n="ui.zoomIn">הגדל ＋</button>
+        <button class="btn ghost tiny" data-vk="B" data-v="zout" data-i18n="ui.zoomOut">הקטן －</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ סעיף ג(1) ============ -->
+  <section class="card" id="secG1">
+    <p class="lead-line" data-i18n="sec.g.lead">הורידו מן המבנה את מספר הקוביות הגדול ביותר האפשרי כך שהמבט מלמעלה לא ישתנה.</p>
+    <div class="sec-head"><span class="badge" data-i18n="sec.g1.badge">ג(1)</span><h2 data-i18n="sec.g1.head">כמה קוביות הורידו מן המבנה?</h2></div>
+    <div class="answer-inline">
+      <input class="num-input" id="inpG1" type="number" inputmode="numeric" min="0" placeholder="?"
+             data-i18n-aria="sec.g1.head" aria-label="כמה קוביות הורידו מן המבנה">
+    </div>
+    <div class="fb-unit hidden" id="fbG1">
+      <p class="fb-msg"></p>
+      <button class="btn ghost tiny fb-help hidden" data-help="G1" data-i18n="ui.helpBtn">צריך עזרה? פתח תלת־ממד</button>
+    </div>
+
+    <div class="lab hidden" id="lab">
+      <p class="hint" style="margin-top:0" data-i18n-html="lab.mode">מצב: <b>הסרת קוביות</b> — לחצו על קובייה במודל התלת־ממדי כדי להסיר אותה (אפשר גם ללחוץ על תא בתרשים המספרים). ניתן לסובב את המבנה בגרירה.</p>
+      <div class="lab-cols">
+        <div class="lab-col">
+          <p class="grid-label" style="direction:rtl;text-align:right" data-i18n="lab.modelLabel">מודל תלת־ממדי אינטראקטיבי — לחצו על קובייה כדי להסירה</p>
+          <div class="canvas-box"><canvas id="labCanvas" style="height:250px"></canvas></div>
+          <div class="v-tools">
+            <button class="btn ghost tiny" id="labUndo" data-i18n="lab.undo">בטל פעולה אחרונה ↩</button>
+            <button class="btn ghost tiny" id="labReset" data-i18n="lab.reset">איפוס המבנה</button>
+          </div>
+          <div class="counters">
+            <span class="chip"><span data-i18n="lab.removed">הוסרו:</span> <b id="cRemoved">0</b> <span data-i18n="lab.cubes">קוביות</span></span>
+            <span class="chip"><span data-i18n="lab.left">נותרו:</span> <b id="cLeft">15</b> <span data-i18n="lab.cubes">קוביות</span></span>
+          </div>
+          <div><span class="status same" id="topStatus">🟢 המבט מלמעלה עדיין לא השתנה</span></div>
+        </div>
+        <div class="lab-col">
+          <p class="grid-label" style="direction:rtl;text-align:right" data-i18n="lab.numChart">תרשים המספרים (מתעדכן בזמן אמת)</p>
+          <div class="grid click mini-num" id="gridLab" data-rows="4" data-cols="3"></div>
+          <p class="grid-label" style="direction:rtl;text-align:right;margin-top:12px" data-i18n="lab.viewsLive">עדכון מבטים בזמן אמת</p>
+          <div class="views-grid" id="labViews"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ סעיף ג(2) ============ -->
+  <section class="card" id="secG2">
+    <div class="sec-head"><span class="badge" data-i18n="sec.g2.badge">ג(2)</span><h2 data-i18n="sec.g2.head">כמה קוביות נשארו במבנה לאחר ההורדה?</h2></div>
+    <div class="answer-inline">
+      <input class="num-input" id="inpG2" type="number" inputmode="numeric" min="0" placeholder="?"
+             data-i18n-aria="sec.g2.head" aria-label="כמה קוביות נשארו במבנה לאחר ההורדה">
+    </div>
+    <div class="fb-unit hidden" id="fbG2">
+      <p class="fb-msg"></p>
+      <button class="btn ghost tiny fb-help hidden" data-help="G2" data-i18n="ui.helpBtn">צריך עזרה? פתח תלת־ממד</button>
+    </div>
+    <div class="help hidden" id="helpG2">
+      <p class="hint" style="margin:0 0 8px" data-i18n="ui.dragHint">גררו לסיבוב · גלגלת לזום · החץ = כיוון המבט מלפנים</p>
+      <div class="canvas-box"><canvas id="canvasG2" style="height:260px"></canvas></div>
+      <div class="v-tools">
+        <button class="btn ghost tiny" data-vk="G2" data-v="reset" data-i18n="ui.examView">יישר לתצוגת הבגרות</button>
+        <button class="btn ghost tiny" data-vk="G2" data-v="zin" data-i18n="ui.zoomIn">הגדל ＋</button>
+        <button class="btn ghost tiny" data-vk="G2" data-v="zout" data-i18n="ui.zoomOut">הקטן －</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ כפתור בדיקה יחיד + תוצאות ============ -->
+  <div class="check-bar">
+    <button class="btn primary big-btn" id="checkAllBtn" data-i18n="ui.checkAll">בדוק תשובות</button>
+  </div>
+  <div class="warn hidden" id="checkWarn"></div>
+
+  <section class="card summary completion hidden" id="completion">
+    <p class="done-msg" id="doneMsg"></p>
+    <div class="stats">
+      <div class="stat"><div class="big" id="sTime">00:00</div><div class="lab" data-i18n="res.time">זמן עבודה</div></div>
+    </div>
+    <p style="font-weight:700;margin:14px 0 2px" data-i18n="res.reflectTitle">שאלת רפלקציה</p>
+    <p class="hint" style="margin-top:0" data-i18n="res.reflectQ">איזה סעיף היה לך הכי מאתגר ולמה?</p>
+    <textarea class="reflect" id="reflect" data-i18n-ph="res.reflectPh" placeholder="כתבו כאן…"></textarea>
+  </section>
+
+</div>
+<script>
+"use strict";
+/* =====================================================================
+   i18n — עברית / العربية. הניסוח בכל שפה לקוח מהשאלון הרשמי המקורי.
+   ===================================================================== */
+var I18N={
+ he:{
+  'app.title':'ראייה מרחבית · שאלון 35372 · קיץ תשפ״ה 2025 · מועד א׳',
+  'img.alt':'סרטוט של מבנה תלת־ממדי מקוביות עם חץ המסמן את כיוון המבט מלפנים',
+  'app.subtitle':'בגרות קיץ תשפ״ה (2025) · מועד א׳',
+  'ui.timeLabel':'זמן עבודה',
+  'intro.head':'המבנה הנתון',
+  'intro.text':'בסרטוט שלפניכם מתואר מבנה הבנוי מקוביות זהות. החץ בסרטוט מסמן את הכיוון של המבט מלפנים.<br>כל קובייה במבנה מונחת על המשטח או על קובייה אחרת.',
+  'sec.a.badge':'א',
+  'sec.a.head':'השלימו בתבנית שלפניכם את תרשים המספרים של המבנה.',
+  'sec.b.badge':'ב',
+  'sec.b.head':'השלימו בתבניות שלפניכם את המבט מימין ואת המבט משמאל של המבנה.',
+  'sec.g.lead':'הורידו מן המבנה את מספר הקוביות הגדול ביותר האפשרי כך שהמבט מלמעלה לא ישתנה.',
+  'sec.g1.badge':'ג(1)', 'sec.g1.head':'כמה קוביות הורידו מן המבנה?',
+  'sec.g2.badge':'ג(2)', 'sec.g2.head':'כמה קוביות נשארו במבנה לאחר ההורדה?',
+  'view.right':'מבט מימין', 'view.left':'מבט משמאל',
+  'view.top':'מבט מלמעלה', 'view.front':'מבט מלפנים',
+  'ui.tryAgainHint':'כדאי לבדוק שוב.',
+  'ui.helpBtn':'צריך עזרה? פתח תלת־ממד',
+  'ui.retryBtn':'נסה שוב',
+  'ui.dragHint':'גררו לסיבוב · גלגלת לזום · החץ = כיוון המבט מלפנים',
+  'ui.examView':'יישר לתצוגת הבגרות', 'ui.zoomIn':'הגדל ＋', 'ui.zoomOut':'הקטן －',
+  'ui.checkAll':'בדוק תשובות',
+  'lab.mode':'מצב: <b>הסרת קוביות</b> — לחצו על קובייה במודל התלת־ממדי כדי להסיר אותה (אפשר גם ללחוץ על תא בתרשים המספרים). ניתן לסובב את המבנה בגרירה.',
+  'lab.modelLabel':'מודל תלת־ממדי אינטראקטיבי — לחצו על קובייה כדי להסירה',
+  'lab.undo':'בטל פעולה אחרונה ↩', 'lab.reset':'איפוס המבנה',
+  'lab.removed':'הוסרו:', 'lab.left':'נותרו:', 'lab.cubes':'קוביות',
+  'lab.numChart':'תרשים המספרים (מתעדכן בזמן אמת)',
+  'lab.viewsLive':'עדכון מבטים בזמן אמת',
+  'lab.topSame':'🟢 המבט מלמעלה עדיין לא השתנה',
+  'lab.topDiff':'🔴 המבט מלמעלה השתנה — בטלו או החזירו קובייה',
+  'res.head':'תוצאות', 'res.correctSections':'סעיפים נכונים',
+  'res.pct':'אחוז הצלחה', 'res.time':'זמן עבודה',
+  'res.reflectTitle':'שאלת רפלקציה',
+  'res.reflectQ':'איזה סעיף היה לך הכי מאתגר ולמה?',
+  'res.reflectPh':'כתבו כאן…',
+  'verdict.ok':'✓ נכון', 'verdict.bad':'✗ לא נכון',
+  'warn.prefix':'סעיף', 'warn.sep':', ',
+  'warn.incomplete':'עדיין לא סיימת — יש לענות על כל הסעיפים לפני הבדיקה. חסרים: {list}.',
+  'score.line':'ענית נכון על {n} מתוך {t} סעיפים.',
+  'fb.correct':'הסעיף נכון.',
+  'fb.allCorrect':'כל הסעיפים נכונים! עשיתם עבודה מצוינת בניתוח הנתונים ובהגעה לפתרון המדויק.',
+  'fb.try1':'הסעיף הזה עדיין אינו נכון. חזרו אליו ונסו שוב.',
+  'fb.try2':'הסעיף הזה עדיין אינו נכון. לפני ניסיון נוסף, בדקו האם התשובה עקבית עם הנתונים שבשאלה. אפשר להיעזר במודל התלת-ממדי שניתן לסובב.',
+  'fb.try3.A':'בסעיף הזה כל משבצת בתרשים מציינת כמה קוביות עומדות במקומה. בדקו שכל מספר תואם למספר הקוביות באותו מקום במבנה. המודל התלת-ממדי נשאר זמין לעזרה.',
+  'fb.try3.Bright':'בסעיף הזה נדרש המבט מימין. בדקו שהוא משקף את מה שנראה מצד ימין של המבנה בלבד. המודל התלת-ממדי נשאר זמין לעזרה.',
+  'fb.try3.Bleft':'בסעיף הזה נדרש המבט משמאל. בדקו שהוא משקף את מה שנראה מצד שמאל של המבנה בלבד. המודל התלת-ממדי נשאר זמין לעזרה.',
+  'fb.try3.G1':'בסעיף הזה מותר להוריד קוביות רק כל עוד המבט מלמעלה נשאר כפי שהיה, ומבקשים את המספר הגדול ביותר האפשרי. בדקו שני דברים: שהמבט מלמעלה לא השתנה, ושהורדתם את המספר הגדול ביותר שאפשר. המודל התלת-ממדי נשאר זמין לעזרה.',
+  'fb.try3.G2':'בסעיף הזה נדרש מספר הקוביות שנשארו לאחר ההורדה. בדקו שהמספר עקבי עם מספר הקוביות שהורדתם ועם המבנה שהתקבל. המודל התלת-ממדי נשאר זמין לעזרה.',
+  'unit.A.warn':'סעיף א',
+  'unit.Bright.warn':'סעיף ב (מבט מימין)',
+  'unit.Bleft.warn':'סעיף ב (מבט משמאל)',
+  'unit.G1.warn':'סעיף ג(1)',
+  'unit.G2.warn':'סעיף ג(2)'
+ },
+ ar:{
+  'app.title':'الإدراك المكانيّ · النموذج 35372 · صيف 2025 · الموعد الأوّل',
+  'img.alt':'رسم مبنى ثلاثيّ الأبعاد من مكعّبات مع سهم يحدّد اتّجاه النظرة من الأمام',
+  'app.subtitle':'بجروت صيف 2025 · الموعد الأوّل',
+  'ui.timeLabel':'زمن العمل',
+  'intro.head':'المبنى المُعطى',
+  'intro.text':'الرسم الذي أمامكم يصف مبنًى مبنيًّا من مكعّبات متطابقة. السهم في الرسم يُشير إلى اتّجاه النظرة من الأمام.<br>كلّ مكعّب في المبنى موضوع على السطح أو على مكعّب آخر.',
+  'sec.a.badge':'أ',
+  'sec.a.head':'أَكْمِلوا مخطَّط الأعداد للمبنى في القالب الذي أمامكم.',
+  'sec.b.badge':'ب',
+  'sec.b.head':'أَكْمِلوا النظرة من اليمين والنظرة من اليسار للمبنى في القالبين اللذين أمامكم.',
+  'sec.g.lead':'أزالوا من المبنى أكبر عدد ممكن من المكعّبات بحيث لم تتغيّر النظرة من الأعلى.',
+  'sec.g1.badge':'جـ(1)', 'sec.g1.head':'كم مكعّبًا أزالوا من المبنى؟',
+  'sec.g2.badge':'جـ(2)', 'sec.g2.head':'كم مكعّبًا بقي في المبنى بعد الإزالة؟',
+  'view.right':'النظرة من اليمين', 'view.left':'النظرة من اليسار',
+  'view.top':'النظرة من الأعلى', 'view.front':'النظرة من الأمام',
+  'ui.tryAgainHint':'يُستحسن التحقّق مرّة أخرى.',
+  'ui.helpBtn':'بحاجة إلى مساعدة؟ افتحوا النموذج ثلاثيّ الأبعاد',
+  'ui.retryBtn':'حاولوا مرّة أخرى',
+  'ui.dragHint':'اسحبوا للتدوير · العجلة للتقريب · السهم = اتّجاه النظرة من الأمام',
+  'ui.examView':'اضبطوا على زاوية الامتحان', 'ui.zoomIn':'تكبير ＋', 'ui.zoomOut':'تصغير －',
+  'ui.checkAll':'تحقّقوا من الإجابات',
+  'lab.mode':'الوضع: <b>إزالة مكعّبات</b> — اضغطوا على مكعّب في النموذج ثلاثيّ الأبعاد لإزالته (يمكن أيضًا الضغط على خانة في مخطَّط الأعداد). يمكن تدوير المبنى بالسحب.',
+  'lab.modelLabel':'نموذج ثلاثيّ الأبعاد تفاعليّ — اضغطوا على مكعّب لإزالته',
+  'lab.undo':'تراجُع عن آخر إجراء ↩', 'lab.reset':'إعادة ضبط المبنى',
+  'lab.removed':'أُزيلت:', 'lab.left':'بقيت:', 'lab.cubes':'مكعّبات',
+  'lab.numChart':'مخطَّط الأعداد (يتحدّث آنيًّا)',
+  'lab.viewsLive':'تحديث النظرات آنيًّا',
+  'lab.topSame':'🟢 النظرة من الأعلى لم تتغيّر بعد',
+  'lab.topDiff':'🔴 تغيّرت النظرة من الأعلى — تراجعوا أو أعيدوا مكعّبًا',
+  'res.head':'النتائج', 'res.correctSections':'بنود صحيحة',
+  'res.pct':'نسبة النجاح', 'res.time':'زمن العمل',
+  'res.reflectTitle':'سؤال للتأمّل',
+  'res.reflectQ':'أيّ بند كان الأكثر تحدّيًا بالنسبة لكم ولماذا؟',
+  'res.reflectPh':'اكتبوا هنا…',
+  'verdict.ok':'✓ صحيح', 'verdict.bad':'✗ غير صحيح',
+  'warn.prefix':'البند', 'warn.sep':'، ',
+  'warn.incomplete':'لم تنتهوا بعد — يجب الإجابة عن جميع البنود قبل التحقّق. النواقص: {list}.',
+  'score.line':'أجبتم بشكل صحيح عن {n} من أصل {t} بنود.',
+  'fb.correct':'البند صحيح.',
+  'fb.allCorrect':'جميع البنود صحيحة! لقد قمتم بعمل ممتاز في تحليل المعطيات والوصول إلى الحل الدقيق',
+  'fb.try1':'هذا البند ما زال غير صحيح. عودوا إليه وحاولوا مرّة أخرى.',
+  'fb.try2':'هذا البند ما زال غير صحيح. قبل محاولة إضافية، تحقّقوا ممّا إذا كانت الإجابة متّسقة مع معطيات السؤال. يمكنكم الاستعانة بالمجسّم ثلاثيّ الأبعاد الذي يمكن تدويره.',
+  'fb.try3.A':'في هذا البند تشير كلّ خانة في المخطّط إلى عدد المكعّبات القائمة في موضعها. تحقّقوا من أنّ كلّ عدد يطابق عدد المكعّبات في الموضع ذاته من المبنى. المجسّم ثلاثيّ الأبعاد متاحًا للمساعدة.',
+  'fb.try3.Bright':'في هذا البند مطلوبة النظرة من اليمين. تحقّقوا من أنّها تُظهر ما يُرى من الجهة اليمنى للمبنى فقط. المجسّم ثلاثيّ الأبعاد متاحًا للمساعدة.',
+  'fb.try3.Bleft':'في هذا البند مطلوبة النظرة من اليسار. تحقّقوا من أنّها تُظهر ما يُرى من الجهة اليسرى للمبنى فقط. المجسّم ثلاثيّ الأبعاد متاحًا للمساعدة.',
+  'fb.try3.G1':'في هذا البند يُسمح بإزالة المكعّبات فقط ما دامت النظرة من الأعلى تبقى كما كانت، والمطلوب أكبر عدد ممكن. تحقّقوا من أمرين: أنّ النظرة من الأعلى لم تتغيّر، وأنّكم أزلتم أكبر عدد ممكن. المجسّم ثلاثيّ الأبعاد متاحًا للمساعدة.',
+  'fb.try3.G2':'في هذا البند مطلوب عدد المكعّبات التي بقيت بعد الإزالة. تحقّقوا من أنّ العدد متّسق مع عدد المكعّبات التي أزلتموها ومع المبنى الناتج. المجسّم ثلاثيّ الأبعاد متاحًا للمساعدة.',
+  'unit.A.warn':'البند أ',
+  'unit.Bright.warn':'البند ب (النظرة من اليمين)',
+  'unit.Bleft.warn':'البند ب (النظرة من اليسار)',
+  'unit.G1.warn':'البند جـ(1)',
+  'unit.G2.warn':'البند جـ(2)'
+ }
+};
+var LANG='he';
+function T(key){ var d=I18N[LANG]||I18N.he; return (key in d)?d[key]:(I18N.he[key]||key); }
+
+function applyLang(lang){
+  LANG=(lang==='ar')?'ar':'he';
+  if(document.documentElement){
+    document.documentElement.setAttribute('lang', LANG==='ar'?'ar':'he');
+    document.documentElement.setAttribute('dir','rtl');   /* שתי השפות RTL */
+  }
+  var i,els;
+  els=document.querySelectorAll('[data-i18n]');
+  for(i=0;i<els.length;i++) els[i].textContent=T(els[i].getAttribute('data-i18n'));
+  els=document.querySelectorAll('[data-i18n-html]');
+  for(i=0;i<els.length;i++) els[i].innerHTML=T(els[i].getAttribute('data-i18n-html'));
+  els=document.querySelectorAll('[data-i18n-ph]');
+  for(i=0;i<els.length;i++) els[i].setAttribute('placeholder', T(els[i].getAttribute('data-i18n-ph')));
+  els=document.querySelectorAll('[data-i18n-aria]');
+  for(i=0;i<els.length;i++) els[i].setAttribute('aria-label', T(els[i].getAttribute('data-i18n-aria')));
+  /* כפתורי השפה */
+  var lb=document.querySelectorAll('[data-lang]');
+  for(i=0;i<lb.length;i++){
+    if(lb[i].getAttribute('data-lang')===LANG) lb[i].classList.add('active');
+    else lb[i].classList.remove('active');
+  }
+  var img=document.getElementById('structImg');
+  if(img) img.setAttribute('alt', T('img.alt'));
+  refreshDynamicText();
+  document.dispatchEvent(new CustomEvent('lab:languagechange',{detail:{lang:LANG}}));
+}
+/* טקסטים דינמיים שנוצרים ב-JS ולכן אינם נתפסים ע"י data-i18n */
+function refreshDynamicText(){
+  tickTimer();
+  if(typeof LAB!=='undefined' && LAB.refresh) LAB.refresh();
+  for(var i=0;i<UNITS.length;i++) renderUnit(UNITS[i]);
+  if(lastAllCorrect) showCompletion();
+  if(lastMissing) showWarn(buildWarn(lastMissing));
+}
+
+/* =====================================================================
+   מנוע סימולציה — ראייה מרחבית, שאלון 372, קיץ תשפ״ה (2025) מועד א׳
+   כל המבטים מחושבים ממטריצת הגבהים בלבד (אין קידוד ידני של תשובות).
+   מערכת צירים: שורה 0 = אחורית, שורה 3 = קדמית ; עמודה 0 = שמאל המסך.
+   ===================================================================== */
+
+/* ---------- נתוני אמת: מטריצת הגבהים ---------- */
+var ORIG_H = [
+  [3,2,1],   /* שורה אחורית */
+  [1,3,1],
+  [1,1,1],
+  [1,0,0]    /* שורה קדמית  */
+];
+var ROWS = 4, COLS = 3, MAXH = 3;
+
+/* ---------- מנוע מבטים (פונקציות טהורות) ---------- */
+function clone(H){ return H.map(function(row){ return row.slice(); }); }
+function totalCubes(H){
+  var s=0; for(var r=0;r<H.length;r++) for(var c=0;c<H[r].length;c++) s+=H[r][c];
+  return s;
+}
+function colMax(H){               /* גובה מרבי בכל עמודה — שמאל→ימין = עמ׳ 0..2 */
+  var out=[]; for(var c=0;c<COLS;c++){ var m=0; for(var r=0;r<ROWS;r++) m=Math.max(m,H[r][c]); out.push(m); }
+  return out;
+}
+function rowMax(H){               /* גובה מרבי בכל שורה — אחורית→קדמית = שורה 0..3 */
+  var out=[]; for(var r=0;r<ROWS;r++){ var m=0; for(var c=0;c<COLS;c++) m=Math.max(m,H[r][c]); out.push(m); }
+  return out;
+}
+/* צללית מתוך מערך גבהים: מתמלאת מלמטה. שורה 0 = למעלה. */
+function silhouette(heights, maxH){
+  var g=[];
+  for(var r=0;r<maxH;r++){
+    var level=maxH-r, row=[];
+    for(var c=0;c<heights.length;c++) row.push(level<=heights[c]?1:0);
+    g.push(row);
+  }
+  return g;
+}
+function topView(H){              /* תשתית: 1 אם יש לפחות קובייה אחת */
+  return H.map(function(row){ return row.map(function(v){ return v>0?1:0; }); });
+}
+function frontView(H){ return silhouette(colMax(H), MAXH); }            /* שמאל→ימין = עמ׳ 0..2 */
+function rightView(H){ return silhouette(rowMax(H).slice().reverse(), MAXH); } /* שמאל→ימין = קדמית→אחורית */
+function leftView(H){ return silhouette(rowMax(H), MAXH); }             /* שמאל→ימין = אחורית→קדמית */
+
+function gridsEqual(a,b){
+  if(a.length!==b.length) return false;
+  for(var r=0;r<a.length;r++){ if(a[r].length!==b[r].length) return false;
+    for(var c=0;c<a[r].length;c++) if(a[r][c]!==b[r][c]) return false; }
+  return true;
+}
+function topUnchanged(H){ return gridsEqual(topView(H), topView(ORIG_H)); }
+function maxRemoval(){ return totalCubes(ORIG_H) - countFootprint(); }   /* 15 - 10 = 5 */
+function countFootprint(){
+  var n=0; for(var r=0;r<ROWS;r++) for(var c=0;c<COLS;c++) if(ORIG_H[r][c]>0) n++;
+  return n;
+}
+
+/* ---------- עזרי DOM ---------- */
+function byId(id){ return document.getElementById(id); }
+function el(tag,cls){ var e=document.createElement(tag); if(cls) e.className=cls; return e; }
+
+/* בניית רשת אינטראקטיבית או סטטית */
+function makeGrid(container, rows, cols, extraCls, init, onClick){
+  container.innerHTML='';
+  container.style.gridTemplateColumns='repeat('+cols+', auto)';
+  if(extraCls) container.className=('grid '+extraCls).trim();
+  var cells=[];
+  for(var r=0;r<rows;r++){
+    cells[r]=[];
+    for(var c=0;c<cols;c++){
+      (function(r,c){
+        var cell=el('div','cell');
+        cell.dataset.r=r; cell.dataset.c=c;
+        if(init) init(cell,r,c);
+        if(onClick) cell.addEventListener('click',function(){ onClick(r,c,cell); });
+        container.appendChild(cell);
+        cells[r][c]=cell;
+      })(r,c);
+    }
+  }
+  return cells;
+}
+
+/* רשת מספרים סטטית לתצוגת פתרון */
+function staticNumGrid(H, mini){
+  var box=el('div','grid'+(mini?' mini-num':''));
+  box.style.gridTemplateColumns='repeat('+H[0].length+', auto)';
+  for(var r=0;r<H.length;r++) for(var c=0;c<H[r].length;c++){
+    var cell=el('div','cell'); cell.textContent=H[r][c]; box.appendChild(cell);
+  }
+  return box;
+}
+/* רשת צללית סטטית לתצוגת פתרון */
+function staticSilhouette(grid, label){
+  var wrap=el('div','grid-block');
+  if(label){ var lb=el('p','grid-label'); lb.textContent=label; wrap.appendChild(lb); }
+  var box=el('div','grid mini');
+  box.style.gridTemplateColumns='repeat('+grid[0].length+', auto)';
+  for(var r=0;r<grid.length;r++) for(var c=0;c<grid[r].length;c++){
+    var cell=el('div','cell '+(grid[r][c]?'fill':'empty')); box.appendChild(cell);
+  }
+  wrap.appendChild(box); return wrap;
+}
+
+/* ---------- מנגנון בדיקה יחיד + ניהול סעיפים ---------- */
+/* כל סעיף חושף: name, helpType('3d'|'lab'), isAnswered(), isCorrect(), reset() */
+var SECTIONS={};
+var UNITS=['A','Bright','Bleft','G1','G2'];
+var KEYS=UNITS;                 /* כינוי לשמירת תאימות */
+var viewers={};                 /* מציגי תלת־ממד לפי מפתח עזרה */
+var UNITMETA={
+  A:     {fb:'fbA',      help:'A',  try3:'fb.try3.A',      warn:'unit.A.warn'},
+  Bright:{fb:'fbBright', help:'B',  try3:'fb.try3.Bright', warn:'unit.Bright.warn'},
+  Bleft: {fb:'fbBleft',  help:'B',  try3:'fb.try3.Bleft',  warn:'unit.Bleft.warn'},
+  G1:    {fb:'fbG1',     help:'G1', try3:'fb.try3.G1',     warn:'unit.G1.warn'},
+  G2:    {fb:'fbG2',     help:'G2', try3:'fb.try3.G2',     warn:'unit.G2.warn'}
+};
+var attempts={A:0,Bright:0,Bleft:0,G1:0,G2:0};   /* מונה ניסיונות עצמאי לכל יחידה */
+var unitView={};                 /* unit -> {shown, correct, level} */
+var threeDUnlocked=false;        /* התלת־ממד נפתח כשיחידה כלשהי מגיעה לניסיון 2 */
+var lastMissing=null, lastAllCorrect=false;
+
+function openHelp(key){
+  if(key==='G1'){ LAB.open(); var lab=byId('lab'); if(lab) lab.classList.remove('hidden'); return; }
+  var h=byId('help'+key); if(!h) return;
+  h.classList.remove('hidden');
+  if(!viewers[key]) viewers[key]=createViewer(byId('canvas'+key), function(){ return ORIG_H; });
+  var v=viewers[key];
+  if(window.requestAnimationFrame) requestAnimationFrame(function(){ v.render(); });
+  else v.render();
+}
+function hideWarn(){ var w=byId('checkWarn'); if(w){ w.classList.add('hidden'); w.hidden=true; w.textContent=''; } }
+function showWarn(msg){ var w=byId('checkWarn'); if(w){ w.textContent=msg; w.classList.remove('hidden'); w.hidden=false; } }
+function hideCompletion(){ var c=byId('completion'); if(c) c.classList.add('hidden'); }
+function showCompletion(){
+  var c=byId('completion'); if(!c) return;
+  c.classList.remove('hidden');
+  var d=byId('doneMsg'); if(d) d.textContent=T('fb.allCorrect');
+  var tEl=byId('sTime'); if(tEl) tEl.textContent=fmt(Date.now()-startTime);
+}
+function buildWarn(missing){
+  var names=[]; for(var i=0;i<missing.length;i++) names.push(T(UNITMETA[missing[i]].warn));
+  return T('warn.incomplete').replace('{list}', names.join(T('warn.sep')));
+}
+
+/* הצגת המשוב של יחידה אחת לפי מצבה (בינארי + הסלמה לפי מונה) */
+function renderUnit(u){
+  var meta=UNITMETA[u], fb=byId(meta.fb); if(!fb) return;
+  var st=unitView[u];
+  var msg=fb.querySelector('.fb-msg'), help=fb.querySelector('.fb-help');
+  if(!st || !st.shown){ fb.classList.add('hidden'); if(help) help.classList.add('hidden'); return; }
+  fb.classList.remove('hidden');
+  if(st.correct){
+    if(msg){ msg.className='fb-msg ok'; msg.textContent=T('fb.correct'); }   /* "הסעיף נכון." */
+    if(help) help.classList.add('hidden');
+  } else {
+    if(msg){
+      msg.className='fb-msg bad';
+      var key = st.level>=3 ? meta.try3 : (st.level===2 ? 'fb.try2' : 'fb.try1');
+      msg.textContent=T(key);
+    }
+    /* כפתור התלת־ממד ליד כל סעיף שגוי — רק לאחר שהתלת־ממד נפתח (ניסיון 2) */
+    if(help){ if(threeDUnlocked) help.classList.remove('hidden'); else help.classList.add('hidden'); }
+  }
+}
+
+/* בדיקת כל הסעיפים — מונה ניסיונות עצמאי לכל יחידה, ללא חשיפת מספר נכונים */
+function checkAll(){
+  var missing=[], i, u;
+  for(i=0;i<UNITS.length;i++){ u=UNITS[i]; if(!SECTIONS[u].isAnswered()) missing.push(u); }
+  if(missing.length){                       /* לא ניתן לבדוק עד שכל הסעיפים נענו */
+    lastMissing=missing; lastAllCorrect=false;
+    showWarn(buildWarn(missing)); hideCompletion();
+    return;
+  }
+  lastMissing=null; hideWarn();
+  var allOk=true;
+  for(i=0;i<UNITS.length;i++){ u=UNITS[i];
+    if(SECTIONS[u].isCorrect()){
+      unitView[u]={shown:true, correct:true, level:0};   /* אל תמנה, אל תחשוף */
+    } else {
+      allOk=false; attempts[u]++;
+      if(attempts[u]>=2) threeDUnlocked=true;
+      var lvl = attempts[u]>=3 ? 3 : attempts[u];        /* 1 / 2 / 3 ומעלה קבוע */
+      unitView[u]={shown:true, correct:false, level:lvl};
+    }
+  }
+  for(i=0;i<UNITS.length;i++) renderUnit(UNITS[i]);       /* רינדור אחרי חישוב נעילת התלת־ממד */
+  lastAllCorrect=allOk;
+  if(allOk) showCompletion(); else hideCompletion();
+}
+
+/* =====================================================================
+   סעיף א — תרשים המספרים
+   ===================================================================== */
+(function(){
+  var stateA = ORIG_H.map(function(row){ return row.map(function(){ return 0; }); });
+  var touched=false, cellsA;
+  function build(){
+    cellsA=makeGrid(byId('gridA'), ROWS, COLS, 'click', function(cell){ cell.textContent='0'; },
+      function(r,c,cell){ touched=true; stateA[r][c]=(stateA[r][c]+1)%4; cell.textContent=stateA[r][c]; });
+  }
+  SECTIONS.A={
+    name:'א', helpType:'3d',
+    isAnswered:function(){ return touched; },
+    isCorrect:function(){ return gridsEqual(stateA, ORIG_H); },
+    reset:function(){
+      for(var r=0;r<ROWS;r++) for(var c=0;c<COLS;c++){ stateA[r][c]=0; cellsA[r][c].textContent='0'; }
+      touched=false;
+    }
+  };
+  build();
+})();
+
+/* =====================================================================
+   סעיף ב — מבט מימין + מבט משמאל
+   ===================================================================== */
+(function(){
+  var R=3, C=4;
+  function blank(){ var g=[]; for(var r=0;r<R;r++){ g[r]=[]; for(var c=0;c<C;c++) g[r][c]=0; } return g; }
+  var stRight=blank(), stLeft=blank(), tR=false, tL=false;
+  function init(cell){ cell.className='cell empty'; }
+  function build(){
+    makeGrid(byId('gridRight'), R, C, 'click', init, function(r,c,cell){
+      tR=true; stRight[r][c]=stRight[r][c]?0:1; cell.className='cell '+(stRight[r][c]?'fill':'empty'); });
+    makeGrid(byId('gridLeft'),  R, C, 'click', init, function(r,c,cell){
+      tL=true; stLeft[r][c]=stLeft[r][c]?0:1;  cell.className='cell '+(stLeft[r][c]?'fill':'empty'); });
+  }
+  SECTIONS.Bright={
+    isAnswered:function(){ return tR; },
+    isCorrect:function(){ return gridsEqual(stRight, rightView(ORIG_H)); }
+  };
+  SECTIONS.Bleft={
+    isAnswered:function(){ return tL; },
+    isCorrect:function(){ return gridsEqual(stLeft, leftView(ORIG_H)); }
+  };
+  build();
+})();
+
+/* =====================================================================
+   סעיף ג(1) — סביבת חקר: הסרת מרב הקוביות בלי לשנות את המבט מלמעלה
+   ===================================================================== */
+var LAB = (function(){
+  var H=clone(ORIG_H);
+  var history=[];
+  var cells, viewsBox, opened=false;
+  var labViewer=null, busy=false;
+
+  function removed(){ return totalCubes(ORIG_H)-totalCubes(H); }
+  function left(){ return totalCubes(H); }
+
+  function renderNums(){
+    for(var r=0;r<ROWS;r++) for(var c=0;c<COLS;c++){
+      var cell=cells[r][c];
+      cell.textContent=H[r][c];
+      var emptiedOccupied = (ORIG_H[r][c]>0 && H[r][c]===0);
+      cell.className='cell'+(emptiedOccupied?' zerohi':'');
+    }
+  }
+  function renderCounters(){
+    byId('cRemoved').textContent=removed();
+    byId('cLeft').textContent=left();
+  }
+  function renderStatus(){
+    var same=topUnchanged(H);
+    var s=byId('topStatus');
+    s.className='status '+(same?'same':'diff');
+    s.textContent=T(same?'lab.topSame':'lab.topDiff');
+  }
+  function renderViews(){
+    viewsBox.innerHTML='';
+    viewsBox.appendChild(staticSilhouette(topViewAsGrid(),T('view.top')));
+    viewsBox.appendChild(staticSilhouette(frontView(H),T('view.front')));
+    viewsBox.appendChild(staticSilhouette(rightView(H),T('view.right')));
+    viewsBox.appendChild(staticSilhouette(leftView(H),T('view.left')));
+  }
+  function topViewAsGrid(){ return topView(H); }
+
+  function renderAll(){ if(!opened) return; renderNums(); renderCounters(); renderStatus(); renderViews(); if(window.__redraw3d) window.__redraw3d(); }
+
+  /* הסרה עם אנימציה — ניתן להסיר רק את הקובייה העליונה הנגישה של כל ערימה */
+  function commitRemove(r,c){ H[r][c]--; history.push([r,c]); busy=false; renderAll(); }
+  function requestRemove(r,c){
+    if(busy) return;
+    if(H[r][c]<=0) return;                 /* אין מה להסיר — מניעת מבנה לא חוקי */
+    var level=H[r][c]-1;                    /* תמיד הקובייה העליונה: אין קובייה מעליה */
+    if(labViewer && labViewer.animateRemove){
+      busy=true;
+      labViewer.animateRemove(r,c,level,function(){ commitRemove(r,c); });
+    } else { H[r][c]--; history.push([r,c]); renderAll(); }
+  }
+  function undo(){ if(busy) return; if(history.length){ var p=history.pop(); H[p[0]][p[1]]++; renderAll(); } }
+  function reset(){ if(busy) return; H=clone(ORIG_H); history=[]; renderAll(); }
+
+  function open(){
+    if(opened) return; opened=true;
+    byId('lab').classList.remove('hidden');
+    viewsBox=byId('labViews');
+    cells=makeGrid(byId('gridLab'), ROWS, COLS, 'click mini-num',
+      function(cell){ cell.textContent='0'; },
+      function(r,c){ requestRemove(r,c); });
+    labViewer=createViewer(byId('labCanvas'), function(){ return H; },
+      { pickable:true, onPick:requestRemove });
+    window.__redraw3d=function(){ if(labViewer) labViewer.render(); };
+    byId('labUndo').addEventListener('click', undo);
+    byId('labReset').addEventListener('click', reset);
+    renderAll();
+    if(labViewer) labViewer.render();
+  }
+  return { open:open, getH:function(){ return H; }, removed:removed, left:left, reset:reset,
+    refresh:function(){ if(opened) renderAll(); } };
+})();
+
+(function(){
+  SECTIONS.G1={
+    name:'ג(1)', helpType:'lab',
+    isAnswered:function(){ var v=byId('inpG1').value; return v!=='' && v!=null && !isNaN(parseInt(v,10)); },
+    isCorrect:function(){ return parseInt(byId('inpG1').value,10)===maxRemoval(); },   /* 5 */
+    reset:function(){ byId('inpG1').value=''; if(LAB && LAB.reset) LAB.reset(); }
+  };
+})();
+
+/* =====================================================================
+   סעיף ג(2) — כמה קוביות נשארו
+   ===================================================================== */
+(function(){
+  SECTIONS.G2={
+    name:'ג(2)', helpType:'3d',
+    isAnswered:function(){ var v=byId('inpG2').value; return v!=='' && v!=null && !isNaN(parseInt(v,10)); },
+    isCorrect:function(){ return parseInt(byId('inpG2').value,10)===(totalCubes(ORIG_H)-maxRemoval()); }, /* 10 */
+    reset:function(){ byId('inpG2').value=''; }
+  };
+})();
+
+/* =====================================================================
+   חיווט ממשק: כפתור "בדוק תשובות" יחיד, כפתורי עזרה/נסה-שוב, וכלי התלת־ממד
+   ===================================================================== */
+function wireUI(){
+  var chk=byId('checkAllBtn'); if(chk) chk.addEventListener('click', checkAll);
+
+  var langBtns=document.querySelectorAll('[data-lang]');
+  for(var L=0;L<langBtns.length;L++)(function(b){
+    b.addEventListener('click',function(){ applyLang(b.getAttribute('data-lang')); });
+  })(langBtns[L]);
+
+  var helpBtns=document.querySelectorAll('[data-help]');
+  for(var i=0;i<helpBtns.length;i++)(function(b){
+    b.addEventListener('click',function(){ openHelp(b.getAttribute('data-help')); });
+  })(helpBtns[i]);
+
+  /* כלי מציגי התלת־ממד של סעיפי העזרה */
+  var vt=document.querySelectorAll('[data-vk]');
+  for(var k=0;k<vt.length;k++)(function(b){
+    b.addEventListener('click',function(){
+      var key=b.getAttribute('data-vk'), v=b.getAttribute('data-v'), vw=viewers[key];
+      if(!vw) return;
+      if(v==='reset') vw.examView();
+      else if(v==='zin') vw.zoomBy(1.15);
+      else if(v==='zout') vw.zoomBy(0.87);
+    });
+  })(vt[k]);
+}
+
+/* =====================================================================
+   מציג תלת־ממד (Canvas, איזומטרי) — סיבוב, זום, איפוס, חץ מבט מלפנים
+   ===================================================================== */
+function createViewer(canvas, getH, opts){
+  opts=opts||{};
+  var ctx = (canvas && canvas.getContext) ? canvas.getContext('2d') : null;
+  if(!ctx) return { render:function(){}, reset:function(){}, examView:function(){},
+    zoomBy:function(){}, setDebug:function(){}, animateRemove:function(r,c,l,cb){ if(cb)cb(); } };
+
+  /* --- זווית "תצוגת בחינה": איזומטרית כמו בתמונת הבגרות ---
+     yaw=45°  → עמודה 0 בשמאל, עמודה 2 בימין (ללא היפוך)
+     pitch≈35° → השורה הקדמית קרובה (למטה), השורה האחורית רחוקה (למעלה) */
+  var EXAM_YAW=Math.PI/4, EXAM_PITCH=0.6155, EXAM_ZOOM=1;   /* איזומטרי אמיתי: 45° / ~35.26° */
+  var yaw=EXAM_YAW, pitch=EXAM_PITCH, zoom=EXAM_ZOOM;
+  var scale=1, cx=0, cy=0;
+  var lastFaces=[];      /* לפענוח לחיצה (picking) */
+  var anim=null;         /* {r,c,level,t0,dur} אנימציית הסרה */
+  var debug=false;       /* מצב בדיקה: צירים ומספור */
+
+  function now(){ return (window.performance&&performance.now)?performance.now():Date.now(); }
+  function dims(){
+    var dpr=window.devicePixelRatio||1;
+    var w=canvas.clientWidth||520, h=canvas.clientHeight||300;
+    canvas.width=Math.round(w*dpr); canvas.height=Math.round(h*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    return {w:w,h:h};
+  }
+  /* הקרנה לא־מוקטנת (סיבוב בלבד) — הסקלה והמרכוז מתווספים אחר־כך */
+  function proj(X,Y,Z){
+    var cyw=Math.cos(yaw), syw=Math.sin(yaw);
+    var x1=X*cyw - Z*syw, z1=X*syw + Z*cyw;
+    var cp=Math.cos(pitch), sp=Math.sin(pitch);
+    var y2=Y*cp - z1*sp, z2=Y*sp + z1*cp;
+    return { x:x1, y:y2, depth:z2 };
+  }
+  function toScreen(p){ return { x:cx + p.x*scale, y:cy - p.y*scale, depth:p.depth }; }
+
+  var FACES=[
+    {v:[[0,1,0],[1,1,0],[1,1,1],[0,1,1]], ax:'top'},
+    {v:[[0,0,0],[1,0,0],[1,0,1],[0,0,1]], ax:'bot'},
+    {v:[[0,0,1],[1,0,1],[1,1,1],[0,1,1]], ax:'z'},
+    {v:[[0,0,0],[1,0,0],[1,1,0],[0,1,0]], ax:'z'},
+    {v:[[1,0,0],[1,0,1],[1,1,1],[1,1,0]], ax:'x'},
+    {v:[[0,0,0],[0,0,1],[0,1,1],[0,1,0]], ax:'x'}
+  ];
+  /* גוונים תואמים לציור הבגרות (אפור): פאות חזית/אחור (z) בהירות,
+     פאות ימין/שמאל (x) כהות, פאה עליונה כמעט לבנה */
+  var COLOR={top:'#f2f2f2', bot:'#9a9a9a', z:'#bdbdbd', x:'#777777'};
+
+  function arrowPts(zfront){
+    /* חץ "מבט מלפנים" — מונח על המשטח לפני המבנה ומצביע אל החזית (כמו במקור) */
+    var X0=-0.55, Zt=zfront+1.45, Zh=zfront+0.45, b=0.32;
+    return {
+      tail:proj(X0,0,Zt), head:proj(X0,0,Zh),
+      bl:proj(X0+b,0,Zh+b), br:proj(X0-b,0,Zh+b)
+    };
+  }
+
+  function build(H){
+    var ox=(COLS-1)/2, oz=(ROWS-1)/2;
+    var faces=[], raw=[];
+    for(var r=0;r<ROWS;r++) for(var c=0;c<COLS;c++){
+      var hgt=H[r][c];
+      for(var L=0;L<hgt;L++){
+        for(var f=0;f<FACES.length;f++){
+          var face=FACES[f], quad=[], dsum=0;
+          for(var k=0;k<4;k++){
+            var vx=(c-ox)+face.v[k][0], vy=L+face.v[k][1], vz=(r-oz)+face.v[k][2];
+            var p=proj(vx,vy,vz); quad.push(p); raw.push(p); dsum+=p.depth;
+          }
+          faces.push({quad:quad, depth:dsum/4, color:COLOR[face.ax], r:r, c:c, L:L});
+        }
+      }
+    }
+    var arr=arrowPts((ROWS-1)-oz);
+    raw.push(arr.tail,arr.head,arr.bl,arr.br);
+    var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;
+    for(var i=0;i<raw.length;i++){ var q=raw[i];
+      if(q.x<minX)minX=q.x; if(q.x>maxX)maxX=q.x; if(q.y<minY)minY=q.y; if(q.y>maxY)maxY=q.y; }
+    if(raw.length===0){ minX=maxX=minY=maxY=0; }
+    return { faces:faces, arrow:arr, bb:{minX:minX,maxX:maxX,minY:minY,maxY:maxY} };
+  }
+
+  function render(){
+    var d=dims(); var w=d.w, h=d.h;
+    ctx.clearRect(0,0,w,h);
+    var H=getH();
+    var sc=build(H);
+    var bw=Math.max(0.001, sc.bb.maxX-sc.bb.minX), bh=Math.max(0.001, sc.bb.maxY-sc.bb.minY);
+    var fit=Math.min(w*0.84/bw, h*0.84/bh);
+    scale=fit*zoom;
+    var ccx=(sc.bb.minX+sc.bb.maxX)/2, ccy=(sc.bb.minY+sc.bb.maxY)/2;
+    cx=w/2 - ccx*scale; cy=h/2 + ccy*scale;
+
+    sc.faces.sort(function(a,b){ return a.depth-b.depth; });   /* רחוק→קרוב: מצלמה מלפנים-ימין-מעל */
+    lastFaces=[];
+    var pr = anim ? Math.min(1,(now()-anim.t0)/anim.dur) : 0;
+    for(var i=0;i<sc.faces.length;i++){
+      var fc=sc.faces[i];
+      var P=[toScreen(fc.quad[0]),toScreen(fc.quad[1]),toScreen(fc.quad[2]),toScreen(fc.quad[3])];
+      var alpha=1, drop=0;
+      var isAnim = anim && fc.r===anim.r && fc.c===anim.c && fc.L===anim.level;
+      if(isAnim){ alpha=1-pr; drop=pr*scale*0.55; }   /* דהייה + נפילה קצרה */
+      ctx.globalAlpha=alpha;
+      ctx.beginPath(); ctx.moveTo(P[0].x,P[0].y+drop);
+      for(var j=1;j<4;j++) ctx.lineTo(P[j].x,P[j].y+drop);
+      ctx.closePath();
+      ctx.fillStyle=fc.color; ctx.fill();
+      ctx.lineWidth=1.3; ctx.strokeStyle='#3a3a3a'; ctx.stroke();
+      if(!isAnim) lastFaces.push({poly:P, r:fc.r, c:fc.c, depth:fc.depth});
+    }
+    ctx.globalAlpha=1;
+    drawArrow(sc.arrow);
+    if(debug) drawDebug();
+  }
+  function drawArrow(a){
+    var t=toScreen(a.tail), hd=toScreen(a.head), bl=toScreen(a.bl), br=toScreen(a.br);
+    ctx.lineWidth=3; ctx.strokeStyle='#16263f'; ctx.lineCap='round';
+    ctx.beginPath(); ctx.moveTo(t.x,t.y); ctx.lineTo(hd.x,hd.y); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(hd.x,hd.y); ctx.lineTo(bl.x,bl.y); ctx.lineTo(br.x,br.y);
+    ctx.closePath(); ctx.fillStyle='#16263f'; ctx.fill();
+  }
+
+  function examView(){ yaw=EXAM_YAW; pitch=EXAM_PITCH; zoom=EXAM_ZOOM; render(); }
+  function zoomBy(f){ zoom=Math.max(0.5,Math.min(2.4, zoom*f)); render(); }
+  function setDebug(b){ debug=!!b; render(); }
+
+  /* מצב בדיקה: צירי X(עמודות)/Z(שורות)/Y(גובה), מספור, וסימון התא (0,0) */
+  function drawDebug(){
+    var ox=(COLS-1)/2, oz=(ROWS-1)/2;
+    function S(X,Y,Z){ return toScreen(proj(X,Y,Z)); }
+    ctx.save();
+    ctx.font='bold 12px system-ui,Arial'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    var O=[-ox,0,-oz];
+    function axis(to,color,label){
+      var a=S(O[0],O[1],O[2]), b=S(to[0],to[1],to[2]);
+      ctx.strokeStyle=color; ctx.fillStyle=color; ctx.lineWidth=2.5;
+      ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+      ctx.beginPath(); ctx.arc(b.x,b.y,3,0,6.2832); ctx.fill();
+      ctx.fillText(label, b.x, b.y-11);
+    }
+    axis([-ox+COLS,0,-oz], '#d23b3b', 'X · עמודות');   /* +עמודה (ימינה) */
+    axis([-ox,0,-oz+ROWS], '#1b9e57', 'Z · שורות');    /* +שורה (קדימה) */
+    axis([-ox,MAXH+0.6,-oz], '#1e63d0', 'Y · גובה');   /* +גובה (למעלה) */
+    ctx.fillStyle='#13243d';
+    for(var c=0;c<COLS;c++){ var p=S(c-ox+0.5,0,(ROWS-1-oz)+1.3); ctx.fillText('עמ׳'+c, p.x,p.y); }
+    for(var r=0;r<ROWS;r++){ var q=S(-ox-1.0,0,r-oz+0.5); ctx.fillText('ש׳'+r, q.x,q.y); }
+    var m=S(0-ox+0.5,0,0-oz+0.5);
+    ctx.fillStyle='rgba(210,59,59,.9)'; ctx.beginPath(); ctx.arc(m.x,m.y,9,0,6.2832); ctx.fill();
+    ctx.fillStyle='#fff'; ctx.font='bold 10px system-ui,Arial'; ctx.fillText('0,0', m.x,m.y);
+    ctx.restore();
+  }
+
+  /* פענוח לחיצה: מאתר את הקובייה הקרובה ביותר תחת הסמן ומחזיר (r,c) */
+  function pickAt(px,py){
+    for(var i=lastFaces.length-1;i>=0;i--){   /* קרוב→רחוק */
+      if(pointIn(lastFaces[i].poly, px, py)) return {r:lastFaces[i].r, c:lastFaces[i].c};
+    }
+    return null;
+  }
+  function pointIn(poly, x, y){
+    var inside=false;
+    for(var i=0,j=3;i<4;j=i++){
+      var xi=poly[i].x, yi=poly[i].y, xj=poly[j].x, yj=poly[j].y;
+      if(((yi>y)!==(yj>y)) && (x < (xj-xi)*(y-yi)/((yj-yi)||1e-9)+xi)) inside=!inside;
+    }
+    return inside;
+  }
+
+  /* אנימציית הסרה ואז callback להחלת ההסרה */
+  function animateRemove(r,c,level,onDone){
+    anim={r:r,c:c,level:level,t0:now(),dur:200};
+    var raf=window.requestAnimationFrame||function(fn){ return setTimeout(function(){ fn(now()); },16); };
+    function step(){ render();
+      if(now()-anim.t0 < anim.dur) raf(step);
+      else { anim=null; render(); if(onDone) onDone(); }
+    }
+    raf(step);
+  }
+
+  /* אינטראקציה: גרירה=סיבוב, הקשה=לחיצה על קובייה */
+  var dragging=false, moved=false, lx=0, ly=0, dx0=0, dy0=0;
+  function local(e){ var rc=canvas.getBoundingClientRect?canvas.getBoundingClientRect():{left:0,top:0};
+    return { x:e.clientX-rc.left, y:e.clientY-rc.top }; }
+  canvas.addEventListener('pointerdown',function(e){ dragging=true; moved=false;
+    lx=e.clientX; ly=e.clientY; dx0=e.clientX; dy0=e.clientY;
+    if(canvas.setPointerCapture) canvas.setPointerCapture(e.pointerId); });
+  canvas.addEventListener('pointermove',function(e){ if(!dragging) return;
+    if(Math.abs(e.clientX-dx0)+Math.abs(e.clientY-dy0)>6) moved=true;
+    yaw+=(e.clientX-lx)*0.01; pitch+=(e.clientY-ly)*0.01;
+    pitch=Math.max(0.18,Math.min(1.35,pitch)); lx=e.clientX; ly=e.clientY; render(); });
+  function up(e){
+    if(dragging && !moved && opts.pickable && opts.onPick){
+      var p=local(e); var hit=pickAt(p.x,p.y); if(hit) opts.onPick(hit.r,hit.c);
+    }
+    dragging=false;
+  }
+  canvas.addEventListener('pointerup',up); canvas.addEventListener('pointercancel',function(){ dragging=false; });
+  canvas.addEventListener('pointerleave',function(){ dragging=false; });
+  canvas.addEventListener('wheel',function(e){ e.preventDefault(); zoomBy(e.deltaY<0?1.1:0.9); }, {passive:false});
+  if(window.addEventListener) window.addEventListener('resize', render);
+
+  return { render:render, reset:examView, examView:examView, zoomBy:zoomBy, setDebug:setDebug, animateRemove:animateRemove };
+}
+
+/* =====================================================================
+   טיימר
+   ===================================================================== */
+var startTime=Date.now(), frozen=null;
+function fmt(ms){ var s=Math.floor(ms/1000); var m=Math.floor(s/60); s=s%60;
+  return (m<10?'0':'')+m+':'+(s<10?'0':'')+s; }
+function tickTimer(){
+  if(frozen!=null) return;
+  var t=byId('timer');
+  if(t) t.innerHTML='<small>'+T('ui.timeLabel')+'</small> '+fmt(Date.now()-startTime);
+}
+
+/* =====================================================================
+   אתחול
+   ===================================================================== */
+function init(){
+  /* תמונת המבנה (Base64) */
+  var img=byId('structImg'); if(img) img.src='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAkACQAAD/4QEyRXhpZgAATU0AKgAAAAgABwEOAAIAAAALAAAAYgESAAMAAAABAAEAAAEaAAUAAAABAAAAbgEbAAUAAAABAAAAdgEoAAMAAAABAAIAAAEyAAIAAAAUAAAAfodpAAQAAAABAAAAkgAAAABTY3JlZW5zaG90AAAAAACQAAAAAQAAAJAAAAABMjAyNjowNjoyOCAxOToxNTowMgAACZAAAAcAAAAEMDIyMZADAAIAAAAUAAABBJEBAAcAAAAEAQIDAJKGAAcAAAASAAABGKAAAAcAAAAEMDEwMKABAAMAAAAB//8AAKACAAQAAAABAAAB7aADAAQAAAABAAAB1aQGAAMAAAABAAAAAAAAAAAyMDI2OjA2OjI4IDE5OjE1OjAyAEFTQ0lJAAAAU2NyZWVuc2hvdP/tAG5QaG90b3Nob3AgMy4wADhCSU0EBAAAAAAANhwBWgADGyVHHAIAAAIAAhwCeAAKU2NyZWVuc2hvdBwCPAAGMTkxNTAyHAI3AAgyMDI2MDYyODhCSU0EJQAAAAAAEPZnmO0CNCh+H4upMRAI/dT/4gIoSUNDX1BST0ZJTEUAAQEAAAIYYXBwbAQAAABtbnRyUkdCIFhZWiAH5gABAAEAAAAAAABhY3NwQVBQTAAAAABBUFBMAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWFwcGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApkZXNjAAAA/AAAADBjcHJ0AAABLAAAAFB3dHB0AAABfAAAABRyWFlaAAABkAAAABRnWFlaAAABpAAAABRiWFlaAAABuAAAABRyVFJDAAABzAAAACBjaGFkAAAB7AAAACxiVFJDAAABzAAAACBnVFJDAAABzAAAACBtbHVjAAAAAAAAAAEAAAAMZW5VUwAAABQAAAAcAEQAaQBzAHAAbABhAHkAIABQADNtbHVjAAAAAAAAAAEAAAAMZW5VUwAAADQAAAAcAEMAbwBwAHkAcgBpAGcAaAB0ACAAQQBwAHAAbABlACAASQBuAGMALgAsACAAMgAwADIAMlhZWiAAAAAAAAD21QABAAAAANMsWFlaIAAAAAAAAIPfAAA9v////7tYWVogAAAAAAAASr8AALE3AAAKuVhZWiAAAAAAAAAoOAAAEQsAAMi5cGFyYQAAAAAAAwAAAAJmZgAA8qcAAA1ZAAAT0AAACltzZjMyAAAAAAABDEIAAAXe///zJgAAB5MAAP2Q///7ov///aMAAAPcAADAbv/AABEIAdUB7QMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2wBDAAICAgICAgMCAgMFAwMDBQYFBQUFBggGBgYGBggKCAgICAgICgoKCgoKCgoMDAwMDAwODg4ODg8PDw8PDw8PDw//2wBDAQIDAwQEBAcEBAcQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/3QAEAB//2gAMAwEAAhEDEQA/AP38ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA//Q/fyiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/9H9/KKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiq1xdW1nEZ7uVYYkGSzkKAB3JNAFmuA8efErwh8OdMfVPFWoxWSBcqsjbS/sPevmH4tftZ2Wl6kfA3wwtW1vxHMdq4RmgGeMmRQQK5DwL+zH4x+IWqL40+PV+9zJKRINLLiW3jzyAB29aAOW1/8AaX+O/wAQNSk1H4MeH5LXRNOJaVruASfaUTgiIjHJHIr3b4Q/tW+GfGLp4c8axN4a1+P5GhvCIzKw6lFHYnpX1FoXhzRvDenRaVotolraxABUQAAYrwz4ufs2eCPidHJfpCNM1tRmO9hAEqkcjB7cigD6MR43QOhBU9COlSV+ZOn/ABB+M/7L98ml/EaCXXfCakLHqAzPcbRxyqgkV93fD74o+EPiRo8WreHL1JFkUHy2IEg47pnIoA9IooHFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB/9L9/KKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKTIx9Ky9W1jS9CspNR1e5S0tYgS0khwoAGck18KfEb9qbXPE+qP4F+BmnyajqEpKG/KCW0QE4PIwQc/yoA+nvil8bPAvwn0w3viS/SOVgfKjBBLkdBx05r4qnvvjv8AtTagbawE3hDwgxw+Rn7TEeCAeoyBkGvSfhV+yfK2pr45+Mt8+ua9MfMaAuXtEOOixvnA4H419v2Gn2emWyWenwJbwRjCogAAHsBjFAHjPwk+AXgP4S6asGhWSm6kAMsrfMXbucnpXugGAO2KUcUUAFFFFAGTqui6drdpJY6nAk8MgIIdQeD25FfBnj79ljX/AAPq8vjv4BX7aNeA+ZNar84nGclQDwMn04FfoTSHPagD4Y+GH7WUSajH4J+MVk3hzXFOxTLz55HG4dhk19u2l7a3sCXFpKssbjIKkEEV5J8UPgd4G+KemyWutWYiuTytzCAk6n2fGR+FfFCwfHP9lO+zF5nijwSGyI1DTXYTvljx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vynatpaENIhPQkHHBryxvGfxa/aL1N9B+F9lJpvh7O2a8kVoJQp6FcgZ/Cvsv4Nfst+CvhjEmp36f2xrj4Z7u4AMgbrgH0B6UAfL3gT9m74jfG6/g8XfG28a10skSQ2ERaKRB1CyDofQj0r9GPCPgjw14J0yPS/DtjFaRRqF+RACceuMZrq1XaMAY/T+VSUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAH//0v38ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAQ/SvD/i78Avh/8AGHSmsPE2nxvKoPlSgbSpPfjHSvcaKAPyW1Twt8c/2Y70m1Mvi3wohyFACC2i9OBk7QPxr374efGnwX8RdN+1abeKlxGB5sT/AClCeo5weK+3r2xtNQt2tLyFZ4XGCrgFSPpXxN8WP2J/BfjfU/7e8M3dxoV6T8y2spgiIbg5CDk46UAeZ/Ef9o2x0y9PhP4e2h8QeIXIUW8eQATwDkcU34ffsp+K/ihqEPjP4/XbXseRJFpr8CLuoJXGce9fVvwg/Zv8AfCOxRdMtze32Mtc3OJJc+znmvoUDAwBgDpQBh6B4c0fwzpkGkaLbJbW1uAqKoAwBW9RRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAH//0/38ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA//U/fyiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/9k=';
+
+  wireUI();
+  applyLang('he');
+
+  /* טיימר */
+  tickTimer();
+  if(window.setInterval) setInterval(tickTimer, 1000);
+}
+
+/* חשיפת פונקציות־ליבה לבדיקת ריצה (Node DOM stub) */
+if(typeof window!=='undefined'){
+  window.__SIM={ ORIG_H:ORIG_H, colMax:colMax, rowMax:rowMax, topView:topView,
+    frontView:frontView, rightView:rightView, leftView:leftView,
+    totalCubes:totalCubes, gridsEqual:gridsEqual, maxRemoval:maxRemoval,
+    countFootprint:countFootprint, silhouette:silhouette, LAB:LAB, SECTIONS:SECTIONS,
+    checkAll:checkAll, KEYS:KEYS, UNITS:UNITS, applyLang:applyLang, T:T, I18N:I18N,
+    attempts:attempts, unitView:function(){ return unitView; },
+    is3D:function(){ return threeDUnlocked; },
+    getLang:function(){ return LANG; } };
+}
+
+if(typeof document!=='undefined' && document.addEventListener){
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+}
+</script>
+<script src="../../assets/lab-shell.js" data-portal-href="../../../index.html#labs"></script>
+</body>
+</html>

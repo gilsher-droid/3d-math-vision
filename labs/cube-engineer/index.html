@@ -1,0 +1,2148 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="app_title">מהנדס הקוביות - רמת בגרות</title>
+    <script src="../assets/vendor/three-r128/three.min.js"></script>
+    <script src="../assets/vendor/three-r128/OrbitControls.js"></script>
+    <link rel="stylesheet" href="../assets/lab-shell.css">
+    <!-- Compiled Tailwind utilities (self-contained, no CDN) -->
+    <style>
+/* Tailwind v3 base (preflight) */
+*,::before,::after{box-sizing:border-box;border-width:0;border-style:solid;border-color:currentColor}
+::before,::after{--tw-content:''}
+html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4}
+body{margin:0;line-height:inherit}
+hr{height:0;color:inherit;border-top-width:1px}
+h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}
+a{color:inherit;text-decoration:inherit}
+b,strong{font-weight:bolder}
+blockquote,dl,dd,h1,h2,h3,h4,h5,h6,hr,figure,p,pre{margin:0}
+ol,ul,menu{list-style:none;margin:0;padding:0}
+button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;color:inherit;margin:0;padding:0}
+button,select{text-transform:none}
+button,[type=button],[type=reset],[type=submit]{-webkit-appearance:button;background-color:transparent;background-image:none}
+button,[role=button]{cursor:pointer}
+:disabled{cursor:default}
+img,svg,video,canvas,audio,iframe,embed,object{display:block;vertical-align:middle}
+img,video{max-width:100%;height:auto}
+[hidden]{display:none}
+*,::before,::after{--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }
+@keyframes ping{75%,100%{transform:scale(2);opacity:0}}
+/* utilities */
+.block{display:block}
+.inline-block{display:inline-block}
+.flex{display:flex}
+.grid{display:grid}
+.hidden{display:none}
+.from-emerald-600{--tw-gradient-from:rgb(5 150 105) var(--tw-gradient-from-position);--tw-gradient-to:rgb(5 150 105 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+.from-indigo-400{--tw-gradient-from:rgb(129 140 248) var(--tw-gradient-from-position);--tw-gradient-to:rgb(129 140 248 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+.from-indigo-600{--tw-gradient-from:rgb(79 70 229) var(--tw-gradient-from-position);--tw-gradient-to:rgb(79 70 229 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+.from-slate-900{--tw-gradient-from:rgb(15 23 42) var(--tw-gradient-from-position);--tw-gradient-to:rgb(15 23 42 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+.from-slate-950{--tw-gradient-from:rgb(2 6 23) var(--tw-gradient-from-position);--tw-gradient-to:rgb(2 6 23 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+.hover\:from-emerald-500:hover{--tw-gradient-from:rgb(16 185 129) var(--tw-gradient-from-position);--tw-gradient-to:rgb(16 185 129 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+.hover\:from-indigo-500:hover{--tw-gradient-from:rgb(99 102 241) var(--tw-gradient-from-position);--tw-gradient-to:rgb(99 102 241 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+.via-slate-800{--tw-gradient-to:rgb(30 41 59 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),rgb(30 41 59) var(--tw-gradient-via-position),var(--tw-gradient-to)}
+.hover\:to-cyan-400:hover{--tw-gradient-to:rgb(34 211 238) var(--tw-gradient-to-position)}
+.hover\:to-indigo-400:hover{--tw-gradient-to:rgb(129 140 248) var(--tw-gradient-to-position)}
+.to-cyan-300{--tw-gradient-to:rgb(103 232 249) var(--tw-gradient-to-position)}
+.to-cyan-500{--tw-gradient-to:rgb(6 182 212) var(--tw-gradient-to-position)}
+.to-emerald-500{--tw-gradient-to:rgb(16 185 129) var(--tw-gradient-to-position)}
+.to-indigo-500{--tw-gradient-to:rgb(99 102 241) var(--tw-gradient-to-position)}
+.to-indigo-950{--tw-gradient-to:rgb(30 27 75) var(--tw-gradient-to-position)}
+.to-slate-900{--tw-gradient-to:rgb(15 23 42) var(--tw-gradient-to-position)}
+.\[writing-mode\:vertical-lr\]{writing-mode:vertical-lr}
+.absolute{position:absolute}
+.active\:cursor-grabbing:active{cursor:grabbing}
+.active\:scale-95:active{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+.animate-ping{animation:ping 1s cubic-bezier(0,0,0.2,1) infinite}
+.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}
+.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}
+.backdrop-blur-xl{--tw-backdrop-blur:blur(24px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}
+.bg-amber-500{background-color:rgb(245 158 11)}
+.bg-blue-600{background-color:rgb(37 99 235)}
+.bg-clip-text{-webkit-background-clip:text;background-clip:text}
+.bg-cyan-600\/90{background-color:rgb(8 145 178 / 0.9)}
+.bg-emerald-900\/50{background-color:rgb(6 78 59 / 0.5)}
+.bg-emerald-950\/80{background-color:rgb(2 44 34 / 0.8)}
+.bg-gradient-to-b{background-image:linear-gradient(to bottom,var(--tw-gradient-stops))}
+.bg-gradient-to-br{background-image:linear-gradient(to bottom right,var(--tw-gradient-stops))}
+.bg-gradient-to-l{background-image:linear-gradient(to left,var(--tw-gradient-stops))}
+.bg-indigo-500{background-color:rgb(99 102 241)}
+.bg-indigo-600{background-color:rgb(79 70 229)}
+.bg-indigo-600\/20{background-color:rgb(79 70 229 / 0.2)}
+.bg-indigo-600\/90{background-color:rgb(79 70 229 / 0.9)}
+.bg-indigo-900\/30{background-color:rgb(49 46 129 / 0.3)}
+.bg-indigo-900\/40{background-color:rgb(49 46 129 / 0.4)}
+.bg-indigo-950\/80{background-color:rgb(30 27 75 / 0.8)}
+.bg-orange-500{background-color:rgb(249 115 22)}
+.bg-purple-500{background-color:rgb(168 85 247)}
+.bg-red-500{background-color:rgb(239 68 68)}
+.bg-red-900\/50{background-color:rgb(127 29 29 / 0.5)}
+.bg-rose-950\/80{background-color:rgb(76 5 25 / 0.8)}
+.bg-slate-700{background-color:rgb(51 65 85)}
+.bg-slate-700\/40{background-color:rgb(51 65 85 / 0.4)}
+.bg-slate-700\/80{background-color:rgb(51 65 85 / 0.8)}
+.bg-slate-700\/90{background-color:rgb(51 65 85 / 0.9)}
+.bg-slate-800{background-color:rgb(30 41 59)}
+.bg-slate-800\/60{background-color:rgb(30 41 59 / 0.6)}
+.bg-slate-800\/80{background-color:rgb(30 41 59 / 0.8)}
+.bg-slate-800\/90{background-color:rgb(30 41 59 / 0.9)}
+.bg-slate-900{background-color:rgb(15 23 42)}
+.bg-slate-900\/50{background-color:rgb(15 23 42 / 0.5)}
+.bg-slate-900\/60{background-color:rgb(15 23 42 / 0.6)}
+.bg-slate-900\/80{background-color:rgb(15 23 42 / 0.8)}
+.bg-slate-900\/90{background-color:rgb(15 23 42 / 0.9)}
+.bg-slate-950\/40{background-color:rgb(2 6 23 / 0.4)}
+.bg-slate-950\/50{background-color:rgb(2 6 23 / 0.5)}
+.bg-slate-950\/80{background-color:rgb(2 6 23 / 0.8)}
+.bg-slate-950\/90{background-color:rgb(2 6 23 / 0.9)}
+.border{border-width:1px}
+.border-2{border-width:2px}
+.border-\[3px\]{border-width:3px}
+.border-amber-300{border-color:rgb(252 211 77)}
+.border-amber-500\/30{border-color:rgb(245 158 11 / 0.3)}
+.border-b{border-bottom-width:1px}
+.border-blue-400{border-color:rgb(96 165 250)}
+.border-cyan-400\/30{border-color:rgb(34 211 238 / 0.3)}
+.border-cyan-800\/50{border-color:rgb(21 94 117 / 0.5)}
+.border-emerald-500{border-color:rgb(16 185 129)}
+.border-emerald-800{border-color:rgb(6 95 70)}
+.border-emerald-800\/50{border-color:rgb(6 95 70 / 0.5)}
+.border-indigo-400{border-color:rgb(129 140 248)}
+.border-indigo-400\/30{border-color:rgb(129 140 248 / 0.3)}
+.border-indigo-500\/30{border-color:rgb(99 102 241 / 0.3)}
+.border-indigo-800\/50{border-color:rgb(55 48 163 / 0.5)}
+.border-orange-300{border-color:rgb(253 186 116)}
+.border-purple-300{border-color:rgb(216 180 254)}
+.border-red-300{border-color:rgb(252 165 165)}
+.border-red-800{border-color:rgb(153 27 27)}
+.border-rose-800\/50{border-color:rgb(159 18 57 / 0.5)}
+.border-slate-500{border-color:rgb(100 116 139)}
+.border-slate-600{border-color:rgb(71 85 105)}
+.border-slate-700{border-color:rgb(51 65 85)}
+.border-slate-700\/50{border-color:rgb(51 65 85 / 0.5)}
+.border-slate-800{border-color:rgb(30 41 59)}
+.border-t{border-top-width:1px}
+.bottom-2{bottom:0.5rem}
+.bottom-3{bottom:0.75rem}
+.cursor-grab{cursor:grab}
+.cursor-pointer{cursor:pointer}
+.duration-300{transition-duration:300ms}
+.fixed{position:fixed}
+.flex-1{flex:1 1 0%}
+.flex-\[2\]{flex:2 2 0%}
+.flex-col{flex-direction:column}
+.flex-grow{flex-grow:1}
+.flex-wrap{flex-wrap:wrap}
+.focus\:border-indigo-500:focus{border-color:rgb(99 102 241)}
+.font-black{font-weight:900}
+.font-bold{font-weight:700}
+.font-semibold{font-weight:600}
+.gap-1{gap:0.25rem}
+.gap-1\.5{gap:0.375rem}
+.gap-2{gap:0.5rem}
+.gap-3{gap:0.75rem}
+.gap-4{gap:1rem}
+.gap-5{gap:1.25rem}
+.gap-6{gap:1.5rem}
+.gap-8{gap:2rem}
+.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
+.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.group:hover .group-hover\:text-slate-300{color:rgb(203 213 225)}
+.h-10{height:2.5rem}
+.h-12{height:3rem}
+.h-14{height:3.5rem}
+.h-2\.5{height:0.625rem}
+.h-6{height:1.5rem}
+.h-8{height:2rem}
+.h-full{height:100%}
+.hover\:bg-amber-400:hover{background-color:rgb(251 191 36)}
+.hover\:bg-cyan-500:hover{background-color:rgb(6 182 212)}
+.hover\:bg-indigo-500:hover{background-color:rgb(99 102 241)}
+.hover\:bg-rose-600:hover{background-color:rgb(225 29 72)}
+.hover\:bg-slate-600:hover{background-color:rgb(71 85 105)}
+.hover\:bg-slate-700:hover{background-color:rgb(51 65 85)}
+.hover\:border-indigo-500\/50:hover{border-color:rgb(99 102 241 / 0.5)}
+.hover\:scale-105:hover{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+.hover\:text-white:hover{color:#fff}
+.inset-0{top:0px;right:0px;bottom:0px;left:0px}
+.items-center{align-items:center}
+.items-stretch{align-items:stretch}
+.justify-between{justify-content:space-between}
+.justify-center{justify-content:center}
+.left-5{left:1.25rem}
+.left-6{left:1.5rem}
+.list-disc{list-style-type:disc}
+.list-inside{list-style-position:inside}
+.max-h-\[90vh\]{max-height:90vh}
+.max-h-\[95vh\]{max-height:95vh}
+.max-w-2xl{max-width:42rem}
+.max-w-3xl{max-width:48rem}
+.max-w-5xl{max-width:64rem}
+.max-w-7xl{max-width:80rem}
+.max-w-\[280px\]{max-width:280px}
+.max-w-lg{max-width:32rem}
+.max-w-sm{max-width:24rem}
+.max-w-xl{max-width:36rem}
+.mb-1{margin-bottom:0.25rem}
+.mb-1\.5{margin-bottom:0.375rem}
+.mb-2{margin-bottom:0.5rem}
+.mb-3{margin-bottom:0.75rem}
+.mb-4{margin-bottom:1rem}
+.mb-5{margin-bottom:1.25rem}
+.mb-6{margin-bottom:1.5rem}
+.mb-8{margin-bottom:2rem}
+.min-h-\[300px\]{min-height:300px}
+.min-h-\[450px\]{min-height:450px}
+.min-h-screen{min-height:100vh}
+.mt-1{margin-top:0.25rem}
+.mt-2{margin-top:0.5rem}
+.mt-3{margin-top:0.75rem}
+.mt-4{margin-top:1rem}
+.mt-5{margin-top:1.25rem}
+.mt-auto{margin-top:auto}
+.mx-auto{margin-left:auto;margin-right:auto}
+.my-4{margin-top:1rem;margin-bottom:1rem}
+.opacity-40{opacity:0.4}
+.outline-none{outline:2px solid transparent;outline-offset:2px}
+.overflow-hidden{overflow:hidden}
+.overflow-x-auto{overflow-x:auto}
+.overflow-x-hidden{overflow-x:hidden}
+.overflow-y-auto{overflow-y:auto}
+.p-2{padding:0.5rem}
+.p-3{padding:0.75rem}
+.p-4{padding:1rem}
+.p-5{padding:1.25rem}
+.p-6{padding:1.5rem}
+.pb-1\.5{padding-bottom:0.375rem}
+.pb-2{padding-bottom:0.5rem}
+.pb-3{padding-bottom:0.75rem}
+.pb-4{padding-bottom:1rem}
+.pointer-events-none{pointer-events:none}
+.pr-2{padding-right:0.5rem}
+.pt-4{padding-top:1rem}
+.px-12{padding-left:3rem;padding-right:3rem}
+.px-2{padding-left:0.5rem;padding-right:0.5rem}
+.px-3{padding-left:0.75rem;padding-right:0.75rem}
+.px-4{padding-left:1rem;padding-right:1rem}
+.px-5{padding-left:1.25rem;padding-right:1.25rem}
+.px-6{padding-left:1.5rem;padding-right:1.5rem}
+.px-8{padding-left:2rem;padding-right:2rem}
+.py-1{padding-top:0.25rem;padding-bottom:0.25rem}
+.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}
+.py-2{padding-top:0.5rem;padding-bottom:0.5rem}
+.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}
+.py-3{padding-top:0.75rem;padding-bottom:0.75rem}
+.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}
+.py-4{padding-top:1rem;padding-bottom:1rem}
+.relative{position:relative}
+.right-3{right:0.75rem}
+.right-4{right:1rem}
+.rounded-2xl{border-radius:1rem}
+.rounded-3xl{border-radius:1.5rem}
+.rounded-full{border-radius:9999px}
+.rounded-lg{border-radius:0.5rem}
+.rounded-xl{border-radius:0.75rem}
+.sticky{position:sticky}
+.text-amber-400{color:rgb(251 191 36)}
+.text-center{text-align:center}
+.text-cyan-300{color:rgb(103 232 249)}
+.text-emerald-200{color:rgb(167 243 208)}
+.text-emerald-300{color:rgb(110 231 183)}
+.text-emerald-400{color:rgb(52 211 153)}
+.text-indigo-100{color:rgb(224 231 255)}
+.text-indigo-300{color:rgb(165 180 252)}
+.text-indigo-400{color:rgb(129 140 248)}
+.text-red-200{color:rgb(254 202 202)}
+.text-right{text-align:right}
+.text-rose-300{color:rgb(253 164 175)}
+.text-slate-100{color:rgb(241 245 249)}
+.text-slate-200{color:rgb(226 232 240)}
+.text-slate-300{color:rgb(203 213 225)}
+.text-slate-400{color:rgb(148 163 184)}
+.text-slate-950{color:rgb(2 6 23)}
+.text-transparent{color:transparent}
+.text-white{color:#fff}
+.top-0{top:0px}
+.top-16{top:4rem}
+.top-5{top:1.25rem}
+.top-6{top:1.5rem}
+.tracking-wider{letter-spacing:0.05em}
+.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4,0,0.2,1);transition-duration:150ms}
+.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(0.4,0,0.2,1);transition-duration:150ms}
+.w-10{width:2.5rem}
+.w-12{width:3rem}
+.w-14{width:3.5rem}
+.w-2\.5{width:0.625rem}
+.w-6{width:1.5rem}
+.w-8{width:2rem}
+.w-full{width:100%}
+.w-max{width:max-content}
+.z-10{z-index:10}
+.z-40{z-index:40}
+.z-50{z-index:50}
+.z-\[100\]{z-index:100}
+.z-\[110\]{z-index:110}
+.z-\[80\]{z-index:80}
+.space-y-1 > :not([hidden]) ~ :not([hidden]){margin-top:0.25rem}
+.space-y-3 > :not([hidden]) ~ :not([hidden]){margin-top:0.75rem}
+.space-y-4 > :not([hidden]) ~ :not([hidden]){margin-top:1rem}
+.space-y-5 > :not([hidden]) ~ :not([hidden]){margin-top:1.25rem}
+.text-2xl{font-size:1.5rem;line-height:2rem}
+.text-3xl{font-size:1.875rem;line-height:2.25rem}
+.text-4xl{font-size:2.25rem;line-height:2.5rem}
+.text-base{font-size:1rem;line-height:1.5rem}
+.text-lg{font-size:1.125rem;line-height:1.75rem}
+.text-sm{font-size:0.875rem;line-height:1.25rem}
+.text-xl{font-size:1.25rem;line-height:1.75rem}
+.text-xs{font-size:0.75rem;line-height:1rem}
+.leading-relaxed{line-height:1.625}
+.leading-tight{line-height:1.25}
+.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}
+.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}
+.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}
+.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}
+.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}
+.shadow-indigo-500\/20{--tw-shadow-color:rgb(99 102 241 / 0.2);--tw-shadow:var(--tw-shadow-colored)}
+.shadow-indigo-500\/30{--tw-shadow-color:rgb(99 102 241 / 0.3);--tw-shadow:var(--tw-shadow-colored)}
+.shadow-indigo-600\/30{--tw-shadow-color:rgb(79 70 229 / 0.3);--tw-shadow:var(--tw-shadow-colored)}
+@media (min-width:640px){.sm\:block{display:block}.sm\:gap-3{gap:0.75rem}.sm\:h-14{height:3.5rem}.sm\:h-20{height:5rem}.sm\:w-14{width:3.5rem}.sm\:w-20{width:5rem}.sm\:w-auto{width:auto}.sm\:text-2xl{font-size:1.5rem;line-height:2rem}.sm\:text-base{font-size:1rem;line-height:1.5rem}}
+@media (min-width:768px){.md\:flex-row{flex-direction:row}.md\:gap-4{gap:1rem}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.md\:p-10{padding:2.5rem}.md\:p-6{padding:1.5rem}.md\:p-8{padding:2rem}.md\:px-4{padding-left:1rem;padding-right:1rem}.md\:py-2{padding-top:0.5rem;padding-bottom:0.5rem}.md\:text-2xl{font-size:1.5rem;line-height:2rem}.md\:text-3xl{font-size:1.875rem;line-height:2.25rem}.md\:text-5xl{font-size:3rem;line-height:1}.md\:text-base{font-size:1rem;line-height:1.5rem}.md\:text-lg{font-size:1.125rem;line-height:1.75rem}}
+@media (min-width:1024px){.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}}
+    </style>
+    <style>
+        body { font-family: 'Assistant', 'Cairo', sans-serif; }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
+        
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 15px rgba(236, 72, 153, 0.6); }
+            50% { box-shadow: 0 0 25px rgba(236, 72, 153, 1); }
+            100% { box-shadow: 0 0 15px rgba(236, 72, 153, 0.6); }
+        }
+        
+        .highlighted-cell {
+            border-color: #ec4899 !important;
+            border-width: 4px !important;
+            transform: scale(1.15); 
+            z-index: 20;
+            animation: pulse-glow 1.5s infinite;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; border-radius: 10px; margin-block: 5px;}
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        
+        /* עיצוב צ'קבוקס מותאם אישית */
+        .custom-checkbox {
+            appearance: none;
+            background-color: #0f172a;
+            margin: 0;
+            font: inherit;
+            color: currentColor;
+            width: 1.15em;
+            height: 1.15em;
+            border: 1px solid #475569;
+            border-radius: 0.25em;
+            display: grid;
+            place-content: center;
+        }
+        .custom-checkbox::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em #818cf8;
+            background-color: transform;
+            transform-origin: center;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+        .custom-checkbox:checked::before {
+            transform: scale(1);
+        }
+
+        /* ===== עדכון: אזור הסימולציה כלוח עבודה לבן (רק אזור התלת-ממד) ===== */
+        .sim-card { background: #ffffff !important; border-color: #e2e8f0 !important; }
+        .sim-card #canvas-container { background: #ffffff !important; border-color: #e2e8f0 !important; }
+        .sim-card #3d-instruction {
+            background: rgba(255,255,255,0.92) !important;
+            color: #334155 !important;
+            border-color: #e2e8f0 !important;
+        }
+        .sim-badge {
+            background: rgba(255,255,255,0.92) !important;
+            color: #334155 !important;
+            border-color: #e2e8f0 !important;
+        }
+
+        /* ===== עדכון: התאמה רספונסיבית למסכי מחשב רחבים בלבד (אינה משפיעה על טאבלט/טלפון) ===== */
+        @media (min-width: 1280px) {
+            main.max-w-7xl { max-width: 88rem; }
+            .sim-card { min-height: 600px; }
+        }
+        @media (min-width: 1600px) {
+            main.max-w-7xl { max-width: 104rem; }
+        }
+
+        /* ============================================================
+           Light Theme — ערכת צבעים בהירה אחידה (צבעים בלבד)
+           לא משנה מבנה/תוכן/לוגיקה/מיקום/ריווח/גדלים/פונקציונליות.
+           כפתורים, צבעי קוביות, הדגשה וצביעה — נשמרים כפי שהם.
+           ============================================================ */
+        body{background:#f1f5f9 !important;background-image:none !important;color:#334155 !important}
+        :not(button).bg-slate-800{background-color:#ffffff !important}
+        :not(button).bg-slate-800\/60{background-color:#ffffff !important}
+        :not(button).bg-slate-800\/80{background-color:#ffffff !important}
+        :not(button).bg-slate-800\/90{background-color:#ffffff !important}
+        :not(button).bg-slate-900{background-color:#ffffff !important}
+        :not(button).bg-slate-900\/60{background-color:#ffffff !important}
+        :not(button).bg-slate-900\/80{background-color:#ffffff !important}
+        :not(button).bg-slate-900\/90{background-color:#ffffff !important}
+        :not(button).bg-slate-950\/40{background-color:#f8fafc !important}
+        :not(button).bg-slate-950\/50{background-color:#f8fafc !important}
+        :not(button).bg-slate-950\/80{background-color:rgba(226,232,240,0.80) !important}
+        :not(button).bg-slate-950\/90{background-color:rgba(226,232,240,0.80) !important}
+        :not(button).bg-slate-700\/40{background-color:#eef2f6 !important}
+        :not(button).bg-indigo-900\/30{background-color:#eef2ff !important}
+        :not(button).bg-indigo-900\/40{background-color:#eef2ff !important}
+        :not(button).bg-emerald-950\/80{background-color:#ecfdf5 !important}
+        :not(button).bg-emerald-900\/50{background-color:#ecfdf5 !important}
+        :not(button).bg-rose-950\/80{background-color:#fff1f2 !important}
+        :not(button).bg-indigo-950\/80{background-color:#eef2ff !important}
+        :not(button).bg-red-900\/50{background-color:#fef2f2 !important}
+        :not(button).border-slate-700{border-color:#e2e8f0 !important}
+        :not(button).border-slate-700\/50{border-color:#e2e8f0 !important}
+        :not(button).border-slate-800{border-color:#e2e8f0 !important}
+        :not(button).border-indigo-500\/30{border-color:#c7d2fe !important}
+        :not(button).border-amber-500\/30{border-color:#fde68a !important}
+        :not(button).border-emerald-800\/50{border-color:#a7f3d0 !important}
+        :not(button).border-emerald-800{border-color:#a7f3d0 !important}
+        :not(button).border-rose-800\/50{border-color:#fecdd3 !important}
+        :not(button).border-cyan-800\/50{border-color:#a5f3fc !important}
+        :not(button).border-indigo-800\/50{border-color:#c7d2fe !important}
+        :not(button).border-red-800{border-color:#fecaca !important}
+        :not(button):not(h1):not(h2):not(h3):not(h4).text-slate-100{color:#1e293b !important}
+        :not(button):not(h1):not(h2):not(h3):not(h4).text-slate-300{color:#475569 !important}
+        :not(button):not(h1):not(h2):not(h3):not(h4).text-slate-400{color:#64748b !important}
+        :not(button):not(h1):not(h2):not(h3):not(h4).text-indigo-100{color:#3730a3 !important}
+        :not(button):not(h1):not(h2):not(h3):not(h4).text-indigo-300{color:#4338ca !important}
+        :not(button):not(h1):not(h2):not(h3):not(h4).text-indigo-400{color:#4338ca !important}
+        :not(button):not(h1):not(h2):not(h3):not(h4).text-cyan-300{color:#0e7490 !important}
+        :not(button):not(h1):not(h2):not(h3):not(h4).text-amber-400{color:#b45309 !important}
+        :not(button):not(h1):not(h2):not(h3):not(h4).text-emerald-200{color:#047857 !important}
+        :not(button):not(h1):not(h2):not(h3):not(h4).text-emerald-300{color:#047857 !important}
+        :not(button):not(h1):not(h2):not(h3):not(h4).text-emerald-400{color:#047857 !important}
+        :not(button):not(h1):not(h2):not(h3):not(h4).text-rose-300{color:#be123c !important}
+        :not(button):not(h1):not(h2):not(h3):not(h4).text-red-200{color:#b91c1c !important}
+        h1,h2,h3,h4{color:#1e3a8a !important}
+        .bg-clip-text{color:#1e3a8a !important;-webkit-text-fill-color:#1e3a8a !important;background:none !important}
+        #dynamic-grid button.bg-slate-800\/60{background-color:#ffffff !important;border-color:#cbd5e1 !important}
+        #dynamic-grid button.text-slate-400{color:#64748b !important}
+        select{background-color:#ffffff !important;border-color:#cbd5e1 !important;color:#334155 !important}
+        .custom-checkbox{background-color:#ffffff !important;border-color:#cbd5e1 !important}
+        .custom-scrollbar::-webkit-scrollbar-track{background:#e2e8f0 !important}
+        .custom-scrollbar::-webkit-scrollbar-thumb{background:#cbd5e1 !important}
+
+        /* ===== כפתורי מעבר בין המצבים: ניגודיות גבוהה כדי שכל השלושה ייראו לחיצים (לא מושבתים) ===== */
+        /* הכפתור הפעיל נשאר כחול מלא; הלא-פעילים מקבלים מראה מוצק וברור של כפתור ניווט */
+        #tab-observation:not(.bg-indigo-600),
+        #tab-practice:not(.bg-indigo-600),
+        #tab-challenge:not(.bg-indigo-600){
+            background-color:#e0e7ff !important;
+            color:#3730a3 !important;
+            border:1px solid #a5b4fc !important;
+        }
+        #tab-observation:not(.bg-indigo-600):hover,
+        #tab-practice:not(.bg-indigo-600):hover,
+        #tab-challenge:not(.bg-indigo-600):hover{
+            background-color:#c7d2fe !important;
+            color:#312e81 !important;
+            border-color:#818cf8 !important;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 min-h-screen text-slate-100 flex flex-col justify-between overflow-x-hidden relative">
+
+    <canvas id="confetti-canvas" class="absolute inset-0 pointer-events-none z-50 w-full h-full hidden"></canvas>
+
+    <!-- חלונית הדרכה למצבים (Modal) -->
+    <div id="instruction-modal" class="fixed inset-0 z-[110] flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 hidden">
+        <div class="bg-slate-800 border border-slate-700 rounded-3xl p-6 md:p-8 max-w-xl w-full text-right shadow-2xl relative flex flex-col max-h-[90vh]">
+            <button onclick="closeInstructionModal()" class="absolute top-5 left-5 text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <h3 id="instruction-title" class="text-2xl md:text-3xl font-black text-indigo-300 mb-4 border-b border-slate-700 pb-4">כותרת</h3>
+            
+            <div id="instruction-content" class="text-slate-300 text-base md:text-lg space-y-3 mb-6 overflow-y-auto custom-scrollbar pr-2 leading-relaxed">
+                <!-- תוכן דינמי יוזרק לכאן -->
+            </div>
+            
+            <div class="mt-auto pt-4 border-t border-slate-700">
+                <label class="flex items-center gap-3 cursor-pointer mb-5 group w-max">
+                    <input type="checkbox" id="instruction-checkbox" class="custom-checkbox cursor-pointer">
+                    <span data-i18n="inst_dont_show" class="text-sm md:text-base text-slate-400 group-hover:text-slate-300 transition-colors">אל תציג הודעה זו שוב</span>
+                </label>
+                <div class="flex gap-3">
+                    <button data-i18n="inst_close" onclick="closeInstructionModal()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-bold py-3.5 px-4 rounded-xl transition-all shadow-md active:scale-95">סגור</button>
+                    <button data-i18n="inst_start" onclick="startModeFromInstruction()" class="flex-[2] bg-gradient-to-l from-indigo-600 to-indigo-500 hover:from-indigo-500 text-white font-black py-3.5 px-4 rounded-xl transition-all shadow-md shadow-indigo-600/30 active:scale-95 text-lg">התחל</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- מסך פתיחה -->
+    <div id="welcome-screen" class="fixed inset-0 z-[100] bg-slate-950/90 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="max-w-5xl w-full bg-slate-800/90 border border-slate-700/50 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh] overflow-y-auto custom-scrollbar relative">
+            
+            <!-- כפתור שפה בדף השער -->
+            <button onclick="toggleLanguage()" class="lang-toggle-btn absolute top-6 left-6 bg-slate-700/80 hover:bg-slate-600 px-3 py-1.5 rounded-xl text-sm font-bold transition-all text-white shadow-md border border-slate-500 active:scale-95 flex items-center gap-1.5 z-10">
+                🌐 العربية
+            </button>
+
+            <!-- כפתור "?" להצגת מדריך הכלים -->
+            <button id="tools-guide-btn" onclick="toggleToolsGuide()" title="מדריך הכלים" aria-label="מדריך הכלים" class="absolute top-6 right-6 bg-slate-700/80 hover:bg-slate-600 px-3 py-1.5 rounded-xl text-base font-black transition-all text-white shadow-md border border-slate-500 active:scale-95 flex items-center justify-center z-10">
+                ?
+            </button>
+
+            <div class="p-6 md:p-10 flex flex-col items-center text-center">
+                
+                <div class="bg-indigo-600/20 text-indigo-400 p-4 rounded-full shadow-lg shadow-indigo-500/20 border border-indigo-500/30 mb-4 mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                </div>
+                
+                <h1 data-i18n="app_title" class="text-4xl md:text-5xl font-black bg-gradient-to-l from-indigo-400 to-cyan-300 bg-clip-text text-transparent mb-3">מהנדס הקוביות</h1>
+                
+                <p data-i18n="welcome_desc" class="text-base md:text-lg text-slate-300 mb-6 max-w-2xl font-semibold">
+                    פעילות אינטראקטיבית להבנת תרשים המספרים במבנים מקוביות.<br>
+                    בפעילות תתאמנו בקשר שבין מבנה תלת־ממדי לבין תרשים המספרים, באמצעות התבוננות, מילוי תרשים ובניית מבנים.
+                </p>
+
+                <!-- מטרת הפעילות -->
+                <div class="bg-indigo-900/30 border border-indigo-500/30 p-4 rounded-xl text-right w-full max-w-2xl mb-8 shadow-inner">
+                    <h3 class="text-lg font-bold text-indigo-300 flex items-center gap-2 mb-1">
+                        <span>🎯</span> <span data-i18n="goal_title">מטרת הפעילות</span>
+                    </h3>
+                    <p data-i18n="goal_desc" class="text-sm md:text-base text-slate-300 leading-relaxed">
+                        לפתח הבנה של תרשים המספרים והקשר בינו לבין מבנה תלת־ממדי.
+                    </p>
+                </div>
+
+                <!-- מצבי משחק (כרטיסים) -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8 text-right w-full">
+                    <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-700 hover:border-indigo-500/50 transition-colors">
+                        <div class="text-3xl mb-2">👁️</div>
+                        <h3 data-i18n="mode_obs_title" class="text-lg font-black text-white mb-1.5">הבנת הייצוג</h3>
+                        <p data-i18n="mode_obs_desc" class="text-sm text-slate-400 leading-relaxed">התבוננו במבנה ובתרשים המספרים. סובבו את המבנה והפעילו הדגשה או צביעה כדי להבין כיצד תרשים המספרים מתאר את המבנה.</p>
+                    </div>
+                    <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-700 hover:border-indigo-500/50 transition-colors">
+                        <div class="text-3xl mb-2">✏️</div>
+                        <h3 data-i18n="mode_prac_title" class="text-lg font-black text-white mb-1.5">מילוי תרשים המספרים</h3>
+                        <p data-i18n="mode_prac_desc" class="text-sm text-slate-400 leading-relaxed">התבוננו במבנה ומלאו את תרשים המספרים המתאים לו. בסיום תוכלו לבדוק את תשובתכם ולקבל משוב.</p>
+                    </div>
+                    <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-700 hover:border-indigo-500/50 transition-colors">
+                        <div class="text-3xl mb-2">🏗️</div>
+                        <h3 data-i18n="mode_chal_title" class="text-lg font-black text-white mb-1.5">בניית המבנה</h3>
+                        <p data-i18n="mode_chal_desc" class="text-sm text-slate-400 leading-relaxed">בנו מבנה תלת־ממדי המתאים לתרשים המספרים הנתון. בסיום תוכלו לבדוק אם המבנה שבניתם נכון.</p>
+                    </div>
+                </div>
+
+                <!-- מדריך כפתורים מאורגן -->
+                <div id="tools-guide" class="hidden w-full bg-slate-950/50 rounded-3xl p-6 border border-slate-700/50 mb-8 text-right shadow-inner">
+                    <h3 class="text-xl font-black text-indigo-300 mb-5 border-b border-slate-700 pb-2 flex items-center gap-2">
+                        <span class="text-2xl">🎛️</span> <span data-i18n="tools_title">מדריך הכלים בסימולציה</span>
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        
+                        <!-- קבוצה 1 -->
+                        <div>
+                            <h4 data-i18n="tools_group1" class="text-sm font-bold text-slate-400 mb-4 border-b border-slate-800 pb-1.5">כלים להבנת המבנה</h4>
+                            <div class="space-y-4">
+                                <div class="flex flex-col gap-1">
+                                    <div data-i18n="tools_color_btn" class="bg-slate-700 border border-slate-600 text-slate-300 px-2 py-1 rounded-lg text-xs font-black shadow-md w-max">🌈 הפעל צבע</div>
+                                    <p data-i18n="tools_color_desc" class="text-xs text-slate-400 leading-tight">יצבע כל גובה קומה בצבע שונה לסיוע בזיהוי.</p>
+                                </div>
+                                <div class="flex flex-col gap-1">
+                                    <div data-i18n="tools_hl_btn" class="bg-slate-700 border border-slate-600 text-slate-300 px-2 py-1 rounded-lg text-xs font-black shadow-md w-max">✨ הפעל הדגשה</div>
+                                    <p data-i18n="tools_hl_desc" class="text-xs text-slate-400 leading-tight">מסמן קשר ישיר בין הקוביה למשבצת בתרשים.</p>
+                                </div>
+                                <div class="flex flex-col gap-1">
+                                    <div data-i18n="tools_cam_btn" class="bg-slate-700 border border-slate-500 text-white px-2 py-1 rounded-lg text-xs font-bold shadow-md w-max">🔄 יישור מצלמה</div>
+                                    <p data-i18n="tools_cam_desc" class="text-xs text-slate-400 leading-tight">מחזיר את המצלמה למבט חזית וימין בסיסי.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- קבוצה 2 -->
+                        <div>
+                            <h4 data-i18n="tools_group2" class="text-sm font-bold text-slate-400 mb-4 border-b border-slate-800 pb-1.5">כלים לניהול הפעילות</h4>
+                            <div class="space-y-4">
+                                <div class="flex flex-col gap-1">
+                                    <div data-i18n="tools_new_btn" class="bg-amber-500 text-slate-950 px-2 py-1 rounded-lg text-xs font-black shadow-md w-max">🎲 מבנה חדש</div>
+                                    <p data-i18n="tools_new_desc" class="text-xs text-slate-400 leading-tight">מגריל מבנה חדש למשימה הנוכחית.</p>
+                                </div>
+                                <div class="flex flex-col gap-1">
+                                    <div data-i18n="tools_check_btn" class="bg-gradient-to-l from-indigo-600 to-indigo-500 text-white px-2 py-1 rounded-lg text-xs font-black shadow-md w-max">🎯 בדיקת תשובה</div>
+                                    <p data-i18n="tools_check_desc" class="text-xs text-slate-400 leading-tight">שולח את עבודתכם לבדיקה ומשוב.</p>
+                                </div>
+                                <div class="flex flex-col gap-1">
+                                    <div data-i18n="tools_undo_btn" class="bg-slate-700 border border-slate-600 text-white px-2 py-1 rounded-lg text-xs font-bold shadow-md w-max">↩️ ביטול פעולה</div>
+                                    <p data-i18n="tools_undo_desc" class="text-xs text-slate-400 leading-tight">זמין במצב אתגר בלבד לביטול הצבת קובייה.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- קבוצה 3 -->
+                        <div>
+                            <h4 data-i18n="tools_group3" class="text-sm font-bold text-slate-400 mb-4 border-b border-slate-800 pb-1.5">הגדרות</h4>
+                            <div class="space-y-4">
+                                <div class="flex flex-col gap-1">
+                                    <div data-i18n="tools_dim_btn" class="bg-slate-700 border border-slate-500 text-white px-2 py-1 rounded-lg text-xs font-bold shadow-md w-max flex items-center gap-1"><span>⚙️</span> ממדים</div>
+                                    <p data-i18n="tools_dim_desc" class="text-xs text-slate-400 leading-tight">פותח חלון לשינוי גודל לוח המשחק והגובה המקסימלי לתרגול מתקדם יותר.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="flex flex-col items-center justify-center gap-3 sticky bottom-2 z-10 mx-auto w-full">
+                    <div class="text-amber-400 font-bold text-sm md:text-base bg-slate-900/90 px-5 py-2 rounded-full border border-amber-500/30 shadow-lg flex items-center gap-2 max-w-3xl text-center">
+                        <span>💡</span> <span data-i18n="tip_start">מומלץ להתחיל במצב "הבנת הייצוג" כדי להבין כיצד תרשים המספרים מתאר את המבנה, ולאחר מכן לעבור למצבי התרגול.</span>
+                    </div>
+                    <button onclick="startGame()" class="mt-2 bg-gradient-to-l from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-black py-4 px-12 rounded-2xl text-xl transition-all shadow-xl active:scale-95 flex items-center justify-center gap-3 w-full sm:w-auto">
+                        <span id="start-btn-text" data-i18n="btn_start">התחילו ללמוד</span> <span class="text-2xl">🚀</span>
+                    </button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- מודל בחירת מימדים (Settings) -->
+    <div id="settings-modal" class="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4 hidden">
+        <div class="bg-slate-800 border border-slate-700 rounded-3xl p-6 md:p-8 max-w-sm w-full text-right shadow-2xl relative overflow-hidden flex flex-col">
+            <h3 class="text-2xl font-black text-white mb-6 flex items-center gap-2 border-b border-slate-700 pb-3">
+                <span class="text-2xl">⚙️</span> <span data-i18n="modal_dim_title">מימדי המבנה</span>
+            </h3>
+            
+            <div class="space-y-5 mb-8">
+                <div>
+                    <label data-i18n="modal_w" class="block text-cyan-300 text-sm font-bold mb-2">רוחב בסיס (ציר X - ימין/שמאל):</label>
+                    <select id="setting-width" class="w-full bg-slate-900 border border-slate-600 text-white rounded-xl p-3 focus:border-indigo-500 outline-none font-semibold">
+                        <option value="2" data-i18n="opt_cols_2">2 עמודות</option>
+                        <option value="3" data-i18n="opt_cols_3" selected>3 עמודות</option>
+                        <option value="4" data-i18n="opt_cols_4">4 עמודות</option>
+                        <option value="5" data-i18n="opt_cols_5">5 עמודות</option>
+                    </select>
+                </div>
+                <div>
+                    <label data-i18n="modal_d" class="block text-indigo-300 text-sm font-bold mb-2">עומק בסיס (ציר Z - פנים/אחור):</label>
+                    <select id="setting-depth" class="w-full bg-slate-900 border border-slate-600 text-white rounded-xl p-3 focus:border-indigo-500 outline-none font-semibold">
+                        <option value="2" data-i18n="opt_rows_2">2 שורות</option>
+                        <option value="3" data-i18n="opt_rows_3" selected>3 שורות</option>
+                        <option value="4" data-i18n="opt_rows_4">4 שורות</option>
+                    </select>
+                </div>
+                <div>
+                    <label data-i18n="modal_h" class="block text-emerald-300 text-sm font-bold mb-2">גובה מקסימלי לקוביות (ציר Y):</label>
+                    <select id="setting-height" class="w-full bg-slate-900 border border-slate-600 text-white rounded-xl p-3 focus:border-indigo-500 outline-none font-semibold">
+                        <option value="3" data-i18n="opt_h_3" selected>עד 3 קוביות גובה</option>
+                        <option value="4" data-i18n="opt_h_4">עד 4 קוביות גובה</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="flex gap-3 mt-auto">
+                <button data-i18n="modal_cancel" onclick="closeSettings()" class="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-bold py-3.5 px-4 rounded-xl transition-all shadow-md active:scale-95">
+                    ביטול
+                </button>
+                <button data-i18n="modal_apply" onclick="applySettings()" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 px-4 rounded-xl transition-all shadow-md shadow-indigo-600/30 active:scale-95">
+                    החל והתחל
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- כותרת ראשית -->
+    <header class="border-b border-slate-700/50 bg-slate-900/60 backdrop-blur-md sticky top-0 z-40 px-4 py-3 shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-indigo-600 text-white p-2 rounded-xl shadow-lg shadow-indigo-500/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                </div>
+                <div>
+                    <h1 data-i18n="app_title" class="text-xl md:text-2xl font-black bg-gradient-to-l from-indigo-400 to-cyan-300 bg-clip-text text-transparent">מהנדס הקוביות</h1>
+                    <p data-i18n="header_subtitle" class="text-xs text-slate-400 hidden sm:block">חקר ופיתוח ראייה מרחבית</p>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-3 md:gap-4 text-sm font-semibold">
+                <div id="level-container" class="bg-slate-800/80 px-3 py-1.5 md:px-4 md:py-2 rounded-2xl border border-slate-700/50 flex items-center gap-2 hidden">
+                    <span id="level-indicator" class="text-indigo-400 text-base md:text-lg font-bold">משימה 1 מתוך 10</span>
+                </div>
+                <div id="score-container" class="bg-slate-800/80 px-3 py-1.5 md:px-4 md:py-2 rounded-2xl border border-slate-700/50 flex items-center gap-2 hidden">
+                    <span data-i18n="score_label" class="text-slate-400">ניקוד:</span>
+                    <span id="score-display" class="text-amber-400 text-base md:text-lg font-bold">0</span>
+                </div>
+                <div id="timer-container" class="bg-slate-800/80 px-3 py-1.5 md:px-4 md:py-2 rounded-2xl border border-slate-700/50 flex items-center gap-2 hidden">
+                    <span data-i18n="time_label" class="text-slate-400">זמן:</span>
+                    <span id="timer-display" class="text-emerald-400 text-base md:text-lg font-bold">00:00</span>
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <button id="fullscreen-btn" onclick="toggleFullscreen()" title="מסך מלא" aria-label="מסך מלא" class="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 md:px-4 md:py-2 rounded-2xl text-sm font-bold transition-all text-white shadow-md border border-slate-500 active:scale-95 flex items-center justify-center">
+                        <svg id="fs-enter-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:1.15rem;height:1.15rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg>
+                        <svg id="fs-exit-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:1.15rem;height:1.15rem;" class="hidden"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" /></svg>
+                    </button>
+                    <button onclick="toggleLanguage()" class="lang-toggle-btn bg-slate-700 hover:bg-slate-600 px-3 py-1.5 md:px-4 md:py-2 rounded-2xl text-sm font-bold transition-all text-white shadow-md border border-slate-500 active:scale-95 flex items-center gap-1.5">
+                        🌐 العربية
+                    </button>
+                    <button data-i18n="tools_dim_btn" onclick="openSettings()" class="bg-slate-700 hover:bg-slate-600 px-3 py-1.5 md:px-4 md:py-2 rounded-2xl text-sm font-bold transition-all text-white shadow-md border border-slate-500 active:scale-95 flex items-center gap-1.5">
+                        ⚙️ ממדים
+                    </button>
+                    <button data-i18n="btn_home" onclick="goHome()" class="bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 md:px-4 md:py-2 rounded-2xl text-sm font-bold transition-all text-white shadow-md border border-indigo-400 active:scale-95 flex items-center gap-1.5">
+                        🏠 דף הבית
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-4 md:p-6 w-full flex-grow flex flex-col items-stretch gap-4">
+
+        <div class="bg-slate-800/60 backdrop-blur-md p-2 rounded-2xl border border-slate-700/50 shadow-md flex justify-between gap-2 max-w-3xl mx-auto w-full">
+            <button id="tab-observation" data-i18n="tab_obs" onclick="setMode('observation')" class="flex-1 py-2.5 px-3 rounded-xl font-bold transition-all bg-indigo-600 text-white shadow-md active:scale-95 text-sm sm:text-base">הבנת הייצוג</button>
+            <button id="tab-practice" data-i18n="tab_prac" onclick="setMode('practice')" class="flex-1 py-2.5 px-3 rounded-xl font-bold transition-all bg-slate-900/50 text-slate-400 hover:bg-slate-700 hover:text-white active:scale-95 text-sm sm:text-base">מילוי תרשים המספרים</button>
+            <button id="tab-challenge" data-i18n="tab_chal" onclick="setMode('challenge')" class="flex-1 py-2.5 px-3 rounded-xl font-bold transition-all bg-slate-900/50 text-slate-400 hover:bg-slate-700 hover:text-white active:scale-95 text-sm sm:text-base">בניית המבנה</button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch flex-grow">
+            <!-- צד ימין: מסך התלת-ממד -->
+            <section class="lg:col-span-7 flex flex-col gap-4">
+                <div class="sim-card bg-slate-800/60 backdrop-blur-md rounded-3xl p-4 border border-slate-700/50 shadow-xl flex flex-col justify-between h-full min-h-[450px] relative overflow-hidden group">
+                    
+                    <div class="flex flex-wrap justify-between items-center gap-2 mb-2 z-10">
+                        <div class="sim-badge bg-slate-900/80 px-3 py-1.5 rounded-xl text-xs font-semibold border border-slate-700/50 text-slate-300 flex items-center gap-1">
+                            <span class="inline-block w-2.5 h-2.5 bg-indigo-500 rounded-full animate-ping"></span>
+                            <span data-i18n="area_3d">אזור תלת-ממד</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <button id="color-toggle-btn" onclick="toggleCubeColors()" class="bg-slate-700/80 hover:bg-slate-600 text-slate-300 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 active:scale-95 shadow-md border border-slate-600">
+                                🌈 הפעל צבע
+                            </button>
+                            <button id="highlight-btn" onclick="toggleHighlight()" class="bg-slate-700/80 hover:bg-slate-600 text-slate-300 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 active:scale-95 shadow-md border border-slate-600">
+                                ✨ הפעל הדגשה
+                            </button>
+                            <button data-i18n="tools_cam_btn" onclick="resetCamera()" class="bg-slate-700/80 hover:bg-slate-600 px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-200 flex items-center gap-1 active:scale-95 shadow-md">
+                                🔄 יישור מצלמה
+                            </button>
+                            <button id="regenerate-btn" data-i18n="tools_new_btn" onclick="regenerateCurrentLevel()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1 active:scale-95 shadow-md hidden">
+                                🎲 מבנה חדש
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="canvas-container" class="w-full flex-grow rounded-2xl overflow-hidden bg-gradient-to-b from-slate-950 to-slate-900 cursor-grab active:cursor-grabbing border border-slate-750 relative min-h-[300px]">
+                        <div id="3d-instruction" data-i18n="inst_drag" class="absolute bottom-3 right-3 bg-slate-900/90 px-3 py-2 rounded-xl text-xs text-slate-300 max-w-[280px] border border-slate-700/50 pointer-events-none text-right shadow-lg">
+                            גררו כדי לסובב. הפעילו את הצבע או ההדגשה רק במקרה של קושי.
+                        </div>
+                    </div>
+                    
+                    <div id="challenge-controls" class="absolute top-16 right-4 flex flex-col gap-2 z-10 hidden">
+                        <button data-i18n="tools_undo_btn" onclick="undoLastAction()" class="bg-slate-700/90 hover:bg-slate-600 text-white p-2 rounded-xl text-xs font-bold transition-all shadow-md active:scale-95 border border-slate-600 flex items-center gap-1">
+                            ↩️ ביטול פעולה
+                        </button>
+                        <button data-i18n="btn_clear_bld" onclick="clearUserStructure()" class="bg-slate-700/90 hover:bg-rose-600 text-white p-2 rounded-xl text-xs font-bold transition-all shadow-md active:scale-95 border border-slate-600 flex items-center gap-1">
+                            🧹 ניקוי מבנה
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- צד שמאל: רשת ההזנה -->
+            <section class="lg:col-span-5 flex flex-col gap-6">
+                
+                <div class="bg-slate-800/60 backdrop-blur-md rounded-3xl p-6 border border-slate-700/50 shadow-xl flex flex-col justify-between h-full relative">
+                    
+                    <div class="mb-2 text-center">
+                        <h2 data-i18n="grid_title" id="grid-title" class="text-lg font-black text-slate-100">תרשים המספרים</h2>
+                        <p id="grid-subtitle" class="text-xs text-slate-400 mt-1">חפשו את הקוביות הנסתרות! סובבו את המודל מכל הכיוונים.</p>
+                    </div>
+
+                    <div class="bg-indigo-900/40 border border-indigo-500/30 text-indigo-300 text-xs text-center p-2 rounded-xl mt-2 flex items-center justify-center gap-2">
+                        <span class="text-base">💡</span>
+                        <span data-i18n="arrow_note">שימו לב: החץ התכלת מסמן תמיד את החזית (<strong>מבט מלפנים</strong>).</span>
+                    </div>
+
+                    <!-- אזור הגריד הדינמי -->
+                    <div class="flex flex-col items-center justify-center my-4 overflow-x-auto w-full custom-scrollbar pb-2">
+                        <div class="flex items-center justify-center">
+                            <!-- הרשת נוצרת דינמית כאן -->
+                            <div id="dynamic-grid" class="grid gap-2 sm:gap-3 bg-slate-950/40 p-4 rounded-2xl border border-slate-800 shadow-inner">
+                                <!-- תאים ייווצרו ב-JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- אזור תחתון (כפתורים ומשוב) -->
+                    <div class="flex flex-col gap-3 mt-4">
+                        <div id="feedback-message" class="hidden text-center py-3 px-4 rounded-xl text-sm font-bold border-2 transition-all shadow-md"></div>
+
+                        <div id="action-buttons-container" class="flex gap-3 hidden">
+                            <button id="clear-btn" data-i18n="btn_clear" onclick="clearPracticeInputs()" class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-3.5 px-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm shadow-md active:scale-95">
+                                🧹 איפוס 
+                            </button>
+                            <button id="action-btn" data-i18n="tools_check_btn" onclick="checkAnswer()" class="flex-grow bg-gradient-to-l from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-black py-3.5 px-6 rounded-2xl text-base transition-all shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 active:scale-95">
+                                🎯 בדיקת תשובה
+                            </button>
+                        </div>
+                        
+                        <button id="next-level-btn" data-i18n="btn_next" onclick="goToNextLevel()" class="hidden w-full bg-gradient-to-l from-emerald-600 to-emerald-500 hover:from-emerald-500 text-white font-black py-3.5 px-6 rounded-2xl text-base transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+                            השלב הבא ➡️
+                        </button>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- מודל סיום המשחק -->
+    <div id="gameover-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 backdrop-blur-md p-4 hidden">
+        <div class="bg-slate-800 border border-slate-700 rounded-3xl p-6 md:p-8 max-w-lg w-full text-center shadow-2xl relative overflow-hidden">
+            <div id="confetti-holder" class="absolute inset-0 pointer-events-none opacity-40"></div>
+            <div class="text-amber-400 inline-block p-4 bg-slate-900/60 rounded-full mb-4 shadow-lg border border-slate-700/50 text-4xl">🏆</div>
+            <h3 data-i18n="go_title" class="text-3xl font-black mb-2 text-white" id="rank-title">כל הכבוד, סיימתם!</h3>
+            <p data-i18n="go_desc" class="text-slate-300 text-sm mb-6 leading-relaxed">הצלחתם לנתח ולפתור 10 מבנים מורכבים במצב זה.</p>
+            <div class="bg-slate-900/60 rounded-2xl p-4 border border-slate-700/50 grid grid-cols-2 gap-4 text-center mb-6">
+                <div><span data-i18n="go_score" class="text-xs text-slate-400 block">סך כל הנקודות:</span><span id="final-score" class="text-2xl font-black text-amber-400">0</span></div>
+                <div><span data-i18n="go_time" class="text-xs text-slate-400 block">זמן משחק:</span><span id="final-time" class="text-2xl font-black text-emerald-400">00:00</span></div>
+            </div>
+            <button data-i18n="go_btn" onclick="restartGame()" class="bg-gradient-to-l from-indigo-600 to-indigo-500 hover:from-indigo-500 text-white font-black py-3 px-8 rounded-2xl text-lg transition-all w-full active:scale-95">
+                שחקו שוב במבנים חדשים! 🔄
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- i18n Translations Dictionary ---
+        const i18n = {
+            he: {
+                app_title: "מהנדס הקוביות",
+                welcome_desc: "פעילות אינטראקטיבית להבנת תרשים המספרים במבנים מקוביות.<br>בפעילות תתאמנו בקשר שבין מבנה תלת־ממדי לבין תרשים המספרים, באמצעות התבוננות, מילוי תרשים ובניית מבנים.",
+                goal_title: "מטרת הפעילות",
+                goal_desc: "לפתח הבנה של תרשים המספרים והקשר בינו לבין מבנה תלת־ממדי.",
+                mode_obs_title: "הבנת הייצוג",
+                mode_obs_desc: "התבוננו במבנה ובתרשים המספרים. סובבו את המבנה והפעילו הדגשה או צביעה כדי להבין כיצד תרשים המספרים מתאר את המבנה.",
+                mode_prac_title: "מילוי תרשים המספרים",
+                mode_prac_desc: "התבוננו במבנה ומלאו את תרשים המספרים המתאים לו. בסיום תוכלו לבדוק את תשובתכם ולקבל משוב.",
+                mode_chal_title: "בניית המבנה",
+                mode_chal_desc: "בנו מבנה תלת־ממדי המתאים לתרשים המספרים הנתון. בסיום תוכלו לבדוק אם המבנה שבניתם נכון.",
+                tools_title: "מדריך הכלים בסימולציה",
+                tools_group1: "כלים להבנת המבנה",
+                tools_color_btn: "🌈 הפעל צבע",
+                tools_color_desc: "יצבע כל גובה קומה בצבע שונה לסיוע בזיהוי.",
+                tools_hl_btn: "✨ הפעל הדגשה",
+                tools_hl_desc: "מסמן קשר ישיר בין הקובייה למשבצת בתרשים.",
+                tools_cam_btn: "🔄 יישור מצלמה",
+                tools_cam_desc: "מחזיר את המצלמה למבט מלפנים ומימין בסיסי.",
+                tools_group2: "כלים לניהול הפעילות",
+                tools_new_btn: "🎲 מבנה חדש",
+                tools_new_desc: "מגריל מבנה חדש למשימה הנוכחית.",
+                tools_check_btn: "🎯 בדיקת תשובה",
+                tools_check_desc: "שולח את עבודתכם לבדיקה ומשוב.",
+                tools_undo_btn: "↩️ ביטול פעולה",
+                tools_undo_desc: "זמין במצב אתגר בלבד לביטול הצבת קובייה.",
+                tools_group3: "הגדרות",
+                tools_dim_btn: "⚙️ ממדים",
+                tools_dim_desc: "פותח חלון לשינוי גודל לוח המשחק והגובה המקסימלי לתרגול מתקדם יותר.",
+                tip_start: "מומלץ להתחיל במצב \"הבנת הייצוג\" כדי להבין כיצד תרשים המספרים מתאר את המבנה, ולאחר מכן לעבור למצבי התרגול.",
+                btn_start: "התחילו ללמוד",
+                btn_continue: "המשך ללמוד",
+                header_subtitle: "חקר ופיתוח ראייה מרחבית",
+                score_label: "ניקוד:",
+                time_label: "זמן:",
+                btn_home: "🏠 דף הבית",
+                tab_obs: "הבנת הייצוג",
+                tab_prac: "מילוי תרשים המספרים",
+                tab_chal: "בניית המבנה",
+                area_3d: "אזור תלת-ממד",
+                inst_drag: "גררו כדי לסובב. הפעילו את הצבע או ההדגשה רק במקרה של קושי.",
+                btn_clear_bld: "🧹 ניקוי מבנה",
+                grid_title: "תרשים המספרים",
+                grid_sub_obs: "המבנה מוסתר! חפשו חללים ובליטות מכל כיוון.",
+                grid_sub_prac: "קבעו גובה (0 עד {maxH}). סובבו את המבנה כדי לגלות הכל.",
+                grid_sub_chal: "שימו לב לעומק ולהסתרות. קראו את התרשים היטב!",
+                arrow_note: "שימו לב: החץ התכלת מסמן תמיד את החזית (<strong>מבט מלפנים</strong>).",
+                dir_back: "מבט מאחור",
+                dir_right: "מבט מימין",
+                dir_left: "מבט משמאל",
+                dir_front: "מבט מלפנים (חץ)",
+                btn_clear: "🧹 איפוס",
+                btn_next: "השלב הבא ➡️",
+                btn_results: "לתוצאות הסופיות 🏆",
+                modal_dim_title: "מימדי המבנה",
+                modal_w: "רוחב בסיס (ציר X - ימין/שמאל):",
+                modal_d: "עומק בסיס (ציר Z - פנים/אחור):",
+                modal_h: "גובה מקסימלי לקוביות (ציר Y):",
+                modal_cancel: "ביטול",
+                modal_apply: "החל והתחל",
+                go_title: "כל הכבוד, סיימתם!",
+                go_desc: "הצלחתם לנתח ולפתור 10 מבנים מורכבים במצב זה.",
+                go_score: "סך כל הנקודות:",
+                go_time: "זמן משחק:",
+                go_btn: "שחקו שוב במבנים חדשים! 🔄",
+                inst_dont_show: "אל תציג הודעה זו שוב",
+                inst_close: "סגור",
+                inst_start: "התחל",
+                color_on: "🌈 הפעל צבע",
+                color_off: "🎨 צבע אחיד",
+                hl_on: "✨ הפעל הדגשה",
+                hl_off: "✨ כיבוי הדגשה",
+                fb_correct_chal: "כל הכבוד! המבנה תואם לתרשים במדויק.",
+                fb_correct_prac: "כל הכבוד! התרשים תואם למבנה במדויק.",
+                fb_err_1: "לא מדויק. נסו שוב.",
+                fb_err_prac_2: "האם בחנתם את המבנה מכל הכיוונים? חזרו ובדקו את עצמכם.",
+                fb_err_prac_3: "ספרו את סך כל הקוביות שסימנתם בתרשים והשוו למבנה. תואם?",
+                fb_err_chal_2: "האם כל עמודה שבניתם תואמת בדיוק את המספר בתרשים? חזרו ובדקו את עצמכם.",
+                fb_err_chal_3: "השוו את גובה כל עמודה במבנה שבניתם למספר המתאים בתרשים. הכול תואם?",
+                fb_new_lvl: "🎲 הוגרלה תבנית בגרות חדשה!",
+                fb_no_attempt: "עדיין לא ביצעתם ניסיון. השלימו את המשימה ולאחר מכן לחצו על 'בדיקת תשובה'.",
+                task_counter: "משימה {cur} מתוך 10",
+                opt_cols_2: "2 עמודות",
+                opt_cols_3: "3 עמודות",
+                opt_cols_4: "4 עמודות",
+                opt_cols_5: "5 עמודות",
+                opt_rows_2: "2 שורות",
+                opt_rows_3: "3 שורות",
+                opt_rows_4: "4 שורות",
+                opt_h_3: "עד 3 קוביות גובה",
+                opt_h_4: "עד 4 קוביות גובה",
+                obs_html: `
+                    <p class="font-bold text-white text-lg mb-2">ברוכים הבאים!</p>
+                    <p>במצב זה יוצגו לפניכם מבנה תלת־ממדי ותרשים המספרים המתאר אותו.</p>
+                    <p>מטרת הפעילות היא להבין כיצד כל עמודה במבנה מיוצגת באמצעות מספר בתרשים.</p>
+                    <p class="font-bold text-white mt-4 mb-2">במהלך הפעילות תוכלו:</p>
+                    <ul class="list-disc list-inside space-y-1 pr-2 text-slate-300">
+                        <li>לסובב את המבנה מכל הכיוונים.</li>
+                        <li>להפעיל הדגשות כדי לזהות את הקשר בין העמודות במבנה לבין הערכים בתרשים.</li>
+                        <li>להפעיל צביעה להמחשת גובה העמודות.</li>
+                    </ul>
+                    <p class="mt-4">נסו להתבונן במבנה, להשוות אותו לתרשים ולזהות כיצד מיקום וגובה כל עמודה באים לידי ביטוי בייצוג.</p>
+                    <div class="mt-5 bg-indigo-900/30 border border-indigo-500/30 p-4 rounded-xl text-indigo-100">
+                        <span class="text-base">💡</span> <strong>טיפ:</strong> עברו עמודה אחר עמודה והשוו בין גובהה לבין המספר המתאים בתרשים.
+                    </div>
+                `,
+                prac_html: `
+                    <p class="font-bold text-white text-lg mb-2">ברוכים הבאים!</p>
+                    <p>במצב זה יוצג לפניכם מבנה תלת־ממדי, ועליכם להשלים את תרשים המספרים המתאר אותו.</p>
+                    <p class="mt-3">בחנו את גובה כל עמודה במבנה, והקלידו את המספר המתאים בכל תא בתרשים.</p>
+                    <p class="mt-3">לאחר שתסיימו תוכלו לבדוק את תשובותיכם ולקבל משוב מיידי.</p>
+                    <div class="mt-5 bg-indigo-900/30 border border-indigo-500/30 p-4 rounded-xl text-indigo-100">
+                        <span class="text-base">💡</span> <strong>טיפ:</strong> כל מספר בתרשים מייצג את מספר הקוביות בעמודה המתאימה. הקפידו לספור את כל הקוביות בכל עמודה, גם אם חלקן מוסתרות מזווית מסוימת.
+                    </div>
+                `,
+                chal_html: `
+                    <p class="font-bold text-white text-lg mb-2">ברוכים הבאים!</p>
+                    <p>במצב זה יוצג לפניכם תרשים מספרים בלבד.</p>
+                    <p class="mt-3">עליכם לבנות את המבנה התלת־ממדי כך שיתאים בדיוק לערכים המופיעים בתרשים.</p>
+                    <p class="mt-3">הוסיפו או הסירו קוביות עד שכל עמודה במבנה תהיה בגובה המתאים.</p>
+                    <p class="mt-3">לאחר שתסיימו תוכלו לבדוק את הפתרון ולהשוות בין המבנה שבניתם לבין הפתרון הנכון.</p>
+                    <div class="mt-5 bg-indigo-900/30 border border-indigo-500/30 p-4 rounded-xl text-indigo-100">
+                        <span class="text-base">💡</span> <strong>טיפ:</strong> בנו את המבנה עמודה אחר עמודה. לאחר השלמת כל העמודות, סובבו את המבנה ובדקו שהוא תואם לתרשים מכל הכיוונים.
+                    </div>
+                `
+            },
+            ar: {
+                app_title: "مهندس المكعبات",
+                welcome_desc: "ستتعلمون في هذا النشاط كيف يصف تخطيط الأعداد المبنى ثلاثي الأبعاد، وكيف يمكن الانتقال بين التمثيلين بسهولة من خلال الملاحظة، وإكمال تخطيط الأعداد، وبناء المبنى.",
+                goal_title: "هدف النشاط",
+                goal_desc: "تطوير فهم تخطيط الأعداد والعلاقة بينه وبين المبنى ثلاثي الأبعاد.",
+                mode_obs_title: "فهم التمثيل",
+                mode_obs_desc: "استكشفوا المبنى وتخطيط الأعداد معًا. دوّروا المبنى، واستخدموا أدوات التمييز والتلوين لفهم كيف يصف تخطيط الأعداد ارتفاع كل عمود في المبنى.",
+                mode_prac_title: "إكمال تخطيط الأعداد",
+                mode_prac_desc: "تأملوا المبنى، ثم احسبوا ارتفاع كل عمود واكتبوا العدد المناسب في كل خلية من تخطيط الأعداد. بعد الانتهاء يمكنكم فحص الإجابة والحصول على تغذية راجعة.",
+                mode_chal_title: "بناء المبنى",
+                mode_chal_desc: "ابنوا مبنى ثلاثي الأبعاد يطابق تخطيط الأعداد المعطى. أضيفوا أو احذفوا مكعبات حتى يصبح ارتفاع كل عمود مطابقًا للقيم في التخطيط، ثم افحصوا إجابتكم.",
+                tools_title: "دليل أدوات النشاط",
+                tools_group1: "أدوات لفهم المبنى",
+                tools_color_btn: "🌈 تفعيل التلوين",
+                tools_color_desc: "يُلوّن كل ارتفاع بلون مختلف للمساعدة في التمييز.",
+                tools_hl_btn: "✨ تفعيل التمييز",
+                tools_hl_desc: "يميز العلاقة المباشرة بين المكعب والخلية في التخطيط.",
+                tools_cam_btn: "🔄 إعادة ضبط زاوية العرض",
+                tools_cam_desc: "يُعيد الكاميرا إلى النظرة من الأمام واليمين الأساسية.",
+                tools_group2: "أدوات لإدارة النشاط",
+                tools_new_btn: "🎲 مبنى جديد",
+                tools_new_desc: "يُنشئ مبنى جديدًا للمهمة الحالية.",
+                tools_check_btn: "🎯 فحص الإجابة",
+                tools_check_desc: "يُرسل عملكم للفحص للحصول على تغذية راجعة.",
+                tools_undo_btn: "↩️ تراجع",
+                tools_undo_desc: "متاح في وضع بناء المبنى فقط للتراجع عن وضع مكعب.",
+                tools_group3: "الإعدادات",
+                tools_dim_btn: "⚙️ الأبعاد",
+                tools_dim_desc: "يفتح نافذة لتغيير أبعاد لوحة اللعب والحد الأقصى للارتفاع.",
+                tip_start: "يفضّل البدء بقسم فهم التمثيل، ثم الانتقال إلى اقسام التدريب.",
+                btn_start: "ابدأ التعلم",
+                btn_continue: "متابعة التعلم",
+                header_subtitle: "تطوير الإدراك الفراغي",
+                score_label: "النقاط:",
+                time_label: "الوقت:",
+                btn_home: "🏠 الرئيسية",
+                tab_obs: "فهم التمثيل",
+                tab_prac: "إكمال تخطيط الأعداد",
+                tab_chal: "بناء المبنى",
+                area_3d: "منطقة ثلاثية الأبعاد",
+                inst_drag: "اسحبوا لتدوير المبنى. فعلوا التلوين أو التمييز عند الحاجة فقط.",
+                btn_clear_bld: "🧹 تنظيف المبنى",
+                grid_title: "تخطيط الأعداد",
+                grid_sub_obs: "المبنى مخفي! ابحثوا عن الفراغات والبروزات من جميع الاتجاهات.",
+                grid_sub_prac: "حددوا الارتفاع (0 حتى {maxH}). دوروا المبنى لاكتشاف جميع المكعبات.",
+                grid_sub_chal: "انتبهوا للعمق والإخفاء. اقرأوا التخطيط جيدًا!",
+                arrow_note: "انتبهوا: السهم الأزرق الفاتح يشير دائمًا إلى النظرة من الأمام (<strong>الأمام</strong>).",
+                dir_back: "النظرة من الخلف",
+                dir_right: "النظرة من اليمين",
+                dir_left: "النظرة من اليسار",
+                dir_front: "النظرة من الأمام (سهم)",
+                btn_clear: "🧹 إعادة ضبط",
+                btn_next: "المرحلة التالية ➡️",
+                btn_results: "إلى النتائج النهائية 🏆",
+                modal_dim_title: "أبعاد المبنى",
+                modal_w: "عرض القاعدة (محور X - اليمين/اليسار):",
+                modal_d: "عمق القاعدة (محور Z - الأمام/الخلف):",
+                modal_h: "الحد الأقصى لارتفاع المكعبات (محور Y):",
+                modal_cancel: "إلغاء",
+                modal_apply: "تطبيق والبدء",
+                go_title: "أحسنتم، لقد أنهيتم!",
+                go_desc: "نجحتم في تحليل وحل 10 مبانٍ معقدة في هذا القسم.",
+                go_score: "إجمالي النقاط:",
+                go_time: "وقت اللعب:",
+                go_btn: "العبوا مرة أخرى بمبانٍ جديدة! 🔄",
+                inst_dont_show: "لا تعرض هذه الرسالة مرة أخرى",
+                inst_close: "إغلاق",
+                inst_start: "ابدأ",
+                color_on: "🌈 تفعيل التلوين",
+                color_off: "🎨 لون موحد",
+                hl_on: "✨ تفعيل التمييز",
+                hl_off: "✨ إيقاف التمييز",
+                fb_correct_chal: "إجابة صحيحة! المبنى يطابق تخطيط الأعداد بدقة.",
+                fb_correct_prac: "إجابة صحيحة! تخطيط الأعداد يطابق المبنى بدقة.",
+                fb_err_1: "إجابة غير صحيحة. حاولوا مرة أخرى.",
+                fb_err_prac_2: "هل فحصتم المبنى من جميع الاتجاهات؟ عودوا وافحصوا إجابتكم.",
+                fb_err_prac_3: "عدّوا إجمالي المكعبات التي حددتموها في التخطيط وقارنوها بالمبنى. هل تتطابق؟",
+                fb_err_chal_2: "هل يطابق كل عمود بنيتموه الرقم في التخطيط تمامًا؟ عودوا وافحصوا إجابتكم.",
+                fb_err_chal_3: "قارنوا ارتفاع كل عمود في المبنى الذي بنيتموه بالرقم المناسب في التخطيط. هل كل شيء يتطابق؟",
+                fb_new_lvl: "🎲 تم سحب مبنى جديد!",
+                fb_no_attempt: "لم تقوموا بأي محاولة بعد. أكملوا المهمة ثم اضغطوا على 'فحص الإجابة'.",
+                task_counter: "مهمة {cur} من 10",
+                opt_cols_2: "عمودان",
+                opt_cols_3: "3 أعمدة",
+                opt_cols_4: "4 أعمدة",
+                opt_cols_5: "5 أعمدة",
+                opt_rows_2: "صفان",
+                opt_rows_3: "3 صفوف",
+                opt_rows_4: "4 صفوف",
+                opt_h_3: "حتى ارتفاع 3 مكعبات",
+                opt_h_4: "حتى ارتفاع 4 مكعبات",
+                obs_html: `
+                    <p class="font-bold text-white text-lg mb-2">مرحبًا بكم!</p>
+                    <p>في هذا القسم ستتعرفون إلى العلاقة بين المبنى ثلاثي الأبعاد وتخطيط الأعداد.</p>
+                    <p class="font-bold text-white mt-4 mb-2">يمكنكم:</p>
+                    <ul class="list-disc list-inside space-y-1 pr-2 text-slate-300">
+                        <li>تدوير المبنى من جميع الجهات.</li>
+                        <li>استخدام أداة التمييز لإظهار العلاقة بين العمود في المبنى والخلية المقابلة له في تخطيط الأعداد.</li>
+                        <li>استخدام التلوين لتوضيح ارتفاع الأعمدة.</li>
+                    </ul>
+                    <p class="mt-4">حاولوا مقارنة كل عمود بالعدد المقابل له في التخطيط حتى تفهموا كيف يصف تخطيط الأعداد المبنى.</p>
+                    <div class="mt-5 bg-indigo-900/30 border border-indigo-500/30 p-4 rounded-xl text-indigo-100">
+                        <span class="text-base">💡</span> <strong>تلميح:</strong> انتقلوا من عمود إلى آخر، وقارنوا بين ارتفاعه والعدد المقابل له في التخطيط.
+                    </div>
+                `,
+                prac_html: `
+                    <p class="font-bold text-white text-lg mb-2">مرحبًا بكم!</p>
+                    <p>في هذا القسم سيظهر أمامكم مبنى ثلاثي الأبعاد، وعليكم إكمال تخطيط الأعداد الذي يصفه.</p>
+                    <p class="mt-3">احسبوا ارتفاع كل عمود في المبنى، ثم اكتبوا العدد المناسب في مكانه الصحيح داخل تخطيط الأعداد.</p>
+                    <p class="mt-3">بعد الانتهاء يمكنكم فحص الإجابة والحصول على تغذية راجعة.</p>
+                    <div class="mt-5 bg-indigo-900/30 border border-indigo-500/30 p-4 rounded-xl text-indigo-100">
+                        <span class="text-base">💡</span> <strong>تلميح:</strong> يمثل كل عدد في تخطيط الأعداد ارتفاع العمود المطابق له، لذا احرصوا على عد جميع المكعبات في كل عمود حتى لو كان جزء منها مخفيًا.
+                    </div>
+                `,
+                chal_html: `
+                    <p class="font-bold text-white text-lg mb-2">مرحبًا بكم!</p>
+                    <p>في هذا القسم سيظهر أمامكم تخطيط أعداد فقط.</p>
+                    <p class="mt-3">ابنوا مبنى ثلاثي الأبعاد يطابق تمامًا القيم الموجودة في تخطيط الأعداد.</p>
+                    <p class="mt-3">أضيفوا أو احذفوا مكعبات حتى يصبح ارتفاع كل عمود مطابقًا للعدد المكتوب في التخطيط.</p>
+                    <p class="mt-3">بعد الانتهاء يمكنكم فحص الحل ومقارنة المبنى الذي بنيتموه بالإجابة الصحيحة.</p>
+                    <div class="mt-5 bg-indigo-900/30 border border-indigo-500/30 p-4 rounded-xl text-indigo-100">
+                        <span class="text-base">💡</span> <strong>تلميح:</strong> ابنوا المبنى عمودًا بعد عمود، ثم دوّروه للتأكد من مطابقته لتخطيط الأعداد من جميع الجهات.
+                    </div>
+                `
+            }
+        };
+
+        // --- State Management ---
+        let currentLang = 'he'; // Default language
+        
+        let gridW = 3; 
+        let gridD = 3; 
+        let maxH = 3;  
+
+        let levelBanks = { observation: [], practice: [], challenge: [] };
+        let currentIndices = { observation: 0, practice: 0, challenge: 0 };
+        
+        let score = 0;
+        let attemptCounter = 0; 
+        let gameActive = false;
+        let totalSeconds = 0;
+        let timerInterval = null;
+        let currentMode = 'observation'; 
+        
+        // עזרים והדרכות
+        let showInstructions = { observation: true, practice: true, challenge: true };
+        let pendingMode = null;
+        let highlightActive = false; 
+        let isColorfulCubes = false; 
+        
+        let interactables = [];
+        let studentAnswers = []; 
+        let undoStack = []; 
+
+        // זיכרון פדגוגי
+        let lastMaxCol = -1;
+        let lastTotalCubes = -1;
+
+        const CUBE_SIZE = 1.0; 
+
+        let scene, camera, renderer, controls, cubesGroup, baseGroup;
+        let frontArrowMesh = null;
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        let isPointerDragging = false;
+
+        const colorsByHeight = [0xfbbf24, 0xf97316, 0xef4444, 0xa855f7];
+        const highlightColor3D = 0xec4899; 
+
+        window.onload = function() {
+            updateLanguage(); // Init language text
+            create2DGrid();
+            initLevels();
+            initThree();
+            setupRaycaster();
+            setMode('observation'); 
+            document.addEventListener('fullscreenchange', onFullscreenChange);
+            document.addEventListener('webkitfullscreenchange', onFullscreenChange);
+        };
+
+        // --- Fullscreen Logic ---
+        function toggleFullscreen() {
+            playSound('click');
+            const el = document.documentElement;
+            const isFs = document.fullscreenElement || document.webkitFullscreenElement;
+            if (!isFs) {
+                const req = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+                if (req) req.call(el);
+            } else {
+                const exit = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+                if (exit) exit.call(document);
+            }
+        }
+
+        function onFullscreenChange() {
+            const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+            const enterIcon = document.getElementById('fs-enter-icon');
+            const exitIcon = document.getElementById('fs-exit-icon');
+            if (enterIcon && exitIcon) {
+                enterIcon.classList.toggle('hidden', isFs);
+                exitIcon.classList.toggle('hidden', !isFs);
+            }
+            // עדכון גודל אזור העבודה לאחר כניסה/יציאה ממסך מלא
+            if (typeof onWindowResize === 'function') onWindowResize();
+            setTimeout(() => { if (typeof onWindowResize === 'function') onWindowResize(); }, 80);
+        }
+
+        // --- Tools Guide toggle (dg השער: מוצג רק בלחיצה על "?") ---
+        function toggleToolsGuide() {
+            playSound('click');
+            const guide = document.getElementById('tools-guide');
+            if (!guide) return;
+            guide.classList.toggle('hidden');
+            if (!guide.classList.contains('hidden')) {
+                guide.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // --- Language Toggle Logic ---
+        function toggleLanguage() {
+            playSound('click');
+            currentLang = currentLang === 'he' ? 'ar' : 'he';
+            
+            // Toggle the button text for all lang toggle buttons
+            const btns = document.querySelectorAll('.lang-toggle-btn');
+            btns.forEach(btn => {
+                btn.innerHTML = currentLang === 'he' ? '🌐 العربية' : '🌐 עברית';
+            });
+            
+            updateLanguage();
+        }
+
+        function updateLanguage() {
+            const t = i18n[currentLang];
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = 'rtl';
+            
+            // Update all standard data-i18n elements
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) {
+                    el.innerHTML = t[key];
+                }
+            });
+
+            // Update dynamic strings
+            updateDynamicTexts();
+            document.dispatchEvent(new CustomEvent('lab:languagechange', { detail: { lang: currentLang } }));
+        }
+
+        function updateDynamicTexts() {
+            const t = i18n[currentLang];
+
+            // Fullscreen button tooltip (מסך מלא / ملء الشاشة)
+            const fsBtn = document.getElementById('fullscreen-btn');
+            if (fsBtn) {
+                const tip = currentLang === 'he' ? 'מסך מלא' : 'ملء الشاشة';
+                fsBtn.title = tip;
+                fsBtn.setAttribute('aria-label', tip);
+            }
+
+            // Tools-guide "?" button tooltip (מדריך הכלים / دليل الأدوات)
+            const tgBtn = document.getElementById('tools-guide-btn');
+            if (tgBtn) {
+                const tip2 = currentLang === 'he' ? 'מדריך הכלים' : 'دليل الأدوات';
+                tgBtn.title = tip2;
+                tgBtn.setAttribute('aria-label', tip2);
+            }
+            
+            // Button texts
+            const btnColor = document.getElementById('color-toggle-btn');
+            if (btnColor) btnColor.innerHTML = isColorfulCubes ? t.color_off : t.color_on;
+            
+            const btnHigh = document.getElementById('highlight-btn');
+            if (btnHigh) btnHigh.innerHTML = highlightActive ? t.hl_off : t.hl_on;
+            
+            // Grid Subtitles
+            const gridSub = document.getElementById('grid-subtitle');
+            if (gridSub) {
+                if (currentMode === 'observation') gridSub.innerHTML = t.grid_sub_obs;
+                else if (currentMode === 'practice') gridSub.innerHTML = t.grid_sub_prac.replace('{maxH}', maxH);
+                else if (currentMode === 'challenge') gridSub.innerHTML = t.grid_sub_chal;
+            }
+
+            // Task Counter (if visible)
+            const levelInd = document.getElementById('level-indicator');
+            if (levelInd && currentMode !== 'observation') {
+                levelInd.innerText = t.task_counter.replace('{cur}', currentIndices[currentMode] + 1);
+            }
+
+            // Start / Continue button
+            const startBtn = document.getElementById('start-btn-text');
+            if (startBtn) {
+                startBtn.innerText = gameActive ? t.btn_continue : t.btn_start;
+            }
+
+            // End game texts if open
+            const nextBtn = document.getElementById('next-level-btn');
+            if (nextBtn && !nextBtn.classList.contains('hidden')) {
+                nextBtn.innerHTML = currentIndices[currentMode] < 9 ? t.btn_next : t.btn_results;
+            }
+        }
+
+
+        // --- Settings & Modal Logic ---
+        function openSettings() {
+            playSound('click');
+            document.getElementById('settings-modal').classList.remove('hidden');
+        }
+
+        function closeSettings() {
+            playSound('click');
+            document.getElementById('settings-modal').classList.add('hidden');
+        }
+
+        function applySettings() {
+            gridW = parseInt(document.getElementById('setting-width').value);
+            gridD = parseInt(document.getElementById('setting-depth').value);
+            maxH = parseInt(document.getElementById('setting-height').value);
+            
+            lastMaxCol = -1; lastTotalCubes = -1;
+            
+            closeSettings();
+            restartGame(); 
+            updateDynamicTexts(); // update maxH in text if needed
+        }
+
+        // --- Instruction Modals Logic ---
+        function openInstructionModal(mode) {
+            pendingMode = mode;
+            const modal = document.getElementById('instruction-modal');
+            const title = document.getElementById('instruction-title');
+            const content = document.getElementById('instruction-content');
+            const checkbox = document.getElementById('instruction-checkbox');
+
+            checkbox.checked = false; // איפוס 
+            
+            const t = i18n[currentLang];
+
+            if (mode === 'observation') {
+                title.innerText = t.mode_obs_title;
+                content.innerHTML = t.obs_html;
+            } else if (mode === 'practice') {
+                title.innerText = t.mode_prac_title;
+                content.innerHTML = t.prac_html;
+            } else if (mode === 'challenge') {
+                title.innerText = t.mode_chal_title;
+                content.innerHTML = t.chal_html;
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeInstructionModal() {
+            playSound('click');
+            const checkbox = document.getElementById('instruction-checkbox');
+            if (checkbox.checked && pendingMode) {
+                showInstructions[pendingMode] = false;
+            }
+            document.getElementById('instruction-modal').classList.add('hidden');
+            pendingMode = null;
+        }
+
+        function startModeFromInstruction() {
+            closeInstructionModal();
+        }
+
+        function startGame() {
+            playSound('click');
+            document.getElementById('welcome-screen').classList.add('hidden');
+            gameActive = true;
+            if (!timerInterval && currentMode !== 'observation') {
+                startTimer();
+            }
+            if (showInstructions[currentMode]) {
+                openInstructionModal(currentMode);
+            }
+            updateDynamicTexts(); // Updates start to continue
+        }
+
+        function goHome() {
+            playSound('click');
+            gameActive = false; 
+            document.getElementById('welcome-screen').classList.remove('hidden');
+            updateDynamicTexts();
+        }
+
+        function copyMatrix(mat) {
+            return mat.map(row => [...row]);
+        }
+
+        // --- PROCEDURAL GENERATION: EXPLICIT CONSTRUCTION ---
+        
+        function generateProceduralLevel() {
+            let mat = Array.from({length: gridD}, () => Array(gridW).fill(1));
+            
+            let totalCells = gridW * gridD;
+            let targetZeros = Math.max(1, Math.floor(totalCells * 0.15));
+            if (totalCells === 9 && Math.random() > 0.5) targetZeros = 2;
+            
+            let possibleZeros = [];
+            possibleZeros.push({r: 0, c: 0});
+            possibleZeros.push({r: 0, c: gridW-1});
+            possibleZeros.push({r: gridD-1, c: 0});
+            if (gridD > 2) possibleZeros.push({r: gridD-2, c: 0});
+            
+            possibleZeros.sort(() => Math.random() - 0.5);
+            for (let i = 0; i < targetZeros && i < possibleZeros.length; i++) {
+                mat[possibleZeros[i].r][possibleZeros[i].c] = 0;
+            }
+
+            for (let r = 0; r < gridD; r++) {
+                for (let c = 0; c < gridW; c++) {
+                    if (mat[r][c] === 0) continue;
+                    if (r === 0) mat[r][c] = (Math.random() < 0.8) ? 1 : 2;
+                    else if (r === gridD - 1) mat[r][c] = (Math.random() < 0.6) ? maxH : Math.max(1, maxH - 1);
+                    else mat[r][c] = Math.max(1, Math.floor(Math.random() * maxH) + 1);
+                }
+            }
+
+            for (let r = 0; r < gridD; r++) {
+                for (let c = 0; c < gridW; c++) {
+                    if (mat[r][c] === maxH) {
+                        let allowed = (r === gridD - 1) || (c === gridW - 1);
+                        let isFrontCorner = (r === 0 && (c === 0 || c === gridW - 1));
+                        if (!allowed || isFrontCorner) {
+                            mat[r][c] = Math.max(1, maxH - 1);
+                        }
+                    }
+                }
+            }
+
+            let maxFound = false;
+            for (let c = 0; c < gridW; c++) {
+                if (mat[gridD-1][c] === maxH) maxFound = true;
+            }
+            if (!maxFound) mat[gridD-1][Math.floor(gridW/2)] = maxH;
+            
+            for (let r = 0; r < gridD; r++) {
+                for (let c = 0; c < gridW; c++) {
+                    if (mat[r][c] === maxH) {
+                        if (c > 0 && mat[r][c-1] !== 0) mat[r][c-1] = Math.max(mat[r][c-1], maxH - 1);
+                        if (c < gridW-1 && mat[r][c+1] !== 0) mat[r][c+1] = Math.max(mat[r][c+1], maxH - 1);
+                    }
+                }
+            }
+
+            for (let smooth = 0; smooth < 3; smooth++) {
+                for (let r = 0; r < gridD; r++) {
+                    for (let c = 0; c < gridW; c++) {
+                        if (mat[r][c] === 0) continue;
+                        if (r < gridD - 1 && mat[r+1][c] > 0) {
+                            if (Math.abs(mat[r][c] - mat[r+1][c]) > 2) mat[r][c] = Math.max(1, mat[r+1][c] - 2);
+                        }
+                        if (c < gridW - 1 && mat[r][c+1] > 0) {
+                            if (Math.abs(mat[r][c] - mat[r][c+1]) > 2) mat[r][c] = Math.max(1, mat[r][c+1] - 2);
+                        }
+                    }
+                }
+            }
+
+            for (let c = 0; c < gridW; c++) {
+                if (mat[0][c] >= mat[gridD-1][c] && mat[gridD-1][c] > 0) {
+                    mat[0][c] = Math.max(1, mat[gridD-1][c] - 1);
+                }
+            }
+            
+            if (mat[0][0] === mat[0][gridW-1]) {
+                if (mat[0][0] > 0) mat[0][0] = Math.max(1, mat[0][0]-1);
+            }
+
+            return { matrix: mat };
+        }
+
+        function initLevels() {
+            levelBanks.observation = Array.from({length: 10}, (_, i) => generateProceduralLevel(i));
+            levelBanks.practice = Array.from({length: 10}, (_, i) => generateProceduralLevel(i));
+            levelBanks.challenge = Array.from({length: 10}, (_, i) => generateProceduralLevel(i));
+            currentIndices = { observation: 0, practice: 0, challenge: 0 };
+        }
+
+        // --- Core Mode Switching Logic ---
+        function setMode(mode) {
+            playSound('click');
+            currentMode = mode;
+            
+            isColorfulCubes = false;
+            highlightActive = false;
+            
+            clearHighlight();
+            
+            ['observation', 'practice', 'challenge'].forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if(t === mode) {
+                    btn.className = "flex-1 py-2.5 px-3 rounded-xl font-bold transition-all bg-indigo-600 text-white shadow-md active:scale-95 text-sm sm:text-base";
+                } else {
+                    btn.className = "flex-1 py-2.5 px-3 rounded-xl font-bold transition-all bg-slate-900/50 text-slate-400 hover:bg-slate-700 hover:text-white active:scale-95 text-sm sm:text-base";
+                }
+            });
+
+            const timerContainer = document.getElementById('timer-container');
+            const levelContainer = document.getElementById('level-container');
+            const scoreContainer = document.getElementById('score-container');
+
+            if (mode === 'observation') {
+                timerContainer.classList.add('hidden');
+                levelContainer.classList.add('hidden');
+                scoreContainer.classList.add('hidden');
+                totalSeconds = 0; 
+            } else {
+                timerContainer.classList.remove('hidden');
+                levelContainer.classList.remove('hidden');
+                scoreContainer.classList.remove('hidden');
+                totalSeconds = 0; 
+                if (gameActive && !timerInterval) startTimer();
+            }
+
+            loadCurrentLevel(); 
+            updateDynamicTexts(); 
+            
+            if (gameActive && showInstructions[mode]) {
+                openInstructionModal(mode);
+            }
+        }
+
+        function loadCurrentLevel() {
+            document.getElementById('feedback-message').classList.add('hidden');
+            document.getElementById('next-level-btn').classList.add('hidden'); 
+            attemptCounter = 0;
+
+            const actionContainer = document.getElementById('action-buttons-container');
+            const regenBtn = document.getElementById('regenerate-btn');
+            const challengeControls = document.getElementById('challenge-controls');
+
+            for (let r = 0; r < gridD; r++) {
+                for (let c = 0; c < gridW; c++) {
+                    const btn = document.getElementById(`cell-${r}-${c}`);
+                    if(btn) btn.classList.remove('border-emerald-500', 'border-[3px]');
+                }
+            }
+
+            if (currentMode === 'observation') {
+                actionContainer.classList.add('hidden');
+                regenBtn.classList.remove('hidden');
+                challengeControls.classList.add('hidden');
+                
+                const targetMatrix = levelBanks[currentMode][currentIndices[currentMode]].matrix;
+                draw3DCubes(targetMatrix);
+                update2DGridUI(targetMatrix, false); 
+                
+            } else if (currentMode === 'practice') {
+                actionContainer.classList.remove('hidden');
+                document.getElementById('clear-btn').classList.remove('hidden'); 
+                regenBtn.classList.add('hidden');
+                challengeControls.classList.add('hidden');
+                
+                const targetMatrix = levelBanks[currentMode][currentIndices[currentMode]].matrix;
+                draw3DCubes(targetMatrix);
+                clearPracticeInputs(); 
+
+            } else if (currentMode === 'challenge') {
+                actionContainer.classList.remove('hidden');
+                regenBtn.classList.add('hidden');
+                challengeControls.classList.remove('hidden'); 
+                document.getElementById('clear-btn').classList.add('hidden'); 
+
+                studentAnswers = Array.from({length: gridD}, () => Array(gridW).fill(0));
+                undoStack = [];
+                draw3DCubes(studentAnswers); 
+                const targetMatrix = levelBanks[currentMode][currentIndices[currentMode]].matrix;
+                update2DGridUI(targetMatrix, false); 
+            }
+        }
+
+        function regenerateCurrentLevel() {
+            playSound('click');
+            const newLevel = generateProceduralLevel(currentIndices[currentMode]);
+            levelBanks[currentMode][currentIndices[currentMode]] = newLevel;
+            loadCurrentLevel();
+            
+            const fb = document.getElementById('feedback-message');
+            fb.classList.remove('hidden');
+            fb.className = "text-center py-2 px-4 rounded-xl text-sm font-bold border bg-indigo-950/80 text-indigo-300 border-indigo-800/50 mt-4 shadow-md";
+            fb.innerText = i18n[currentLang].fb_new_lvl;
+        }
+
+        function goToNextLevel() {
+            playSound('click');
+            if (currentIndices[currentMode] < 9) {
+                currentIndices[currentMode]++;
+                loadCurrentLevel();
+                resetCamera();
+                updateDynamicTexts();
+            } else {
+                endGame();
+            }
+        }
+
+        // --- Interaction Logic ---
+        function saveToHistory() {
+            if(currentMode !== 'challenge') return;
+            undoStack.push(copyMatrix(studentAnswers));
+        }
+
+        function undoLastAction() {
+            if(currentMode !== 'challenge') return;
+            if(undoStack.length > 0) {
+                playSound('click');
+                studentAnswers = undoStack.pop();
+                draw3DCubes(studentAnswers);
+                clearHighlight();
+            }
+        }
+
+        function clearUserStructure() {
+            if(currentMode !== 'challenge') return;
+            playSound('click');
+            saveToHistory();
+            studentAnswers = Array.from({length: gridD}, () => Array(gridW).fill(0));
+            draw3DCubes(studentAnswers);
+            clearHighlight();
+        }
+
+        function on3DClick(r, c) {
+            if (currentMode === 'observation' || currentMode === 'practice') {
+                if(highlightActive) applyHighlight(r, c);
+            } else if (currentMode === 'challenge') {
+                saveToHistory();
+                let nextHeight = (studentAnswers[r][c] + 1) % (maxH + 1);
+                studentAnswers[r][c] = nextHeight;
+                draw3DCubes(studentAnswers); 
+                if(highlightActive) applyHighlight(r, c);
+                playSound('click');
+            }
+        }
+
+        function on2DClick(r, c) {
+            if (currentMode === 'observation' || currentMode === 'challenge') {
+                if(highlightActive) applyHighlight(r, c);
+            } else if (currentMode === 'practice') {
+                studentAnswers[r][c] = (studentAnswers[r][c] + 1) % (maxH + 1);
+                update2DButton(r, c, studentAnswers[r][c]);
+                if(highlightActive) applyHighlight(r, c);
+                playSound('click');
+            }
+        }
+
+        // --- Display Toggles ---
+        function toggleCubeColors() {
+            playSound('click');
+            isColorfulCubes = !isColorfulCubes;
+            updateDynamicTexts();
+            
+            const btn = document.getElementById('color-toggle-btn');
+            if (isColorfulCubes) {
+                btn.className = "bg-indigo-600/90 hover:bg-indigo-500 text-white px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1 active:scale-95 shadow-md border border-indigo-400/30";
+            } else {
+                btn.className = "bg-slate-700/80 hover:bg-slate-600 text-slate-300 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 active:scale-95 shadow-md border border-slate-600";
+            }
+            
+            let matrix = (currentMode === 'challenge') ? studentAnswers : levelBanks[currentMode][currentIndices[currentMode]].matrix;
+            draw3DCubes(matrix);
+            
+            for (let r = 0; r < gridD; r++) {
+                for (let c = 0; c < gridW; c++) {
+                    const cell = document.getElementById(`cell-${r}-${c}`);
+                    const val = parseInt(cell.innerText) || 0;
+                    update2DButton(r, c, val);
+                }
+            }
+        }
+
+        function toggleHighlight() {
+            playSound('click');
+            highlightActive = !highlightActive;
+            updateDynamicTexts();
+            
+            const btn = document.getElementById('highlight-btn');
+            if (highlightActive) {
+                btn.className = "bg-cyan-600/90 hover:bg-cyan-500 text-white px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1 active:scale-95 shadow-md border border-cyan-400/30";
+            } else {
+                btn.className = "bg-slate-700/80 hover:bg-slate-600 text-slate-300 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 active:scale-95 shadow-md border border-slate-600";
+                clearHighlight();
+            }
+        }
+
+        function applyHighlight(r, c) {
+            interactables.forEach(obj => {
+                if (obj.userData.r === r && obj.userData.c === c) {
+                    obj.material.emissive.setHex(highlightColor3D);
+                    obj.material.emissiveIntensity = 0.55;
+                } else {
+                    obj.material.emissive.setHex(0x000000);
+                }
+            });
+
+            for (let i = 0; i < gridD; i++) {
+                for (let j = 0; j < gridW; j++) {
+                    const btn = document.getElementById(`cell-${i}-${j}`);
+                    if(btn) {
+                        if (i === r && j === c) {
+                            btn.classList.add('highlighted-cell');
+                        } else {
+                            btn.classList.remove('highlighted-cell');
+                        }
+                    }
+                }
+            }
+        }
+
+        function clearHighlight() {
+            interactables.forEach(obj => {
+                if(obj.material && obj.material.emissive) obj.material.emissive.setHex(0x000000);
+            });
+            for (let i = 0; i < gridD; i++) {
+                for (let j = 0; j < gridW; j++) {
+                    const btn = document.getElementById(`cell-${i}-${j}`);
+                    if(btn) btn.classList.remove('highlighted-cell');
+                }
+            }
+        }
+
+        // --- 2D UI Management ---
+        function create2DGrid() {
+            const container = document.getElementById('dynamic-grid');
+            container.innerHTML = '';
+            container.style.gridTemplateColumns = `repeat(${gridW}, minmax(0, 1fr))`;
+            
+            studentAnswers = Array.from({length: gridD}, () => Array(gridW).fill(0));
+            undoStack = [];
+            
+            const sizeClass = gridW >= 5 ? 'w-10 h-10 sm:w-14 sm:h-14 text-lg' : 'w-14 h-14 sm:w-20 sm:h-20 text-xl sm:text-2xl';
+
+            for (let r = gridD - 1; r >= 0; r--) {
+                for (let c = 0; c < gridW; c++) {
+                    const btn = document.createElement('button');
+                    btn.id = `cell-${r}-${c}`;
+                    btn.onclick = () => on2DClick(r, c);
+                    btn.className = `${sizeClass} rounded-xl font-black flex items-center justify-center transition-all duration-300 border-2 shadow-md hover:scale-105 active:scale-95 cursor-pointer bg-slate-800/60 border-slate-700 text-slate-400`;
+                    btn.innerText = "0";
+                    container.appendChild(btn);
+                }
+            }
+        }
+
+        function update2DButton(r, c, val) {
+            const btn = document.getElementById(`cell-${r}-${c}`);
+            if(!btn) return;
+            btn.innerText = val;
+            
+            btn.classList.remove(
+                "bg-amber-500", "border-amber-300", "text-slate-950",
+                "bg-orange-500", "border-orange-300", "text-white",
+                "bg-red-500", "border-red-300",
+                "bg-purple-500", "border-purple-300",
+                "bg-blue-600", "border-blue-400",
+                "bg-slate-800/60", "border-slate-700", "text-slate-400",
+                "border-emerald-500"
+            ); 
+            
+            if (isColorfulCubes) {
+                switch(val) {
+                    case 1: btn.classList.add("bg-amber-500", "border-amber-300", "text-slate-950"); break;
+                    case 2: btn.classList.add("bg-orange-500", "border-orange-300", "text-white"); break;
+                    case 3: btn.classList.add("bg-red-500", "border-red-300", "text-white"); break;
+                    case 4: btn.classList.add("bg-purple-500", "border-purple-300", "text-white"); break;
+                    default: btn.classList.add("bg-slate-800/60", "border-slate-700", "text-slate-400"); break;
+                }
+            } else {
+                if (val > 0) {
+                    btn.classList.add("bg-blue-600", "border-blue-400", "text-white");
+                } else {
+                    btn.classList.add("bg-slate-800/60", "border-slate-700", "text-slate-400");
+                }
+            }
+        }
+
+        function update2DGridUI(matrix, isClickable = true) {
+            for (let r = 0; r < gridD; r++) {
+                for (let c = 0; c < gridW; c++) {
+                    update2DButton(r, c, matrix[r][c]);
+                    const btn = document.getElementById(`cell-${r}-${c}`);
+                    if(!isClickable) {
+                        btn.classList.remove('hover:scale-105', 'active:scale-95', 'cursor-pointer');
+                    } else {
+                        btn.classList.add('hover:scale-105', 'active:scale-95', 'cursor-pointer');
+                    }
+                }
+            }
+        }
+
+        function clearPracticeInputs() {
+            playSound('click');
+            for (let r = 0; r < gridD; r++) {
+                for (let c = 0; c < gridW; c++) {
+                    studentAnswers[r][c] = 0;
+                    update2DButton(r, c, 0);
+                    const btn = document.getElementById(`cell-${r}-${c}`);
+                    btn.classList.add('hover:scale-105', 'active:scale-95', 'cursor-pointer');
+                }
+            }
+        }
+
+        // --- Validation & Feedback Logic ---
+        function checkAnswer() {
+            const t = i18n[currentLang];
+            const fb = document.getElementById('feedback-message');
+            
+            // בדיקת "ניסיון ריק" לפי ההנחיות
+            let hasAttempt = false;
+            for (let r = 0; r < gridD; r++) {
+                for (let c = 0; c < gridW; c++) {
+                    if (studentAnswers[r][c] !== 0) {
+                        hasAttempt = true;
+                        break;
+                    }
+                }
+                if (hasAttempt) break;
+            }
+
+            if (!hasAttempt) {
+                fb.classList.remove('hidden', 'bg-red-900/50', 'text-red-200', 'border-red-800', 'bg-emerald-900/50', 'text-emerald-200', 'border-emerald-800', 'bg-emerald-950/80', 'text-emerald-300', 'border-emerald-800/50', 'bg-rose-950/80', 'text-rose-300', 'border-rose-800/50');
+                fb.className = "text-center py-4 px-4 rounded-xl text-base font-bold border bg-slate-800/80 text-cyan-300 border-cyan-800/50 mt-4 shadow-lg";
+                fb.innerText = t.fb_no_attempt;
+                return; // יציאה ללא עדכון מונה הניסיונות או ניקוד
+            }
+
+            // מכאן והלאה - בדיקת תשובה רגילה (ניסיון אמיתי)
+            attemptCounter++;
+            const targetMatrix = levelBanks[currentMode][currentIndices[currentMode]].matrix;
+            let isAllCorrect = true;
+
+            for (let r = 0; r < gridD; r++) {
+                for (let c = 0; c < gridW; c++) {
+                    const btn = document.getElementById(`cell-${r}-${c}`);
+                    if(btn) btn.classList.remove('border-emerald-500', 'border-[3px]');
+
+                    if (studentAnswers[r][c] !== targetMatrix[r][c]) {
+                        isAllCorrect = false;
+                    }
+                }
+            }
+
+            fb.classList.remove('hidden', 'bg-red-900/50', 'text-red-200', 'border-red-800', 'bg-emerald-900/50', 'text-emerald-200', 'border-emerald-800', 'bg-emerald-950/80', 'text-emerald-300', 'border-emerald-800/50', 'bg-rose-950/80', 'text-rose-300', 'border-rose-800/50', 'bg-slate-800/80', 'text-cyan-300', 'border-cyan-800/50');
+            const nextBtn = document.getElementById('next-level-btn');
+
+            if (isAllCorrect) {
+                playSound('success');
+                fb.className = "text-center py-4 px-4 rounded-xl text-base font-bold border bg-emerald-950/80 text-emerald-300 border-emerald-800/50 mt-4 shadow-lg";
+                
+                for (let r = 0; r < gridD; r++) {
+                    for (let c = 0; c < gridW; c++) {
+                        const btn = document.getElementById(`cell-${r}-${c}`);
+                        if(btn) btn.classList.add('border-emerald-500', 'border-[3px]');
+                    }
+                }
+
+                if(currentMode === 'challenge') {
+                    fb.innerText = t.fb_correct_chal;
+                } else {
+                    fb.innerText = t.fb_correct_prac;
+                }
+
+                const gainedPoints = attemptCounter === 1 ? 10 : 5;
+                score += gainedPoints;
+                document.getElementById('score-display').innerText = score;
+
+                nextBtn.classList.remove('hidden');
+                updateDynamicTexts(); 
+                
+                document.getElementById('action-buttons-container').classList.add('hidden');
+
+            } else {
+                playSound('fail');
+                fb.className = "text-center py-4 px-4 rounded-xl text-base font-bold border bg-rose-950/80 text-rose-300 border-rose-800/50 mt-4 shadow-lg";
+                
+                if (currentMode === 'practice') {
+                    if (attemptCounter === 1) fb.innerText = t.fb_err_1;
+                    else if (attemptCounter === 2) fb.innerText = t.fb_err_prac_2;
+                    else fb.innerText = t.fb_err_prac_3;
+                } else if (currentMode === 'challenge') {
+                    if (attemptCounter === 1) fb.innerText = t.fb_err_1;
+                    else if (attemptCounter === 2) fb.innerText = t.fb_err_chal_2;
+                    else fb.innerText = t.fb_err_chal_3;
+                }
+                
+                nextBtn.classList.add('hidden'); 
+            }
+        }
+
+        // --- Three.js & Raycaster Logic ---
+        function setupRaycaster() {
+            const container = document.getElementById('canvas-container');
+            
+            let pointerDownX = 0, pointerDownY = 0;
+            const DRAG_THRESHOLD = 6; // סף תנועה בפיקסלים: מבדיל בין לחיצה קצרה לגרירה (מתקן לחיצות בעכבר)
+            container.addEventListener('pointerdown', (e) => {
+                isPointerDragging = false;
+                pointerDownX = e.clientX;
+                pointerDownY = e.clientY;
+            });
+            container.addEventListener('pointermove', (e) => {
+                if (Math.abs(e.clientX - pointerDownX) > DRAG_THRESHOLD ||
+                    Math.abs(e.clientY - pointerDownY) > DRAG_THRESHOLD) {
+                    isPointerDragging = true;
+                }
+            });
+            
+            container.addEventListener('pointerup', (e) => {
+                if (isPointerDragging) return; 
+                
+                const rect = container.getBoundingClientRect();
+                mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+                mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObjects(interactables, false);
+
+                if (intersects.length > 0) {
+                    const r = intersects[0].object.userData.r;
+                    const c = intersects[0].object.userData.c;
+                    if (r !== undefined && c !== undefined) {
+                        on3DClick(r, c);
+                    }
+                } else {
+                    if (highlightActive) clearHighlight();
+                }
+            });
+        }
+
+        function initThree() {
+            const container = document.getElementById('canvas-container');
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xffffff); 
+
+            camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 100);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(renderer.domElement);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            
+            controls.minAzimuthAngle = -Infinity; 
+            controls.maxAzimuthAngle = Infinity; 
+            controls.maxPolarAngle = Math.PI / 2.2; 
+            controls.minPolarAngle = Math.PI / 6; 
+
+            controls.minDistance = 3.5;
+            controls.maxDistance = 20;
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+            
+            const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.7);
+            dirLight1.position.set(4, 10, 6);
+            dirLight1.castShadow = true;
+            scene.add(dirLight1);
+            
+            const dirLight2 = new THREE.DirectionalLight(0x38bdf8, 0.5); 
+            dirLight2.position.set(-6, 5, -8);
+            scene.add(dirLight2);
+
+            baseGroup = new THREE.Group();
+            scene.add(baseGroup);
+            cubesGroup = new THREE.Group();
+            scene.add(cubesGroup);
+
+            rebuildThreeScene(); 
+            
+            animate();
+            window.addEventListener('resize', onWindowResize);
+        }
+
+        function rebuildThreeScene() {
+            while(baseGroup.children.length > 0) baseGroup.remove(baseGroup.children[0]);
+            while(cubesGroup.children.length > 0) cubesGroup.remove(cubesGroup.children[0]);
+            if(frontArrowMesh) {
+                scene.remove(frontArrowMesh);
+                frontArrowMesh = null;
+            }
+            
+            interactables = [];
+            buildBaseFloor();
+            buildFrontArrow();
+            resetCamera();
+        }
+
+        function buildBaseFloor() {
+            for (let r = 0; r < gridD; r++) {
+                for (let c = 0; c < gridW; c++) {
+                    const x = ((gridW - 1) / 2.0) - c; 
+                    const z = ((gridD - 1) / 2.0) - r; 
+
+                    const tileGeo = new THREE.BoxGeometry(CUBE_SIZE, 0.05, CUBE_SIZE);
+                    const tileMat = new THREE.MeshStandardMaterial({
+                        color: 0x1e293b, roughness: 0.8, metalness: 0.1
+                    });
+                    const tileMesh = new THREE.Mesh(tileGeo, tileMat);
+                    tileMesh.position.set(x, -0.025, z);
+                    tileMesh.userData = { r: r, c: c, isBase: true };
+                    
+                    const edgeGeo = new THREE.EdgesGeometry(tileGeo);
+                    const line = new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({ color: 0x4f46e5, linewidth: 2 }));
+                    tileMesh.add(line);
+
+                    interactables.push(tileMesh);
+                    baseGroup.add(tileMesh);
+                }
+            }
+        }
+
+        function buildFrontArrow() {
+            const shape = new THREE.Shape();
+            shape.moveTo(0, 0); 
+            shape.lineTo(0.4, -0.5); 
+            shape.lineTo(0.2, -0.5); 
+            shape.lineTo(0.2, -1.0); 
+            shape.lineTo(-0.2, -1.0); 
+            shape.lineTo(-0.2, -0.5); 
+            shape.lineTo(-0.4, -0.5); 
+            shape.lineTo(0, 0); 
+
+            const geometry = new THREE.ShapeGeometry(shape);
+            const material = new THREE.MeshStandardMaterial({ 
+                color: 0x38bdf8, 
+                roughness: 0.3,
+                metalness: 0.2,
+                side: THREE.DoubleSide 
+            });
+            frontArrowMesh = new THREE.Mesh(geometry, material);
+
+            const frontZ = (gridD - 1) / 2.0 + 0.8;
+            frontArrowMesh.position.set(0, 0.01, frontZ); 
+            frontArrowMesh.rotation.x = -Math.PI / 2;
+            
+            scene.add(frontArrowMesh);
+        }
+
+        function draw3DCubes(matrix) {
+            while (cubesGroup.children.length > 0) cubesGroup.remove(cubesGroup.children[0]);
+            
+            interactables = interactables.filter(obj => obj.userData.isBase);
+
+            for (let r = 0; r < gridD; r++) {
+                for (let c = 0; c < gridW; c++) {
+                    const stackHeight = matrix[r][c];
+                    const x = ((gridW - 1) / 2.0) - c; 
+                    const z = ((gridD - 1) / 2.0) - r; 
+
+                    for (let h = 0; h < stackHeight; h++) {
+                        const cubeGeo = new THREE.BoxGeometry(CUBE_SIZE, CUBE_SIZE, CUBE_SIZE);
+                        
+                        const cubeColor = isColorfulCubes ? colorsByHeight[Math.min(h, colorsByHeight.length-1)] : 0x94a3b8; 
+                        
+                        const cubeMat = new THREE.MeshStandardMaterial({
+                            color: cubeColor, roughness: 0.6, metalness: 0.05
+                        });
+                        const cubeMesh = new THREE.Mesh(cubeGeo, cubeMat);
+                        
+                        cubeMesh.position.set(x, h + (CUBE_SIZE / 2), z);
+                        cubeMesh.castShadow = true;
+                        cubeMesh.receiveShadow = true;
+                        cubeMesh.userData = { r: r, c: c, isBase: false };
+
+                        const edgeGeo = new THREE.EdgesGeometry(cubeGeo);
+                        const line = new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({ color: 0x475569, linewidth: 2 }));
+                        cubeMesh.add(line);
+
+                        interactables.push(cubeMesh);
+                        cubesGroup.add(cubeMesh);
+                    }
+                }
+            }
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('canvas-container');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        function resetCamera() {
+            controls.reset();
+            const sizeFactor = Math.max(gridW, gridD);
+            const camDistX = 5.0 + (gridW * 0.4);
+            const camDistY = 5.0 + (sizeFactor * 0.4);
+            const camDistZ = 6.0 + (gridD * 0.5);
+            camera.position.set(camDistX, camDistY, camDistZ); 
+            controls.target.set(0, 0.5, 0);
+            controls.update();
+        }
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval); 
+            gameActive = true;
+            timerInterval = setInterval(() => {
+                if(gameActive) {
+                    totalSeconds++;
+                    document.getElementById('timer-display').innerText = String(Math.floor(totalSeconds/60)).padStart(2,'0') + ":" + String(totalSeconds%60).padStart(2,'0');
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            playSound('success');
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('final-time').innerText = document.getElementById('timer-display').innerText;
+            document.getElementById('gameover-modal').classList.remove('hidden');
+            spawnConfetti(); 
+        }
+
+        function restartGame() {
+            currentIndices[currentMode] = 0; 
+            score = 0; 
+            totalSeconds = 0;
+            document.getElementById('score-display').innerText = "0";
+            document.getElementById('gameover-modal').classList.add('hidden');
+            
+            create2DGrid();
+            initLevels();
+            rebuildThreeScene();
+            setMode(currentMode); 
+        }
+
+        function playSound(type) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const now = ctx.currentTime;
+                if (type === 'success') {
+                    [261.63, 329.63, 392.00, 523.25].forEach((freq, idx) => {
+                        const osc = ctx.createOscillator(), gain = ctx.createGain();
+                        osc.type = 'triangle'; osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+                        gain.gain.setValueAtTime(0.12, now + idx * 0.08);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.25);
+                        osc.connect(gain); gain.connect(ctx.destination);
+                        osc.start(now + idx * 0.08); osc.stop(now + idx * 0.08 + 0.3);
+                    });
+                } else if (type === 'fail') {
+                    const osc = ctx.createOscillator(), gain = ctx.createGain();
+                    osc.type = 'sawtooth'; osc.frequency.setValueAtTime(140, now); osc.frequency.linearRampToValueAtTime(90, now + 0.3);
+                    gain.gain.setValueAtTime(0.15, now); gain.gain.linearRampToValueAtTime(0.001, now + 0.35);
+                    osc.connect(gain); gain.connect(ctx.destination);
+                    osc.start(now); osc.stop(now + 0.38);
+                } else if (type === 'click') {
+                    const osc = ctx.createOscillator(), gain = ctx.createGain();
+                    osc.type = 'sine'; osc.frequency.setValueAtTime(580, now);
+                    gain.gain.setValueAtTime(0.03, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                    osc.connect(gain); gain.connect(ctx.destination);
+                    osc.start(now); osc.stop(now + 0.06);
+                }
+            } catch (err) {}
+        }
+
+        let confettiActive = false; const confettiCanvas = document.getElementById('confetti-canvas'), confettiCtx = confettiCanvas.getContext('2d'); let confettiParticles = [];
+        function resizeConfetti() { confettiCanvas.width = window.innerWidth; confettiCanvas.height = window.innerHeight; }
+        function spawnConfetti() {
+            confettiActive = true; confettiCanvas.classList.remove('hidden'); resizeConfetti(); window.addEventListener('resize', resizeConfetti);
+            confettiParticles = Array.from({length: 110}, () => ({ x: Math.random() * confettiCanvas.width, y: Math.random() * Math.random() * confettiCanvas.height - confettiCanvas.height, size: Math.random() * 8 + 5, color: `hsl(${Math.random() * 360}, 85%, 65%)`, speedX: Math.random() * 4 - 2, speedY: Math.random() * 5 + 4, rotation: Math.random() * 360, rotationSpeed: Math.random() * 8 - 4 }));
+            requestAnimationFrame(updateConfetti);
+        }
+        function updateConfetti() {
+            if (!confettiActive) return; confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height); let anyAlive = false;
+            confettiParticles.forEach(p => {
+                p.y += p.speedY; p.x += p.speedX; p.rotation += p.rotationSpeed; if (p.y < confettiCanvas.height) anyAlive = true;
+                confettiCtx.save(); confettiCtx.translate(p.x, p.y); confettiCtx.rotate((p.rotation * Math.PI) / 180); confettiCtx.fillStyle = p.color; confettiCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size); confettiCtx.restore();
+            });
+            anyAlive ? requestAnimationFrame(updateConfetti) : (confettiActive = false, confettiCanvas.classList.add('hidden'));
+        }
+    </script>
+    <script src="../assets/lab-shell.js" data-portal-href="../../index.html#labs"></script>
+</body>
+</html>

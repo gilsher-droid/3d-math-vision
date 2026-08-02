@@ -3,15 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3D Math Vision</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <title>Spatial Vision | ראייה מרחבית בהוראת המתמטיקה</title>
+  <meta name="description" content="פורטל למורי מתמטיקה בנושא ראייה מרחבית, שאלון 35372, מטעם הפקולטה לחינוך באוניברסיטת חיפה.">
 <link rel="stylesheet" href="style.css">
     
    </head>
 
 <body>
+<a class="skip-link" href="#main-content">דילוג לתוכן המרכזי</a>
 <header>
   <div class="brand">
     <img src="UHLogo.jpeg" alt="University of Haifa Faculty of Education logo">
@@ -42,7 +41,7 @@
     </div>
   </div>
 </header>
-<main>
+<main id="main-content">
 
 <section id="home" class="hero">
   <div>
@@ -56,8 +55,8 @@ Spatial Vision הוא פורטל מידע והוראה למורים למתמטי
       </p>
 
       <div class="buttons">
-        <a class="btn btn-primary" href="#resources">כניסה למשאבי ההוראה</a>
-        <a class="btn btn-secondary" href="#curriculum">מיפוי תכנית הלימודים</a>
+        <a class="btn btn-primary" href="#labs">כניסה למעבדות</a>
+        <a class="btn btn-secondary" href="#resources">משאבי הוראה</a>
       </div>
     </div>
 
@@ -91,6 +90,10 @@ Spatial Vision הוא פורטל מידע והוראה למורים למתמטי
 
         <a href="#resources" class="btn btn-secondary">
           מעבר למאגר המשאבים
+        </a>
+
+        <a href="#labs" class="btn btn-secondary">
+          התנסות במעבדות
         </a>
       </div>
     </div>
@@ -143,13 +146,51 @@ Spatial Vision הוא פורטל מידע והוראה למורים למתמטי
 </section>
 
   
-      <section id="labs">
-  <h2 class="section-title">מעבדות אינטראקטיביות</h2>
+<section id="labs" class="labs-section" aria-labelledby="labs-title">
+  <div class="section-heading-row">
+    <div>
+      <p class="eyebrow">למידה פעילה בעברית ובערבית</p>
+      <h2 class="section-title" id="labs-title">מעבדות אינטראקטיביות</h2>
+      <p class="section-subtitle">
+        תשע פעילויות מוכנות לתרגול בכיתה או לעבודה עצמית. מומלץ להתחיל בכלי החקר,
+        ורק לאחר מכן לעבור לשאלות הבגרות האינטראקטיביות.
+      </p>
+    </div>
+    <a class="btn btn-secondary catalog-link" href="labs/index.html">צפייה בכל המעבדות</a>
+  </div>
 
-  <p class="section-subtitle">
-    באזור זה יופיעו המעבדות האינטראקטיביות שפותחו במסגרת הפרויקט,
-    ויאפשרו למורים ולתלמידים לתרגל ראייה מרחבית באופן דינמי.
-  </p>
+  <h3 class="labs-group-title">כלי חקר ובנייה</h3>
+  <div class="lab-grid lab-grid-featured">
+    <article class="lab-card featured">
+      <div class="lab-card-top"><span class="lab-icon" aria-hidden="true">👁️</span><span class="lab-badge">עברית</span></div>
+      <h4>מעבדת מבטים</h4>
+      <p>בניית מבנה מקוביות והשוואה בין מבט מלפנים, מהצד ומלמעלה.</p>
+      <a class="lab-link" href="labs/views-lab/index.html">פתיחת המעבדה <span aria-hidden="true">←</span></a>
+    </article>
+    <article class="lab-card featured">
+      <div class="lab-card-top"><span class="lab-icon" aria-hidden="true">🧊</span><span class="lab-badge">עברית</span></div>
+      <h4>בנייה חופשית בתלת־ממד</h4>
+      <p>סביבת התנסות פתוחה לבניית מבנים, סיבובם ובחינת הייצוגים שלהם.</p>
+      <a class="lab-link" href="labs/free-builder/index.html">פתיחת המעבדה <span aria-hidden="true">←</span></a>
+    </article>
+    <article class="lab-card featured">
+      <div class="lab-card-top"><span class="lab-icon" aria-hidden="true">🏗️</span><span class="lab-badge bilingual">עברית · العربية</span></div>
+      <h4>מהנדס הקוביות</h4>
+      <p>אתגר דו־לשוני לבניית מבנים לפי תנאים, ממדים ומבטים נתונים.</p>
+      <a class="lab-link" href="labs/cube-engineer/index.html">פתיחת המעבדה <span aria-hidden="true">←</span></a>
+    </article>
+  </div>
+
+  <h3 class="labs-group-title">שאלות בגרות אינטראקטיביות · שאלון 35372</h3>
+  <div class="lab-grid exam-grid">
+    <article class="lab-card"><span class="lab-badge bilingual">עברית · العربية</span><h4>קיץ תשפ״ד 2024 · מועד ב׳</h4><p>תרגול מלא עם בדיקת תשובות, משוב וסביבת המחשה.</p><a class="lab-link" href="labs/exams/summer-b-2024/index.html">פתיחת השאלה <span aria-hidden="true">←</span></a></article>
+    <article class="lab-card"><span class="lab-badge bilingual">עברית · العربية</span><h4>חורף תשפ״ה 2025</h4><p>התאמת מבנים למבטים, שרטוט ותרשים מספרים.</p><a class="lab-link" href="labs/exams/winter-2025/index.html">פתיחת השאלה <span aria-hidden="true">←</span></a></article>
+    <article class="lab-card"><span class="lab-badge bilingual">עברית · العربية</span><h4>קיץ תשפ״ה 2025 · מועד א׳</h4><p>פירוק מבנה, חישוב מבטים ופעילות חקר תלת־ממדית.</p><a class="lab-link" href="labs/exams/summer-a-2025/index.html">פתיחת השאלה <span aria-hidden="true">←</span></a></article>
+    <article class="lab-card"><span class="lab-badge bilingual">עברית · العربية</span><h4>קיץ תשפ״ה 2025 · מועד ב׳</h4><p>השלמת מבטים ושינוי מבנה תוך שמירה על תנאי השאלה.</p><a class="lab-link" href="labs/exams/summer-b-2025/index.html">פתיחת השאלה <span aria-hidden="true">←</span></a></article>
+    <article class="lab-card"><span class="lab-badge bilingual">עברית · العربية</span><h4>חורף תשפ״ו 2026</h4><p>שאלה דו־לשונית עם מעבר שפה, משוב מדורג ועזרה חזותית.</p><a class="lab-link" href="labs/exams/winter-2026/index.html">פתיחת השאלה <span aria-hidden="true">←</span></a></article>
+    <article class="lab-card"><span class="lab-badge bilingual">עברית · العربية</span><h4>קיץ תשפ״ו 2026 · מועד א׳</h4><p>מעבר בין מבנה, מבטים ותרשימי מספרים בשאלה מלאה.</p><a class="lab-link" href="labs/exams/summer-a-2026/index.html">פתיחת השאלה <span aria-hidden="true">←</span></a></article>
+  </div>
+  <p class="session-disclaimer">המעבדות פועלות בדפדפן. ההתקדמות נשמרת בדף הנוכחי בלבד ונמחקת ברענון או בסגירה.</p>
 </section>
 <section id="videos">
   <h2 class="section-title">סרטוני הדרכה</h2>
