@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ראייה מרחבית · שאלון 35372 · בגרות חורף תשפ״ו 2026</title>
+<style>
+
+:root{
+  --blue-900:#0b2545;--blue-800:#102b4f;--blue-700:#13315c;--blue-600:#1d4e89;--blue-500:#2f6fb5;
+  --blue-300:#8ab6e0;--blue-100:#e7f0fa;--blue-050:#f3f8fd;
+  --ink:#1a2433;--muted:#5b6b80;--line:#cdd9e8;
+  --ok:#15803d;--ok-bg:#e8f7ee;--bad:#b42318;--bad-bg:#fdecea;--gold:#b88008;
+  --shadow:0 6px 22px rgba(13,37,69,.10);--radius:16px;
+  --cell:#fff;--fill:#7f8c9b;--fill-empty:#fff;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:"Segoe UI","Heebo","Arial",sans-serif;
+  background:radial-gradient(1200px 500px at 80% -10%,#eaf2fb 0%,transparent 60%),
+             linear-gradient(180deg,#f7fbff 0%,#eef5fc 100%);
+  color:var(--ink);line-height:1.6;min-height:100vh;
+}
+.wrap{max-width:980px;margin:0 auto;padding:18px 16px 90px;}
+.hidden{display:none !important;}
+
+header.top{text-align:center;padding:22px 18px;background:linear-gradient(135deg,var(--blue-700),var(--blue-500));
+  color:#fff;border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:8px;}
+header.top .eyebrow{letter-spacing:.18em;font-size:.78rem;opacity:.85;font-weight:600;}
+header.top h1{margin:.2em 0 .1em;font-size:1.55rem;font-weight:800;}
+header.top p{margin:.2em 0 0;opacity:.9;font-size:.95rem;}
+
+.progress-bar{display:flex;gap:6px;margin:14px 2px 20px;flex-wrap:wrap;}
+.progress-bar .chip{flex:1 1 90px;min-width:84px;text-align:center;padding:8px 6px;border-radius:10px;
+  background:#fff;border:1px solid var(--line);font-size:.82rem;font-weight:600;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;gap:6px;}
+.progress-bar .chip .dot{width:9px;height:9px;border-radius:50%;background:var(--line);}
+.progress-bar .chip.done{color:var(--ok);border-color:#bfe6cd;background:var(--ok-bg);}
+.progress-bar .chip.done .dot{background:var(--ok);}
+.progress-bar .chip.wrong{color:var(--bad);border-color:#f3c0bb;background:var(--bad-bg);}
+.progress-bar .chip.wrong .dot{background:var(--bad);}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+  margin:18px 0;overflow:hidden;}
+.card>.card-head{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--blue-050);
+  border-bottom:1px solid var(--line);}
+.card-head .badge{width:38px;height:38px;border-radius:11px;flex:none;
+  background:linear-gradient(135deg,var(--blue-600),var(--blue-500));color:#fff;font-weight:800;font-size:1.15rem;
+  display:flex;align-items:center;justify-content:center;}
+.card-head h2{margin:0;font-size:1.12rem;color:var(--blue-900);}
+.card-head .sub{margin:2px 0 0;font-size:.85rem;color:var(--muted);font-weight:500;}
+.card-head .sec-badge{margin-inline-start:auto;font-weight:800;font-size:.95rem;padding:5px 12px;border-radius:999px;
+  white-space:nowrap;display:none;}
+.card-head .sec-badge.ok{display:inline-block;background:var(--ok-bg);color:var(--ok);border:1px solid #bfe6cd;}
+.card-head .sec-badge.bad{display:inline-block;background:var(--bad-bg);color:var(--bad);border:1px solid #f3c0bb;}
+.card-body{padding:18px;}
+.prompt{font-size:1rem;margin:0 0 14px;}
+.hint-text{color:var(--muted);font-size:.9rem;}
+
+button{font-family:inherit;cursor:pointer;}
+.btn{border:none;border-radius:10px;padding:10px 18px;font-size:.95rem;font-weight:700;
+  background:var(--blue-600);color:#fff;transition:.15s;}
+.btn:hover{background:var(--blue-700);}
+.btn:active{transform:translateY(1px);}
+.btn:disabled{opacity:.55;cursor:default;}
+.btn.ghost{background:#fff;color:var(--blue-700);border:1.5px solid var(--blue-300);}
+.btn.ghost:hover{background:var(--blue-100);}
+.btn.sm{padding:7px 13px;font-size:.85rem;}
+.btn.big{padding:14px 30px;font-size:1.1rem;}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px;}
+
+/* ---- אזור תוצאה לכל סעיף (מוסתר עד בדיקה) ---- */
+.result{display:none;margin-top:16px;}
+.result.show{display:block;}
+.result .verdict{padding:12px 14px;border-radius:12px;font-weight:700;}
+.result .verdict.ok{background:var(--ok-bg);color:var(--ok);border:1px solid #bfe6cd;}
+.result .verdict.bad{background:var(--bad-bg);color:var(--bad);border:1px solid #f3c0bb;}
+.result .explain{margin-top:12px;padding:12px 14px;border-radius:12px;background:#fffdf5;
+  border:1px dashed var(--gold);color:#6b5310;font-size:.92rem;}
+.result .explain b{color:var(--gold);}
+.result .selfcheck{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--blue-050);
+  border:1px solid var(--blue-300);color:var(--blue-800);font-size:.95rem;line-height:1.55;}
+.result .help-host{margin-top:12px;}
+.success-msg{text-align:center;font-size:1.25rem;font-weight:800;color:var(--ok);
+  background:var(--ok-bg);border:1px solid #bfe6cd;border-radius:14px;padding:16px;margin-bottom:14px;}
+
+/* ---- רשתות (חובה LTR, עמודה שמאלית = עמודה 0) ---- */
+.grid-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.ltr-note{font-size:.74rem;color:var(--muted);direction:ltr;}
+.grid{direction:ltr;display:grid;border:2px solid var(--blue-700);background:var(--blue-700);
+  gap:2px;width:max-content;border-radius:8px;overflow:hidden;}
+.grid .cell{width:54px;height:54px;background:var(--cell);display:flex;align-items:center;justify-content:center;
+  font-size:1.35rem;font-weight:700;color:var(--ink);user-select:none;transition:background .1s;}
+.grid.clickable .cell{cursor:pointer;}
+.grid.clickable .cell:hover{background:var(--blue-100);}
+.grid .cell.shade-on{background:var(--fill);}
+.grid .cell.shade-off{background:var(--fill-empty);}
+.grid.shade .cell{color:transparent;}
+.grid .cell.add-cell{box-shadow:inset 0 0 0 3px var(--blue-500);}
+@media(max-width:520px){.grid .cell{width:44px;height:44px;font-size:1.1rem;}}
+.view-label{font-size:.85rem;font-weight:700;color:var(--blue-700);direction:rtl;}
+
+/* ---- סעיף ב ---- */
+.views4{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;direction:ltr;margin-top:6px;}
+@media(min-width:760px){.views4{grid-template-columns:repeat(4,1fr);}}
+.view-block{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--blue-050);
+  display:flex;flex-direction:column;align-items:center;gap:10px;}
+.view-block .roman{font-size:1.2rem;font-weight:800;color:var(--blue-800);direction:ltr;}
+.mini-grid{direction:ltr;display:grid;grid-template-columns:repeat(4,26px);grid-auto-rows:26px;gap:2px;
+  background:#9aa7b6;border:1.5px solid #6b7889;}
+.mini-grid div{background:#fff;}
+.mini-grid div.on{background:var(--fill);}
+.assign-row{direction:rtl;width:100%;}
+.assign-row select{width:100%;padding:8px;border-radius:8px;border:1.5px solid var(--blue-300);
+  font-family:inherit;font-size:.85rem;background:#fff;color:var(--ink);}
+
+/* ---- סעיף ד ---- */
+.explore{display:grid;gap:18px;}
+@media(min-width:760px){.explore{grid-template-columns:1fr 1fr;}}
+.panel{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--blue-050);}
+.panel h3{margin:0 0 10px;font-size:.98rem;color:var(--blue-800);}
+.live-views{display:flex;gap:16px;flex-wrap:wrap;direction:rtl;}
+.live-views .vcol{display:flex;flex-direction:column;align-items:center;gap:5px;}
+.editor-help{font-size:.82rem;color:var(--muted);margin:0 0 8px;direction:rtl;}
+.task-list{list-style:none;padding:0;margin:10px 0 0;direction:rtl;}
+.task-list li{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:.9rem;color:var(--muted);}
+.task-list li .n{width:20px;height:20px;border-radius:50%;flex:none;display:flex;align-items:center;
+  justify-content:center;font-size:.78rem;background:#dbe6f2;color:var(--blue-700);font-weight:800;}
+.counter-pill{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid var(--blue-300);
+  border-radius:999px;padding:5px 14px;font-weight:700;color:var(--blue-700);font-size:.9rem;}
+
+/* ---- תלת־ממד ---- */
+.viewer{display:none;margin-top:14px;border:1px solid var(--line);border-radius:14px;
+  background:linear-gradient(180deg,#f5f9fd,#eaf1f9);overflow:hidden;}
+.viewer.open{display:block;}
+.viewer .stage{position:relative;height:330px;overflow:hidden;perspective:1100px;touch-action:none;cursor:grab;}
+.viewer .stage:active{cursor:grabbing;}
+.scene{position:absolute;left:50%;top:54%;transform-style:preserve-3d;transition:transform .05s linear;}
+.cube{position:absolute;transform-style:preserve-3d;}
+.face{position:absolute;border:1px solid rgba(40,60,90,.55);box-sizing:border-box;}
+.face.top{background:#dfe7f1;}.face.left{background:#aab8c9;}.face.right{background:#c3cedd;}
+.face.front{background:#cfd9e6;}.face.back{background:#b6c2d2;}.face.bottom{background:#9aa7b6;}
+.cube.added .face.top{background:#cdeccf;}.cube.added .face.left{background:#8fce93;}
+.cube.added .face.right{background:#abdcae;}.cube.added .face.front{background:#a3d6a6;}
+.ground .face.top{background:#e9eef4;}
+.arrow3d{position:absolute;transform-style:preserve-3d;}
+.arrow3d .stem{position:absolute;background:#13315c;border:1px solid #0b2545;}
+.viewer .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;
+  border-top:1px solid var(--line);background:#fff;}
+.viewer .controls .spacer{flex:1;}
+.viewer .hint{font-size:.8rem;color:var(--muted);}
+
+/* ---- תמונת המבנה ---- */
+.exam-img-wrap{text-align:center;}
+.exam-img-wrap img{max-width:100%;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);}
+
+/* ---- כפתור בדיקה גלובלי + סיכום ---- */
+.check-cta{text-align:center;}
+.check-cta .note{font-size:.86rem;color:var(--muted);margin-top:10px;}
+.incomplete-note{display:none;margin:14px auto 0;max-width:560px;padding:12px 16px;border-radius:12px;
+  background:#fff7e6;border:1px solid #f0d18a;color:#8a6300;font-size:.95rem;font-weight:600;}
+.incomplete-note.show{display:block;}
+.incomplete-note b{color:#7a4e00;}
+.scoreline{font-size:1.15rem;font-weight:800;color:var(--blue-800);text-align:center;margin:4px 0 14px;}
+.score-grid{display:flex;justify-content:center;gap:12px;direction:rtl;flex-wrap:wrap;}
+.score-grid .score-box{min-width:160px;}
+.score-box{background:var(--blue-050);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center;}
+.score-box .num{font-size:2rem;font-weight:800;color:var(--blue-700);line-height:1;}
+.score-box .lbl{font-size:.82rem;color:var(--muted);margin-top:6px;}
+.reflection{margin-top:16px;}
+.reflection label{font-weight:700;color:var(--blue-800);display:block;margin-bottom:8px;}
+.reflection textarea{width:100%;min-height:90px;border:1.5px solid var(--blue-300);border-radius:12px;
+  padding:12px;font-family:inherit;font-size:.95rem;resize:vertical;}
+
+/* ---- מתג שפה ---- */
+.lang-toggle{position:absolute;inset-inline-start:14px;top:14px;display:flex;gap:4px;
+  background:rgba(255,255,255,.15);border-radius:999px;padding:3px;}
+.lang-toggle button{border:none;background:transparent;color:#fff;font-weight:700;font-size:.85rem;
+  padding:5px 12px;border-radius:999px;opacity:.75;font-family:inherit;}
+.lang-toggle button.active{background:#fff;color:var(--blue-700);opacity:1;}
+header.top{position:relative;}
+
+.top .lang-toggle{z-index:10;}
+</style>
+<link rel="stylesheet" href="../../assets/lab-shell.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="lang-toggle">
+      <button id="btnHe" class="active" type="button" onclick="setLang('he')">עברית</button>
+      <button id="btnAr" type="button" onclick="setLang('ar')">العربية</button>
+    </div>
+    <div class="eyebrow" data-i18n="eyebrow"></div>
+    <h1 data-i18n="title"></h1>
+    <p data-i18n="subtitle"></p>
+  </header>
+
+  <div class="progress-bar" id="progressBar">
+    <div class="chip" data-sec="a"><span class="dot"></span><span data-i18n="chip_a"></span></div>
+    <div class="chip" data-sec="b"><span class="dot"></span><span data-i18n="chip_b"></span></div>
+    <div class="chip" data-sec="c"><span class="dot"></span><span data-i18n="chip_c"></span></div>
+    <div class="chip" data-sec="d"><span class="dot"></span><span data-i18n="chip_d"></span></div>
+  </div>
+
+  <!-- תמונת המבנה -->
+  <div class="card">
+    <div class="card-head">
+      <div class="badge">?</div>
+      <div>
+        <h2 data-i18n="intro_h2"></h2>
+        <p class="sub" data-i18n="intro_sub"></p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="exam-img-wrap">
+        <img src="data:image/jpeg;base64,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3spY/wDKvzpYNG3TaTM6jt29TWsHdnuGOHD5rO0rYaXZ7qS0UcdNa9cVjWRNDWsnp2uAA70GgplUeKg2iUDTu3O01+BymY5hPgug6g2kUzvw2lLfUDtp6rn4oL+iz87SbxSSdHcNFXeJw5mICQe5eobWLFCxpuFPcre53IVFI9vvx3hBdkVWpdp+j6nlfaOMnqlfuH3qZo9QWm4DNJcqScfQlBQSCLi2Rj/RcD6jlckBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQZVt5lroqSwfJ8MUs/lvmtkdutJwOtVmp1Xqi2tb5TpPpyRkmkqt7HsLQrjtmHn6c/Pj8AiCmR7RxDGZLjp280bRwz0QePcV6KTaZp2seGeUTQOJxiaItwrSWNcCHNBHIgjK6jQUruDqaE5GCCwII+HV1gqDiK70Tjyx0o4KQjraWUDo6mF3DhuvBUPPoLTE7y+Sy0jncydxeCr2XadqH78MVRRuxgeTTFmEFtBB5EY7l9x3KmybPJIId22aiu9M5vLfnLx4FdbNN63pGHyfVcEpA4CelBygrGq52M19c5JHtYyOmiBJOMffKkdIbObrtJmElS6otmno3jekb5stYB81uR5reHFU2DSuqtQ7Ra6qrhRXCS3OjE0Ad0Uc3ZwW0u2oautUbIW6HidDGA0Npp84A7B4INStVporJb4bfbqaOmpYW7rI4xgABe3sWXR7coYIA+5aU1BSP6x5MSPFey27ddI10m5Uzz204zmsYYwPFBoqYVUpNquia2VsUGpba97jgATDip5l7tsmNyvpnZ5YlHFB7V0z0kFSMTwxygcg9oIHiuccscgBY9rgesHmueUEVUaVsNUwtnstukDue9TsP6lU9VaM2d6ctdReLra4KSGFucxTyRbx6g0NcOJVs1HqS26VtE91uk7IKaBuSXHGe4L8y6n1Nctql3bcLk19PY6Z+aKiPDe/tHe/HrQSGyK73O57WGy0UtdQ2OaNzoKOSd8m9GDw3t7PYv0+vzxsYjjqNptS0NI8lt/ADlxd+9fodAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBF84KB1BrnT2lpYortcoaaSX0WE5cfYEE+irdNtH0jVgdFqG3EnqMwBCl6S822vH+611PN/ceCg9qLi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" alt="">
+      </div>
+    </div>
+  </div>
+
+  <!-- סעיף א -->
+  <div class="card" id="card-a">
+    <div class="card-head">
+      <div class="badge" data-i18n="badge_a"></div>
+      <div><h2 data-i18n="a_h2"></h2></div>
+      <span class="sec-badge" id="badgeA"></span>
+    </div>
+    <div class="card-body">
+      <div class="grid-wrap">
+        <div class="grid clickable" id="gridA"></div>
+        <div class="hint-text" data-i18n="a_hint"></div>
+      </div>
+      <div class="result" id="resA"></div>
+    </div>
+  </div>
+
+  <!-- סעיף ב -->
+  <div class="card" id="card-b">
+    <div class="card-head">
+      <div class="badge" data-i18n="badge_b"></div>
+      <div><h2 data-i18n="b_h2"></h2></div>
+      <span class="sec-badge" id="badgeB"></span>
+    </div>
+    <div class="card-body">
+      <p class="prompt" data-i18n="b_prompt"></p>
+      <div class="views4" id="views4"></div>
+      <div class="result" id="resB"></div>
+    </div>
+  </div>
+
+  <!-- סעיף ג -->
+  <div class="card" id="card-c">
+    <div class="card-head">
+      <div class="badge" data-i18n="badge_c"></div>
+      <div><h2 data-i18n="c_h2"></h2></div>
+      <span class="sec-badge" id="badgeC"></span>
+    </div>
+    <div class="card-body">
+      <div class="grid-wrap">
+        <div class="grid shade clickable" id="gridC"></div>
+        <div class="hint-text" data-i18n="c_hint"></div>
+      </div>
+      <div class="result" id="resC"></div>
+    </div>
+  </div>
+
+  <!-- סעיף ד -->
+  <div class="card" id="card-d">
+    <div class="card-head">
+      <div class="badge" data-i18n="badge_d"></div>
+      <div><h2 data-i18n="d_h2"></h2></div>
+      <span class="sec-badge" id="badgeD"></span>
+    </div>
+    <div class="card-body">
+      <p class="prompt" data-i18n="d_prompt"></p>
+      <div class="grid-wrap" style="margin-bottom:16px;">
+        <span class="view-label" data-i18n="d_viewlabel"></span>
+        <div class="grid shade" id="targetTopD"></div>
+      </div>
+      <div class="grid-wrap">
+        <div class="grid clickable" id="gridD"></div>
+        <span class="counter-pill"><span data-i18n="d_counter"></span> <span id="addedCountD">0</span></span>
+      </div>
+      <div class="result" id="resD"></div>
+    </div>
+  </div>
+
+  <!-- כפתור בדיקה -->
+  <div class="card check-cta">
+    <div class="card-body">
+      <button class="btn big" id="checkAllBtn" data-i18n="check_btn"></button>
+      <div class="note" data-i18n="check_note"></div>
+      <div class="incomplete-note" id="incompleteNote"></div>
+    </div>
+  </div>
+
+  <!-- סיכום -->
+  <div class="card" id="summaryCard" style="display:none;">
+    <div class="card-head">
+      <div class="badge">✓</div>
+      <div><h2 data-i18n="sum_h2"></h2><p class="sub" data-i18n="sum_sub"></p></div>
+    </div>
+    <div class="card-body">
+      <div class="success-msg" data-i18n="success_msg"></div>
+      <div class="score-grid">
+        <div class="score-box"><div class="num" id="scoreTime">00:00</div><div class="lbl" data-i18n="time_lbl"></div></div>
+      </div>
+      <div class="reflection">
+        <label for="reflectText" data-i18n="reflect_lbl"></label>
+        <textarea id="reflectText" data-i18n-ph="reflect_ph"></textarea>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+"use strict";
+/* ===================== מילון דו־לשוני (i18n) ===================== */
+const T={
+  he:{
+    _dir:'rtl',
+    eyebrow:'שאלון 35372 · ראייה מרחבית',
+    title:'ראייה מרחבית · שאלון 35372 · בגרות חורף תשפ״ו 2026',
+    img_alt:'מבנה מקוביות עם חץ המסמן את כיוון המבט מלפנים',
+    subtitle:'פתרו את כל הסעיפים, ואז לחצו על "בדוק תשובות" בתחתית העמוד',
+    chip_a:'סעיף א',chip_b:'סעיף ב',chip_c:'סעיף ג',chip_d:'סעיף ד',
+    badge_a:'א',badge_b:'ב',badge_c:'ג',badge_d:'ד',
+    intro_h2:'המבנה הנתון',
+    intro_sub:'בסרטוט שלפניכם מוצג מבנה הבנוי מקוביות זהות. החץ בסרטוט מסמן את הכיוון של המבט מלפנים. כל קובייה במבנה מונחת על המשטח או על קובייה אחרת.',
+    a_h2:'השלימו בתבנית שלפניכם את תרשים המספרים של המבנה',
+    a_hint:'לחיצה על תא: 0→1→2→3→4→0',
+    b_h2:'כתבו איזה תרשים מתאר כל מבט',
+    b_prompt:'לפניכם ארבעה תרשימים I–IV. אחד מהם מתאר מבט מלפנים של המבנה, אחד – מבט מימין, אחד – מבט מלמעלה ואחד אינו מתאר שום מבט של המבנה.',
+    c_h2:'השלימו בתבנית שלפניכם את המבט משמאל של המבנה',
+    c_hint:'לחיצה על תא ממלאת את העמודה מהרצפה עד אליו',
+    d_h2:'סרטטו תרשים מספרים אפשרי של המבנה לאחר הוספת הקוביות',
+    d_prompt:'הוסיפו למבנה 5 קוביות כך שהמבט מלפנים לא השתנה, והמבט מלמעלה נראה כמתואר בתרשים שלפניכם.',
+    d_viewlabel:'מבט מלמעלה',
+    d_counter:'סה״כ קוביות בתרשים:',
+    opt_placeholder:'— בחרו מבט —',
+    opt_front:'מבט מלפנים',opt_right:'מבט מימין',opt_top:'מבט מלמעלה',opt_none:'אינו מתאר שום מבט',
+    check_btn:'בדוק תשובות',
+    check_note:'הבדיקה תופיע ליד כל סעיף רק לאחר מענה על כל הסעיפים. עזרת תלת־ממד תיפתח רק עבור סעיפים שגויים.',
+    gate_msg:'יש לענות על הסעיפים לפני הבדיקה.',
+    sum_h2:'סיום',sum_sub:'כל הסעיפים נפתרו נכון',
+    success_msg:'כל הסעיפים נכונים! עשיתם עבודה מצוינת בניתוח הנתונים ובהגעה לפתרון המדויק.',
+    time_lbl:'זמן עבודה',
+    reflect_lbl:'שאלת רפלקציה: איזה סעיף היה לך הכי מאתגר, ולמה?',
+    reflect_ph:'כתבו כאן את המחשבות שלכם...',
+    badge_ok:'✓ נכון',badge_bad:'✗ לא נכון',
+    fb_correct:'הסעיף נכון.',
+    fb1:'הסעיף הזה עדיין אינו נכון. חזרו אליו ונסו שוב.',
+    fb2:'הסעיף הזה עדיין אינו נכון. לפני ניסיון נוסף, בדקו האם התשובה עקבית עם הנתונים שבשאלה. אפשר להיעזר במודל התלת-ממדי שניתן לסובב.',
+    fb3_a:'בסעיף הזה כל משבצת בתרשים מציינת כמה קוביות עומדות במקומה. בדקו שכל מספר תואם למספר הקוביות באותו מקום במבנה. המודל התלת-ממדי נשאר זמין לעזרה.',
+    fb3_b:'בסעיף הזה נדרש להתאים כל תרשים למבט שהוא מתאר — מלפנים, מימין או מלמעלה — כאשר תרשים אחד אינו מתאר אף מבט. בדקו כל תרשים מול מה שנראה מאותו כיוון של המבנה. המודל התלת-ממדי נשאר זמין לעזרה.',
+    fb3_c:'בסעיף הזה נדרש המבט משמאל. בדקו שהוא משקף את מה שנראה מצד שמאל של המבנה בלבד. המודל התלת-ממדי נשאר זמין לעזרה.',
+    fb3_d:'בסעיף הזה נדרש להוסיף 5 קוביות כך שהמבט מלפנים לא ישתנה והמבט מלמעלה יתאים לתרשים הנתון, ואז לשרטט תרשים מספרים אפשרי של התוצאה. בדקו שלושה דברים: שהוספתם בדיוק 5 קוביות, שהמבט מלפנים נשאר כפי שהיה, ושהמבט מלמעלה תואם לתרשים הנתון. אפשר להוסיף קוביות במודל התלת-ממדי ולבדוק את המבטים בפועל.',
+    open3d:'הצג מודל תלת-ממד',hide3d:'הסתר מודל תלת-ממד',
+    v_zoom_in:'＋ הגדל',v_zoom_out:'－ הקטן',v_reset:'איפוס תצוגה',
+    v_hint:'גררו לסיבוב · גלגלת לזום · החץ = כיוון המבט מלפנים',
+    sb_title:'סביבת חקר — לחצו להוסיף קובייה',
+    sb_help:'כל לחיצה מוסיפה קובייה אחת. נסו, צפו במבטים המתעדכנים, ואז עדכנו את תרשים המספרים שלמעלה.',
+    sb_added:'נוספו:',
+    sb_undo:'↶ ביטול',
+    sb_reset:'איפוס',
+    sb_views:'מבטים בזמן אמת',
+    sb_front:'מבט מלפנים (נוכחי)',
+    sb_top:'מבט מלמעלה (נוכחי)',
+    sb_target:'מבט מלמעלה (מטרה)',
+    sb_t1:'הוסיפו בדיוק 5 קוביות',
+    sb_t2:'שמרו על המבט מלפנים ללא שינוי',
+    sb_t3:'התאימו את המבט מלמעלה לתרשים המטרה'
+  },
+  ar:{
+    _dir:'rtl',
+    eyebrow:'نموذج 35372 · إدراك المستوى والفراغ',
+    title:'الرؤية المكانية · النموذج 35372 · بجروت شتاء 2026',
+    img_alt:'مبنى من مكعّبات مع سهم يشير إلى اتّجاه النظرة من الأمام',
+    subtitle:'أجيبوا عن جميع البنود، ثمّ اضغطوا على "تحقّقوا من الإجابات" في أسفل الصفحة',
+    chip_a:'البند أ',chip_b:'البند ب',chip_c:'البند جـ',chip_d:'البند د',
+    badge_a:'أ',badge_b:'ب',badge_c:'جـ',badge_d:'د',
+    intro_h2:'المبنى المعطى',
+    intro_sub:'الرسم الذي أمامكم يعرض مبنًى مبنيًا من مكعّبات متطابقة. السهم في الرسم يشير إلى اتجاه النظرة من الأمام. كلّ مكعّب في المبنى موضوع على السطح أو على مكعّب آخر.',
+    a_h2:'أكمِلوا مخطّط الأعداد للمبنى في القالب الذي أمامكم',
+    a_hint:'الضغط على خانة: 0→1→2→3→4→0',
+    b_h2:'اكتبوا أيَّ مخطَّط يصف كلَّ نظرة',
+    b_prompt:'أمامكم أربعة مخطَّطات، I–IV. واحد منها يصف النظرة من الأمام للمبنى، وواحد – النظرة من اليمين، وواحد – النظرة من الأعلى، وواحد لا يصف أيَّة نظرة للمبنى.',
+    c_h2:'أكمِلوا النظرة من اليسار للمبنى في القالب الذي أمامكم',
+    c_hint:'الضغط على خانة يملأ العمود من الأسفل حتّى إليها',
+    d_h2:'ارسموا مخطَّط أعداد ممكنًا للمبنى بعد إضافة المكعّبات',
+    d_prompt:'أضافوا إلى المبنى 5 مكعّبات، بحيث لم تتغيَّر النظرة من الأمام، والنظرة من الأعلى تبدو كما هو موصوف في المخطَّط الذي أمامكم.',
+    d_viewlabel:'النظرة من الأعلى',
+    d_counter:'مجموع المكعّبات في المخطَّط:',
+    opt_placeholder:'— اختاروا نظرة —',
+    opt_front:'النظرة من الأمام',opt_right:'النظرة من اليمين',opt_top:'النظرة من الأعلى',opt_none:'لا يصف أيَّة نظرة',
+    check_btn:'تحقّقوا من الإجابات',
+    check_note:'سيظهر التحقّق بجانب كلّ بند فقط بعد الإجابة عن جميع البنود. ستُفتح مساعدة المجسّم ثلاثيّ الأبعاد فقط للبنود الخاطئة.',
+    gate_msg:'يجب الإجابة عن البنود قبل التحقّق.',
+    sum_h2:'الخاتمة',sum_sub:'جميع البنود حُلّت بشكل صحيح',
+    success_msg:'جميع البنود صحيحة! لقد قمتم بعمل ممتاز في تحليل المعطيات والوصول إلى الحل الدقيق.',
+    time_lbl:'زمن العمل',
+    reflect_lbl:'سؤال تأمّل: أيّ بند كان الأكثر تحدّيًا بالنسبة لك، ولماذا؟',
+    reflect_ph:'اكتبوا هنا أفكاركم...',
+    badge_ok:'✓ صحيح',badge_bad:'✗ غير صحيح',
+    fb_correct:'البند صحيح.',
+    fb1:'هذا البند ما زال غير صحيح. عودوا إليه وحاولوا مرّة أخرى.',
+    fb2:'هذا البند ما زال غير صحيح. قبل محاولة إضافية، تحقّقوا ممّا إذا كانت الإجابة متّسقة مع معطيات السؤال. يمكنكم الاستعانة بالمجسّم ثلاثيّ الأبعاد الذي يمكن تدويره.',
+    fb3_a:'في هذا البند تشير كلّ خانة في المخطّط إلى عدد المكعّبات القائمة في موضعها. تحقّقوا من أنّ كلّ عدد يطابق عدد المكعّبات في الموضع ذاته من المبنى. المجسّم ثلاثيّ الأبعاد متاحٌ للمساعدة.',
+    fb3_b:'في هذا البند مطلوب ملاءمة كلّ مخطّط للنظرة التي يصفها — من الأمام أو من اليمين أو من الأعلى — مع أنّ مخطّطًا واحدًا لا يصف أيّة نظرة. تحقّقوا من كلّ مخطّط مقابل ما يُرى من ذلك الاتّجاه للمبنى. المجسّم ثلاثيّ الأبعاد متاحٌ للمساعدة.',
+    fb3_c:'في هذا البند مطلوبة النظرة من اليسار. تحقّقوا من أنّها تُظهر ما يُرى من الجهة اليسرى للمبنى فقط. المجسّم ثلاثيّ الأبعاد متاحٌ للمساعدة.',
+    fb3_d:'في هذا البند مطلوب إضافة 5 مكعّبات بحيث لا تتغيّر النظرة من الأمام وتلائم النظرة من الأعلى المخطّط المعطى، ثمّ رسم مخطّط أعداد ممكن للناتج. تحقّقوا من ثلاثة أمور: أنّكم أضفتم 5 مكعّبات بالضبط، أنّ النظرة من الأمام بقيت كما كانت، وأنّ النظرة من الأعلى تلائم المخطّط المعطى. يمكنكم إضافة المكعّبات في المجسّم ثلاثيّ الأبعاد وفحص النظرات.',
+    open3d:'اعرض المجسّم ثلاثيّ الأبعاد',hide3d:'إخفاء المجسّم ثلاثيّ الأبعاد',
+    v_zoom_in:'＋ تكبير',v_zoom_out:'－ تصغير',v_reset:'إعادة ضبط العرض',
+    v_hint:'اسحبوا للتدوير · العجلة للتكبير · السهم = اتجاه النظرة من الأمام',
+    sb_title:'بيئة استكشاف — اضغطوا لإضافة مكعّب',
+    sb_help:'كلّ ضغطة تضيف مكعّبًا واحدًا. جرّبوا، راقبوا النظرات المتغيّرة، ثمّ حدّثوا مخطَّط الأعداد في الأعلى.',
+    sb_added:'أُضيفت:',
+    sb_undo:'↶ تراجع',
+    sb_reset:'إعادة ضبط',
+    sb_views:'النظرات في الزمن الحقيقيّ',
+    sb_front:'النظرة من الأمام (الحاليّة)',
+    sb_top:'النظرة من الأعلى (الحاليّة)',
+    sb_target:'النظرة من الأعلى (المطلوبة)',
+    sb_t1:'أضيفوا 5 مكعّبات بالضبط',
+    sb_t2:'حافظوا على النظرة من الأمام دون تغيير',
+    sb_t3:'طابِقوا النظرة من الأعلى مع المخطَّط المطلوب'
+  }
+};
+let LANG='he';                 // ברירת המחדל תמיד עברית
+
+/* ===================== מנוע מרכזי ===================== */
+const N=4;
+const HEIGHT_MAP=[[2,2,4,3],[2,0,1,2],[1,0,0,1],[2,0,0,1]];
+const TARGET_TOP=[[1,1,1,1],[1,0,1,1],[1,0,0,1],[1,0,1,1]];
+const clone=M=>M.map(r=>r.slice());
+const sumM=M=>M.reduce((s,r)=>s+r.reduce((a,b)=>a+b,0),0);
+function colMax(H){const m=[];for(let c=0;c<N;c++){let mx=0;for(let r=0;r<N;r++)mx=Math.max(mx,H[r][c]);m.push(mx);}return m;}
+function rowMax(H){return H.map(row=>Math.max(...row));}
+function silhouette(hs){const g=[];for(let lev=0;lev<N;lev++){const row=[];for(let k=0;k<N;k++)row.push(lev>=N-hs[k]?1:0);g.push(row);}return g;}
+const frontView=H=>silhouette(colMax(H));
+const rightView=H=>{const rm=rowMax(H);return silhouette([rm[3],rm[2],rm[1],rm[0]]);};
+const leftView =H=>{const rm=rowMax(H);return silhouette([rm[0],rm[1],rm[2],rm[3]]);};
+const topView  =H=>{const g=[];for(let r=0;r<N;r++){const row=[];for(let c=0;c<N;c++)row.push(H[r][c]>=1?1:0);g.push(row);}return g;}
+const eqGrid=(a,b)=>{for(let r=0;r<N;r++)for(let c=0;c<N;c++)if((a[r][c]?1:0)!==(b[r][c]?1:0))return false;return true;};
+
+const VIEWERS={};
+const startTime=Date.now();
+
+function buildGrid(el,{cols=N,rows=N}={}){
+  el.style.gridTemplateColumns=`repeat(${cols},1fr)`;el.innerHTML='';
+  const cells=[];
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+    const d=document.createElement('div');d.className='cell';d.dataset.r=r;d.dataset.c=c;
+    el.appendChild(d);cells.push(d);
+  }
+  return cells;
+}
+const paintShade=(cells,g)=>cells.forEach(d=>{const on=g[+d.dataset.r][+d.dataset.c]===1;
+  d.classList.toggle('shade-on',on);d.classList.toggle('shade-off',!on);});
+
+/* ===================== מודולי סעיפים ===================== */
+const SEC={};
+SEC.a=(function(){
+  const grid=document.getElementById('gridA');
+  let M=Array.from({length:N},()=>Array(N).fill(0));
+  const cells=buildGrid(grid);
+  const render=()=>cells.forEach(d=>d.textContent=M[+d.dataset.r][+d.dataset.c]);
+  grid.addEventListener('click',e=>{const d=e.target.closest('.cell');if(!d)return;
+    const r=+d.dataset.r,c=+d.dataset.c;M[r][c]=(M[r][c]+1)%5;render();});
+  render();
+  return{isAnswered:()=>sumM(M)>0,
+    isCorrect:()=>{for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(M[r][c]!==HEIGHT_MAP[r][c])return false;return true;},
+    reset:()=>{M=Array.from({length:N},()=>Array(N).fill(0));render();}};
+})();
+
+const ANSWER_B={I:'front',II:'top',III:'none',IV:'right'};
+const DRAW={
+  I:[[0,0,1,0],[0,0,1,1],[1,1,1,1],[1,1,1,1]],
+  II:[[1,1,1,1],[1,0,1,1],[1,0,0,1],[1,0,0,1]],
+  III:[[0,1,0,0],[1,1,0,0],[1,1,0,1],[1,1,1,1]],
+  IV:[[0,0,0,1],[0,0,0,1],[1,0,1,1],[1,1,1,1]]
+};
+SEC.b=(function(){
+  const host=document.getElementById('views4');
+  ['IV','III','II','I'].forEach(key=>{
+    const block=document.createElement('div');block.className='view-block';
+    const mg=document.createElement('div');mg.className='mini-grid';
+    DRAW[key].forEach(row=>row.forEach(v=>{const c=document.createElement('div');if(v)c.classList.add('on');mg.appendChild(c);}));
+    const roman=document.createElement('div');roman.className='roman';roman.textContent=key;
+    const sel=document.createElement('select');sel.dataset.key=key;
+    ['','front','right','top','none'].forEach(v=>{const o=document.createElement('option');o.value=v;sel.appendChild(o);});
+    const wrap=document.createElement('div');wrap.className='assign-row';wrap.appendChild(sel);
+    block.appendChild(mg);block.appendChild(roman);block.appendChild(wrap);host.appendChild(block);
+  });
+  const sels=()=>[...host.querySelectorAll('select')];
+  return{isAnswered:()=>sels().every(s=>!!s.value),
+    isCorrect:()=>sels().every(s=>s.value===ANSWER_B[s.dataset.key]),
+    reset:()=>sels().forEach(s=>s.value='')};
+})();
+
+SEC.c=(function(){
+  const grid=document.getElementById('gridC');
+  const cells=buildGrid(grid);
+  const correct=leftView(HEIGHT_MAP);
+  // מילוי עם כבידה: הצללית נשמרת כגובה לכל עמודה (0..N), ותמיד יושבת על הרצפה.
+  let hs=Array(N).fill(0);
+  const G=()=>silhouette(hs);
+  const render=()=>paintShade(cells,G());
+  grid.addEventListener('click',e=>{
+    const d=e.target.closest('.cell');if(!d)return;
+    const r=+d.dataset.r,c=+d.dataset.c;
+    const want=N-r;                     // שורה 0 = למעלה, שורה N-1 = הרצפה
+    hs[c]=(hs[c]===want)?want-1:want;   // לחיצה חוזרת על התא העליון מורידה אותו
+    render();
+  });
+  render();
+  return{isAnswered:()=>hs.some(v=>v>0),
+    isCorrect:()=>eqGrid(G(),correct),
+    reset:()=>{hs=Array(N).fill(0);render();}};
+})();
+
+SEC.d=(function(){
+  const grid=document.getElementById('gridD');
+  const cells=buildGrid(grid);
+  const tgt=buildGrid(document.getElementById('targetTopD'));
+  paintShade(tgt,TARGET_TOP);
+  const blank=()=>Array.from({length:N},()=>Array(N).fill(0));
+  let M=blank();
+  function render(){cells.forEach(d=>{const r=+d.dataset.r,c=+d.dataset.c;
+    d.textContent=M[r][c];d.classList.toggle('add-cell',M[r][c]>HEIGHT_MAP[r][c]);});
+    document.getElementById('addedCountD').textContent=sumM(M);}
+  grid.addEventListener('click',e=>{const d=e.target.closest('.cell');if(!d)return;
+    const r=+d.dataset.r,c=+d.dataset.c;M[r][c]=(M[r][c]+1)%5;render();});
+  render();
+  return{isAnswered:()=>sumM(M)>0,
+    isCorrect:()=>{
+      let noRem=true;for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(M[r][c]<HEIGHT_MAP[r][c])noRem=false;
+      const add5=noRem&&(sumM(M)-sumM(HEIGHT_MAP)===5);
+      return add5 && eqGrid(frontView(M),frontView(HEIGHT_MAP)) && eqGrid(topView(M),TARGET_TOP);},
+    reset:()=>{M=blank();render();}};
+})();
+
+/* ===================== רנדרר תלת־ממד ===================== */
+function build3DViewer(id,getH,opts={}){
+  const host=document.getElementById(id);
+  const S=44; // גודל קובייה בפיקסלים
+  host.innerHTML=`
+    <div class="stage"><div class="scene"></div></div>
+    <div class="controls">
+      <button class="btn ghost sm zin">${T[LANG].v_zoom_in}</button>
+      <button class="btn ghost sm zout">${T[LANG].v_zoom_out}</button>
+      <button class="btn ghost sm reset3d">${T[LANG].v_reset}</button>
+      <span class="spacer"></span>
+      <span class="hint">${T[LANG].v_hint}</span>
+    </div>`;
+  const stage=host.querySelector('.stage');
+  const scene=host.querySelector('.scene');
+  const view={rx:-24,ry:-34,zoom:1};
+  function apply(){scene.style.transform=
+    `translate(-50%,-50%) scale(${view.zoom}) rotateX(${view.rx}deg) rotateY(${view.ry}deg)`;}
+
+  const h=S/2;
+  // ששת הפאות של קובייה יחידה (ביחס למרכז הקובייה)
+  const CUBE_FACES=[
+    ['top',   `rotateX(90deg) translateZ(${h}px)`],
+    ['bottom',`rotateX(-90deg) translateZ(${h}px)`],
+    ['front', `translateZ(${h}px)`],
+    ['back',  `rotateY(180deg) translateZ(${h}px)`],
+    ['right', `rotateY(90deg) translateZ(${h}px)`],
+    ['left',  `rotateY(-90deg) translateZ(${h}px)`]
+  ];
+  function mkFace(cls,tf,size=S){
+    const f=document.createElement('div');f.className='face '+cls;
+    f.style.width=size+'px';f.style.height=size+'px';
+    f.style.left='0';f.style.top='0';f.style.transform=tf;return f;
+  }
+  // קובייה: מרכזה ב-(Xc,Yc,Zc). הדיב בגודל SxS, פינתו השמאלית-עליונה מוסטת ב-S/2.
+  function makeCube(col,level,depth,added){
+    const cube=document.createElement('div');cube.className='cube'+(added?' added':'');
+    const Xc=(col-1.5)*S, Yc=-(level+0.5)*S, Zc=(depth-1.5)*S;
+    cube.style.width=S+'px';cube.style.height=S+'px';
+    cube.style.transform=`translate3d(${Xc-h}px,${Yc-h}px,${Zc}px)`;
+    CUBE_FACES.forEach(([cls,tf])=>cube.appendChild(mkFace(cls,tf)));
+    return cube;
+  }
+
+  function render(){
+    const H=getH();
+    scene.innerHTML='';
+    // רצפה — אריחים שטוחים (פאת top בלבד) במפלס Y=0
+    for(let r=0;r<N;r++)for(let c=0;c<N;c++){
+      const tile=document.createElement('div');tile.className='cube ground';
+      const Xc=(c-1.5)*S, Zc=(r-1.5)*S;
+      tile.style.width=S+'px';tile.style.height=S+'px';
+      tile.style.transform=`translate3d(${Xc-h}px,${-h}px,${Zc}px)`;
+      tile.appendChild(mkFace('top',`rotateX(90deg) translateZ(0px)`));
+      scene.appendChild(tile);
+    }
+    // קוביות (z=3-r כדי ששורה 3 תהיה קדמית, קרובה לחץ)
+    for(let r=0;r<N;r++)for(let c=0;c<N;c++){
+      const base=HEIGHT_MAP[r][c], hh=H[r][c];
+      for(let y=0;y<hh;y++) scene.appendChild(makeCube(c,y,r,y>=base));
+    }
+    // חץ "מבט מלפנים" על הרצפה, לפני השורה הקדמית, מצביע אל המבנה
+    const arrow=document.createElement('div');arrow.className='arrow3d';
+    const Xc=(1.5-1.5)*S, Zc=(3.7-1.5)*S;
+    arrow.style.transform=`translate3d(${Xc-3}px,${-2}px,${Zc}px) rotateX(90deg)`;
+    arrow.innerHTML=
+      `<div class="stem" style="left:0;top:14px;width:6px;height:30px;"></div>`+
+      `<div class="stem" style="left:-6px;top:-2px;width:0;height:0;background:transparent;`+
+      `border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:18px solid #13315c;"></div>`;
+    scene.appendChild(arrow);
+    apply();
+  }
+
+  // אינטראקציה
+  let drag=false,lx=0,ly=0;
+  stage.addEventListener('pointerdown',e=>{drag=true;lx=e.clientX;ly=e.clientY;stage.setPointerCapture(e.pointerId);});
+  stage.addEventListener('pointermove',e=>{if(!drag)return;
+    view.ry+=(e.clientX-lx)*0.5;view.rx-=(e.clientY-ly)*0.5;
+    view.rx=Math.max(-85,Math.min(5,view.rx));lx=e.clientX;ly=e.clientY;apply();});
+  stage.addEventListener('pointerup',()=>drag=false);
+  stage.addEventListener('pointercancel',()=>drag=false);
+  stage.addEventListener('wheel',e=>{e.preventDefault();view.zoom*=(e.deltaY<0?1.08:0.93);
+    view.zoom=Math.max(0.4,Math.min(2.4,view.zoom));apply();},{passive:false});
+  host.querySelector('.zin').onclick=()=>{view.zoom=Math.min(2.4,view.zoom*1.12);apply();};
+  host.querySelector('.zout').onclick=()=>{view.zoom=Math.max(0.4,view.zoom*0.9);apply();};
+  host.querySelector('.reset3d').onclick=()=>{view.rx=-26;view.ry=-32;view.zoom=1;apply();render();};
+
+  VIEWERS[id]={render};
+  render();
+}
+function refresh3D(id){if(VIEWERS[id])VIEWERS[id].render();}
+
+function build3DViewerInto(host,getH){
+  const id='vw_'+(Math.random().toString(36).slice(2));
+  host.innerHTML='<div class="viewer open" id="'+id+'"></div>';
+  build3DViewer(id,getH);refresh3D(id);
+}
+
+/* סביבת חקר אינטראקטיבית: הוספת קוביות + מבטים חיים + תלת־ממד (עזרה בסעיף ד בלבד) */
+function buildExploreSandbox(host){
+  const t=T[LANG];
+  host.innerHTML='';
+  const wrap=document.createElement('div');wrap.className='explore';
+
+  // פאנל עורך
+  const p1=document.createElement('div');p1.className='panel';
+  const h3=document.createElement('h3');h3.textContent=t.sb_title;
+  const help=document.createElement('p');help.className='editor-help';help.textContent=t.sb_help;
+  p1.appendChild(h3);p1.appendChild(help);
+  const gw=document.createElement('div');gw.className='grid-wrap';
+  const eg=document.createElement('div');eg.className='grid clickable';gw.appendChild(eg);
+  p1.appendChild(gw);
+  const row=document.createElement('div');row.className='btn-row';
+  const counter=document.createElement('span');counter.className='counter-pill';
+  counter.textContent=t.sb_added+' ';
+  const cNum=document.createElement('b');cNum.textContent='0';
+  const cTot=document.createElement('span');cTot.textContent=' / 5';
+  counter.appendChild(cNum);counter.appendChild(cTot);
+  const undo=document.createElement('button');undo.className='btn ghost sm';undo.textContent=t.sb_undo;
+  const reset=document.createElement('button');reset.className='btn ghost sm';reset.textContent=t.sb_reset;
+  row.appendChild(counter);row.appendChild(undo);row.appendChild(reset);
+  p1.appendChild(row);
+  const vid='sbv_'+(Math.random().toString(36).slice(2));
+  const vdiv=document.createElement('div');vdiv.className='viewer open';vdiv.id=vid;p1.appendChild(vdiv);
+
+  // פאנל מבטים חיים
+  const p2=document.createElement('div');p2.className='panel';
+  const h3b=document.createElement('h3');h3b.textContent=t.sb_views;
+  p2.appendChild(h3b);
+  const lv=document.createElement('div');lv.className='live-views';
+  function vcol(label){
+    const d=document.createElement('div');d.className='vcol';
+    const s=document.createElement('span');s.className='view-label';s.textContent=label;
+    const g=document.createElement('div');g.className='grid shade';
+    d.appendChild(s);d.appendChild(g);lv.appendChild(d);return g;
+  }
+  const gFront=vcol(t.sb_front),gTop=vcol(t.sb_top),gTgt=vcol(t.sb_target);
+  p2.appendChild(lv);
+  const tl=document.createElement('ul');tl.className='task-list';
+  [t.sb_t1,t.sb_t2,t.sb_t3].forEach((txt,i)=>{
+    const li=document.createElement('li');
+    const n=document.createElement('span');n.className='n';n.textContent=String(i+1);
+    const sp=document.createElement('span');sp.textContent=txt;
+    li.appendChild(n);li.appendChild(sp);tl.appendChild(li);
+  });
+  p2.appendChild(tl);
+
+  wrap.appendChild(p1);wrap.appendChild(p2);host.appendChild(wrap);
+
+  // לוגיקה
+  const egCells=buildGrid(eg);
+  const fCells=buildGrid(gFront),tCells=buildGrid(gTop),tgCells=buildGrid(gTgt);
+  paintShade(tgCells,TARGET_TOP);
+  let H=clone(HEIGHT_MAP);const hist=[];
+  function render(){
+    egCells.forEach(d=>{const r=+d.dataset.r,c=+d.dataset.c;
+      d.textContent=H[r][c];d.classList.toggle('add-cell',H[r][c]>HEIGHT_MAP[r][c]);});
+    paintShade(fCells,frontView(H));paintShade(tCells,topView(H));
+    cNum.textContent=String(sumM(H)-sumM(HEIGHT_MAP));
+    refresh3D(vid);
+  }
+  eg.addEventListener('click',e=>{const d=e.target.closest('.cell');if(!d)return;
+    const r=+d.dataset.r,c=+d.dataset.c;if(H[r][c]>=4)return;H[r][c]++;hist.push([r,c]);render();});
+  undo.onclick=()=>{const l=hist.pop();if(l){H[l[0]][l[1]]--;render();}};
+  reset.onclick=()=>{H=clone(HEIGHT_MAP);hist.length=0;render();};
+  build3DViewer(vid,()=>H);
+  render();
+}
+
+/* ===================== בקרת בדיקה + משוב ===================== */
+const ORDER=['a','b','c','d'];
+const attempts={a:0,b:0,c:0,d:0};
+const lastOk={};                // תוצאת הבדיקה האחרונה לכל סעיף (לצורך רענון שפה)
+let model3dUnlocked=false;      // התלת־ממד נפתח ברגע שסעיף כלשהו הגיע לניסיון 2
+
+function renderResult(k){
+  const K=k.toUpperCase();
+  const ok=lastOk[k];
+  const badge=document.getElementById('badge'+K);
+  const res=document.getElementById('res'+K);
+  const chip=document.querySelector(`.chip[data-sec="${k}"]`);
+  const t=T[LANG];
+  if(ok){
+    // סעיף נכון — סימון בינארי בלבד, ללא חשיפת תשובה
+    badge.className='sec-badge ok';badge.textContent=t.badge_ok;
+    chip.classList.add('done');chip.classList.remove('wrong');
+    res.className='result show';
+    res.innerHTML='<div class="verdict ok">'+t.fb_correct+'</div>';
+  }else{
+    // בחירת הטקסט לפי מונה הניסיונות של הסעיף בלבד
+    const a=attempts[k];
+    const msg = a<=1 ? t.fb1 : (a===2 ? t.fb2 : t['fb3_'+k]);
+    badge.className='sec-badge bad';badge.textContent=t.badge_bad;
+    chip.classList.add('wrong');chip.classList.remove('done');
+    res.className='result show';
+    // הכפתור לתלת־ממד מופיע ליד כל סעיף שגוי החל מהרגע שסעיף כלשהו הגיע לניסיון 2
+    const btnHtml = model3dUnlocked
+      ? '<div class="btn-row"><button class="btn ghost sm act-open3d">'+t.open3d+'</button></div>' : '';
+    res.innerHTML=
+      '<div class="verdict bad">'+t.badge_bad+'</div>'+
+      '<div class="selfcheck">'+msg+'</div>'+
+      btnHtml+
+      '<div class="help-host" id="help'+K+'" style="display:none;"></div>';
+    const btn=res.querySelector('.act-open3d');
+    if(btn){
+      const host=document.getElementById('help'+K);
+      btn.onclick=()=>{
+        if(!host.dataset.built){
+          if(k==='d') buildExploreSandbox(host); else build3DViewerInto(host,()=>HEIGHT_MAP);
+          host.dataset.built='1';host.style.display='block';btn.textContent=t.hide3d;
+        }else{
+          const open=host.style.display!=='none';
+          host.style.display=open?'none':'block';
+          btn.textContent=open?t.open3d:t.hide3d;
+        }
+      };
+    }
+  }
+}
+function checkAll(){
+  const note=document.getElementById('incompleteNote');
+  if(ORDER.some(k=>!SEC[k].isAnswered())){
+    note.className='incomplete-note show';
+    note.textContent=T[LANG].gate_msg;
+    document.getElementById('summaryCard').style.display='none';
+    note.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  note.className='incomplete-note';note.textContent='';
+  // מעבר 1: חישוב נכונות + עדכון מונה עצמאי לכל סעיף
+  let allOk=true;
+  ORDER.forEach(k=>{const ok=SEC[k].isCorrect();lastOk[k]=ok;
+    if(ok)attempts[k]=0;else{attempts[k]++;allOk=false;}});
+  // התלת־ממד נפתח ברגע שסעיף כלשהו הגיע לניסיון 2, ונשאר זמין (sticky)
+  if(ORDER.some(k=>attempts[k]>=2))model3dUnlocked=true;
+  // מעבר 2: הצגת המשוב
+  ORDER.forEach(k=>renderResult(k));
+  const summary=document.getElementById('summaryCard');
+  if(allOk){
+    const secs=Math.floor((Date.now()-startTime)/1000);
+    const mm=String(Math.floor(secs/60)).padStart(2,'0'),ss=String(secs%60).padStart(2,'0');
+    document.getElementById('scoreTime').textContent=mm+':'+ss;
+    summary.style.display='block';summary.scrollIntoView({behavior:'smooth',block:'center'});
+  }else summary.style.display='none';
+}
+document.getElementById('checkAllBtn').onclick=checkAll;
+
+/* ===================== החלפת שפה ===================== */
+function applyLang(){
+  const t=T[LANG];
+  document.documentElement.lang=LANG;
+  document.documentElement.dir=t._dir;
+  const examImage=document.querySelector('figure img');
+  if(examImage)examImage.alt=t.img_alt;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t[el.getAttribute('data-i18n')]||'';});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{el.placeholder=t[el.getAttribute('data-i18n-ph')]||'';});
+  document.title=t.title;
+  // תפריטי סעיף ב
+  document.querySelectorAll('#views4 select').forEach(sel=>{
+    [...sel.options].forEach(o=>{o.text = o.value ? t['opt_'+o.value] : t.opt_placeholder;});
+  });
+  // בקרות תלת־ממד פתוחות
+  document.querySelectorAll('.viewer').forEach(v=>{
+    const a=v.querySelector('.zin'),b=v.querySelector('.zout'),c=v.querySelector('.reset3d'),h=v.querySelector('.hint');
+    if(a)a.textContent=t.v_zoom_in;if(b)b.textContent=t.v_zoom_out;if(c)c.textContent=t.v_reset;if(h)h.textContent=t.v_hint;
+  });
+  // הודעת "טרם הושלם" אם מוצגת
+  const note=document.getElementById('incompleteNote');
+  if(note.classList.contains('show'))note.textContent=t.gate_msg;
+  // רענון תוצאות שכבר הוצגו (ללא שינוי מונה הניסיונות)
+  ORDER.forEach(k=>{if(k in lastOk)renderResult(k);});
+  // מתגי השפה
+  document.getElementById('btnHe').classList.toggle('active',LANG==='he');
+  document.getElementById('btnAr').classList.toggle('active',LANG==='ar');
+  document.dispatchEvent(new CustomEvent('lab:languagechange',{detail:{lang:LANG}}));
+}
+function setLang(l){LANG=l;applyLang();}
+
+document.getElementById('btnHe').addEventListener('click',()=>setLang('he'));
+document.getElementById('btnAr').addEventListener('click',()=>setLang('ar'));
+applyLang();   // אתחול בעברית
+</script>
+<script src="../../assets/lab-shell.js" data-portal-href="../../../index.html#labs"></script>
+</body>
+</html>

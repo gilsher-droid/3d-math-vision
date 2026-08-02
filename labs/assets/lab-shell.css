@@ -1,0 +1,71 @@
+:root {
+  --lab-focus: #f59e0b;
+  --lab-portal: #0b3b6f;
+}
+
+.portal-back-link {
+  position: fixed;
+  inset-inline-end: 12px;
+  bottom: 12px;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 9px 15px;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: var(--lab-portal);
+  color: #fff;
+  font: 700 0.92rem/1.2 system-ui, "Segoe UI", Arial, sans-serif;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(11, 59, 111, 0.28);
+}
+
+.portal-back-link:hover {
+  background: #082d55;
+}
+
+.lab-session-note {
+  max-width: 920px;
+  margin: 18px auto 72px;
+  padding: 10px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background: #f8fafc;
+  color: #475569;
+  font: 600 0.86rem/1.5 system-ui, "Segoe UI", Arial, sans-serif;
+  text-align: center;
+}
+
+:where(button, a, input, select, textarea, [role="button"]):focus-visible {
+  outline: 3px solid var(--lab-focus) !important;
+  outline-offset: 3px !important;
+}
+
+@media (max-width: 600px) {
+  :where(button, select, input:not([type="radio"]):not([type="checkbox"]), [role="button"]) {
+    min-height: 40px;
+  }
+
+  .portal-back-link {
+    inset-inline-end: 8px;
+    bottom: 8px;
+    min-height: 42px;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+  }
+
+  .lab-session-note {
+    margin-inline: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

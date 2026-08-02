@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ראייה מרחבית · שאלון 35372 · בגרות קיץ תשפ״ה 2025 · מועד ב׳</title>
+<style>
+/* ============================================================
+   עיצוב כללי – כחול/לבן · RTL · רספונסיבי
+   ---------------------------------------------------------------
+   כלל קריטי: כל רשת / מטריצה / מבט עטופים ב-dir="ltr",
+   כך שהעמודה השמאלית על המסך = עמודה 0 במטריצה תמיד.
+   ============================================================ */
+:root{
+  --blue:#1d63b8; --blue-d:#13447f; --blue-l:#e8f1fb; --blue-ll:#f4f9ff;
+  --ink:#16263b; --muted:#5a6b80; --line:#cdddf0;
+  --ok:#1d8a4e; --ok-bg:#e7f6ee; --bad:#c0392b; --bad-bg:#fdecea;
+  --warn:#a86512; --warn-bg:#fff3e0; --warn-line:#f0d8b0;
+  --cell:#ffffff; --fill:#2f7fd1; --fill-line:#0e3f77; --shadow:0 6px 20px rgba(20,68,127,.08);
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Segoe UI","Heebo","Arial Hebrew","Noto Naskh Arabic","Segoe UI Arabic",Tahoma,Arial,sans-serif;
+  color:var(--ink); background:linear-gradient(180deg,#eef5fc,#f7fbff 240px);
+  line-height:1.6; -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:920px;margin:0 auto;padding:18px 16px 60px}
+
+/* כותרת */
+header.app{
+  background:linear-gradient(135deg,var(--blue),var(--blue-d));
+  color:#fff;border-radius:var(--radius);padding:22px 22px;box-shadow:var(--shadow);
+}
+header.app .kicker{font-size:.86rem;letter-spacing:.04em;opacity:.92;margin:0 0 4px}
+header.app h1{margin:0;font-size:1.5rem;font-weight:800}
+header.app p{margin:8px 0 0;opacity:.95;font-size:.96rem}
+/* מתג שפה */
+.langbar{display:flex;gap:8px;margin:0 0 12px}
+.langbtn{font:inherit;font-weight:700;font-size:.86rem;cursor:pointer;padding:5px 16px;border-radius:20px;
+  border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.12);color:#fff;transition:.15s}
+.langbtn:hover{background:rgba(255,255,255,.25)}
+.langbtn.active{background:#fff;color:var(--blue-d);border-color:#fff}
+.progress{margin-top:14px;background:rgba(255,255,255,.25);height:9px;border-radius:9px;overflow:hidden}
+.progress > i{display:block;height:100%;width:0;background:#fff;transition:width .4s ease}
+
+/* כרטיס סעיף */
+.card{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);margin:18px 0;overflow:hidden;
+}
+.card > .head{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 18px;background:var(--blue-ll);border-bottom:1px solid var(--line);
+}
+.badge{
+  flex:0 0 auto;width:34px;height:34px;border-radius:50%;
+  background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800;font-size:1rem;
+}
+.head h2{margin:0;font-size:1.12rem}
+.body{padding:18px}
+.q{background:var(--blue-l);border-inline-start:4px solid var(--blue);
+   padding:10px 14px;border-radius:8px;margin:0 0 14px;font-size:.98rem}
+.hint{font-size:.86rem;color:var(--muted);margin:6px 0 0}
+
+/* תג תוצאה ליד כותרת הסעיף (✓ / ✗) — מופיע רק לאחר בדיקה */
+.res-badge{display:none;margin-inline-start:auto;width:30px;height:30px;border-radius:50%;
+  align-items:center;justify-content:center;font-weight:900;font-size:1.05rem}
+.res-badge.show{display:inline-flex}
+.res-badge.ok{background:var(--ok-bg);color:var(--ok);border:2px solid #bfe6cd}
+.res-badge.bad{background:var(--bad-bg);color:var(--bad);border:2px solid #f3c6c0}
+
+/* כפתורים */
+.btn{
+  font:inherit;cursor:pointer;border:1px solid var(--blue);background:#fff;color:var(--blue);
+  padding:9px 16px;border-radius:10px;font-weight:700;transition:.15s;
+}
+.btn:hover{background:var(--blue-l)}
+.btn:focus-visible{outline:3px solid #9cc4ee;outline-offset:2px}
+.btn.primary{background:var(--blue);color:#fff}
+.btn.primary:hover{background:var(--blue-d)}
+.btn.ghost{border-color:var(--line);color:var(--muted)}
+.btn.ghost:hover{background:#f3f7fc}
+.btn.sm{padding:6px 12px;font-size:.86rem;border-radius:8px}
+.btn.big{font-size:1.12rem;padding:13px 30px;border-radius:12px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btnrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+
+/* תיבת קלט מספרי */
+.numwrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+input.num{
+  width:90px;font:inherit;font-weight:800;text-align:center;font-size:1.15rem;
+  padding:8px;border:2px solid var(--line);border-radius:10px;color:var(--blue-d);
+}
+input.num:focus{outline:none;border-color:var(--blue)}
+input.num:disabled{background:#f3f7fc}
+
+/* רשתות (תמיד LTR) */
+.grid-host{direction:ltr;display:inline-block;background:#fff;
+  border:1px solid var(--line);border-radius:10px;padding:8px}
+.grid-cap{direction:rtl;text-align:center;font-size:.84rem;color:var(--muted);margin-top:6px}
+table.grid{border-collapse:collapse}
+table.grid td{
+  width:38px;height:38px;border:1.5px solid #6f8cab;text-align:center;
+  font-weight:800;font-size:1.05rem;color:var(--blue-d);cursor:pointer;
+  user-select:none;background:var(--cell);transition:.1s;
+}
+table.grid.read td{cursor:default}
+/* תא מלא: קווי הרשת נשארים כהים וברורים, כדי שתאים סמוכים לא ייראו כגוש אחד.
+   ה-inset מצייר מסגרת בתוך התא עצמו — כך כל תא שומר על גבול נראה גם בצמידות. */
+table.grid td.on{background:var(--fill);color:#fff;border-color:var(--fill-line);
+  box-shadow:inset 0 0 0 1px var(--fill-line)}
+table.grid td.num{cursor:pointer}
+table.grid td.z0{color:#b9c6d6}            /* גובה 0 – חיוור */
+table.grid.locked td{pointer-events:none;cursor:default}
+.legend{direction:rtl;font-size:.8rem;color:var(--muted);margin-top:6px}
+
+/* בחירה (סעיף ג3) */
+#g3-choices.locked button{pointer-events:none;opacity:.92}
+
+/* משוב לכל סעיף — מוסתר עד לחיצה על 'בדוק תשובות' */
+.feedback{margin-top:14px;border-radius:10px;padding:12px 14px;display:none;font-size:.96rem}
+.feedback.show{display:block}
+.feedback.ok{background:var(--ok-bg);border:1px solid #bfe6cd;color:var(--ok)}
+.incomplete-note{display:none;margin:0 0 12px;padding:10px 12px;border:1px solid var(--warn-line);border-radius:10px;background:var(--warn-bg);color:var(--warn);font-weight:700}
+.incomplete-note.show{display:block}
+.feedback.bad{background:var(--bad-bg);border:1px solid #f3c6c0;color:var(--bad)}
+.feedback .exp{display:block;margin-top:8px;color:var(--ink);font-size:.9rem}
+
+/* אזור עזרה לסעיף — מופיע רק ליד סעיפים שגויים */
+.help{display:none;margin-top:12px;border-top:1px dashed var(--line);padding-top:12px}
+.help.show{display:block}
+
+/* תלת-ממד */
+.viewer{display:none;margin-top:12px;border:1px solid var(--line);border-radius:12px;
+  background:linear-gradient(180deg,#fbfdff,#f1f7fe);overflow:hidden}
+.viewer.show{display:block}
+.viewer canvas{width:100%;height:340px;display:block;touch-action:none;cursor:grab}
+.viewer canvas:active{cursor:grabbing}
+.viewer .vbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+  padding:10px 12px;border-top:1px solid var(--line);background:#fff}
+.viewer .vbar .sp{margin-inline-start:auto;font-size:.82rem;color:var(--muted)}
+
+/* תמונת השאלה */
+.exam-img{display:block;max-width:300px;width:100%;margin:0 auto;border:1px solid var(--line);
+  border-radius:12px;background:#fff;padding:8px}
+.figcap{text-align:center;font-size:.84rem;color:var(--muted);margin-top:6px}
+
+/* סנדבוקס – רשת הוספה */
+.sandbox-grid{direction:ltr;display:inline-block}
+table.add td{width:42px;height:42px;border:1.5px solid #6f8cab;text-align:center;
+  font-weight:800;color:var(--blue-d);cursor:pointer;background:#fff;font-size:1.05rem}
+table.add td:hover{background:var(--blue-l)}
+.counter{font-weight:800;color:var(--blue-d)}
+
+/* בלוק הבדיקה הכללי */
+.checkbar{text-align:center}
+.warn{display:none;background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn);
+  border-radius:10px;padding:12px 14px;margin:0 0 14px;font-weight:700}
+.warn.show{display:block}
+.score{display:none;font-size:1.08rem;color:var(--ink);margin:0 0 14px}
+.score.show{display:block}
+.score.all{color:var(--ok);font-weight:800}
+.score b{color:var(--blue-d)}
+
+/* מסך סיום */
+.summary{display:none}
+.summary.show{display:block}
+.stat-row{display:flex;flex-wrap:wrap;gap:14px;margin:6px 0 16px}
+.done-msg{background:var(--ok-bg);border:1px solid #bfe6cd;color:var(--ok);border-radius:10px;padding:14px 16px;font-weight:700;font-size:1.02rem;margin:0 0 14px}
+.stat{flex:1 1 150px;background:var(--blue-l);border:1px solid var(--line);
+  border-radius:12px;padding:14px;text-align:center}
+.stat b{display:block;font-size:1.7rem;color:var(--blue-d)}
+.stat span{font-size:.82rem;color:var(--muted)}
+textarea.reflect{width:100%;min-height:90px;font:inherit;padding:10px;border:1.5px solid var(--line);
+  border-radius:10px;resize:vertical}
+textarea.reflect:focus{outline:none;border-color:var(--blue)}
+
+@media (max-width:560px){
+  table.grid td{width:32px;height:32px;font-size:.95rem}
+  table.add td{width:38px;height:38px}
+  header.app h1{font-size:1.25rem}
+}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+</style>
+<link rel="stylesheet" href="../../assets/lab-shell.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="app">
+    <div class="langbar">
+      <button class="langbtn" id="lang-he" onclick="setLang('he')">עברית</button>
+      <button class="langbtn" id="lang-ar" onclick="setLang('ar')">العربية</button>
+    </div>
+    <p class="kicker" data-i18n="kicker"></p>
+    <h1 data-i18n="h1"></h1>
+    <p data-i18n="lead"></p>
+
+  </header>
+
+  <!-- ====================== פתיח + תמונת השאלה ====================== -->
+  <section class="card">
+    <div class="head"><span class="badge">&#9679;</span><h2 data-i18n="sec_intro"></h2></div>
+    <div class="body">
+      <div class="q" data-i18n="q_intro"></div>
+      <img id="examImg" class="exam-img" alt="סרטוט המבנה הנתון">
+    </div>
+  </section>
+
+  <!-- ====================== סעיף א – מבט מלפנים ====================== -->
+  <section class="card" data-section="א">
+    <div class="head"><span class="badge" data-i18n="lbl_a"></span><h2 data-i18n="sec_a"></h2>
+      <span class="res-badge" id="badge-a"></span></div>
+    <div class="body">
+      <div class="q" data-i18n="q_a"></div>
+      <div class="grid-host"><table class="grid" id="grid-a"></table></div>
+
+      <div class="feedback" id="fb-a"></div>
+      <div class="help" id="help-a">
+        <div class="btnrow">
+          <button class="btn ghost" data-help="a" data-i18n="btn_help_open"
+                  onclick="toggleHelp('a')"></button>
+        </div>
+        <div class="viewer" id="viewer-a"><div id="host-a"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== סעיף ב – מבט מימין ====================== -->
+  <section class="card" data-section="ב">
+    <div class="head"><span class="badge" data-i18n="lbl_b"></span><h2 data-i18n="sec_b"></h2>
+      <span class="res-badge" id="badge-b"></span></div>
+    <div class="body">
+      <div class="q" data-i18n="q_b"></div>
+      <div class="grid-host"><table class="grid" id="grid-b"></table></div>
+
+      <div class="feedback" id="fb-b"></div>
+      <div class="help" id="help-b">
+        <div class="btnrow">
+          <button class="btn ghost" data-help="b" data-i18n="btn_help_open"
+                  onclick="toggleHelp('b')"></button>
+        </div>
+        <div class="viewer" id="viewer-b"><div id="host-b"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== סעיף ג(1) ====================== -->
+  <section class="card" data-section="ג1">
+    <div class="head"><span class="badge" data-i18n="lbl_c"></span><h2 data-i18n="sec_g1"></h2>
+      <span class="res-badge" id="badge-g1"></span></div>
+    <div class="body">
+      <div class="q" data-i18n="q_g1"></div>
+      <div class="numwrap">
+        <input class="num" id="g1-input" type="number" min="0" max="40" inputmode="numeric" placeholder="?">
+      </div>
+
+      <div class="feedback" id="fb-g1"></div>
+      <div class="help" id="help-g1">
+        <div class="btnrow">
+          <button class="btn ghost" data-help="g1" data-i18n="btn_help_open_sb"
+                  onclick="toggleHelp('g1')"></button>
+        </div>
+        <div class="viewer" id="viewer-g1"><div id="host-g1"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== סעיף ג(2) – תרשים מספרים ====================== -->
+  <section class="card" data-section="ג2">
+    <div class="head"><span class="badge" data-i18n="lbl_c"></span><h2 data-i18n="sec_g2"></h2>
+      <span class="res-badge" id="badge-g2"></span></div>
+    <div class="body">
+      <div class="q" data-i18n="q_g2"></div>
+      <div class="grid-host"><table class="grid" id="grid-g2"></table></div>
+
+      <div class="feedback" id="fb-g2"></div>
+      <div class="help" id="help-g2">
+        <div class="btnrow">
+          <button class="btn ghost" data-help="g2" data-i18n="btn_help_open_sb"
+                  onclick="toggleHelp('g2')"></button>
+        </div>
+        <div class="viewer" id="viewer-g2"><div id="host-g2"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== סעיף ג(3) ====================== -->
+  <section class="card" data-section="ג3">
+    <div class="head"><span class="badge" data-i18n="lbl_c"></span><h2 data-i18n="sec_g3"></h2>
+      <span class="res-badge" id="badge-g3"></span></div>
+    <div class="body">
+      <div class="q" data-i18n="q_g3"></div>
+      <div id="g3-choices" style="display:flex;flex-direction:column;gap:10px;max-width:340px"></div>
+
+      <div class="feedback" id="fb-g3"></div>
+      <div class="help" id="help-g3">
+        <div class="btnrow">
+          <button class="btn ghost" data-help="g3" data-i18n="btn_help_open"
+                  onclick="toggleHelp('g3')"></button>
+        </div>
+        <div class="viewer" id="viewer-g3"><div id="host-g3"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== בדיקה כללית ====================== -->
+  <section class="card" id="checkCard">
+    <div class="head"><span class="badge">&#10003;</span><h2 data-i18n="sec_check"></h2></div>
+    <div class="body checkbar">
+      <p class="incomplete-note" id="incomplete-note" role="status" aria-live="polite"></p>
+      <button class="btn primary big" onclick="checkAll()" data-i18n="btn_check"></button>
+    </div>
+  </section>
+
+  <!-- ====================== מסך סיום ====================== -->
+  <section class="card summary" id="summaryCard">
+    <div class="head"><span class="badge">&#10022;</span><h2 data-i18n="sec_summary"></h2></div>
+    <div class="body">
+      <div class="done-msg" id="doneMsg"></div>
+      <label for="reflect" style="font-weight:700;display:block;margin-bottom:6px" data-i18n="reflect_q"></label>
+      <textarea class="reflect" id="reflect"></textarea>
+      <div class="btnrow"><button class="btn ghost" onclick="window.scrollTo({top:0,behavior:'smooth'})" data-i18n="btn_top"></button></div>
+    </div>
+  </section>
+
+  <div style="text-align:center;color:var(--muted);font-size:.8rem;margin-top:10px">
+    <span data-i18n="footer"></span>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   מנוע מרכזי – מטריצת גבהים וחישוב מבטים
+   ------------------------------------------------------------
+   ייצוג: H[row][col]
+     row 0 = השורה האחורית · row 2 = השורה הקדמית (מול הצופה / החץ)
+     col 0 = השמאלית ביותר · col 3 = הימנית ביותר
+   כל המבטים מחושבים מהמטריצה — ללא קידוד ידני.
+============================================================ */
+const ROWS=3, COLS=4, MAXH=3;
+const byId = id => document.getElementById(id);
+
+/* מבנה מקורי (מטריצת הגבהים המדויקת — מקור האמת) */
+const ORIGINAL = [
+  [2,1,3,2],   // אחורית  (row 0)
+  [1,1,1,1],   // אמצעית  (row 1)
+  [2,1,1,2]    // קדמית   (row 2)
+];
+
+/* ---- פונקציות מבט (מחושבות) ---- */
+function colMax(H){const a=[];for(let c=0;c<COLS;c++){let m=0;for(let r=0;r<ROWS;r++)m=Math.max(m,H[r][c]);a.push(m);}return a;}
+function rowMax(H){const a=[];for(let r=0;r<ROWS;r++){let m=0;for(let c=0;c<COLS;c++)m=Math.max(m,H[r][c]);a.push(m);}return a;}
+function frontHeights(H){return colMax(H);}                    /* מבט מלפנים */
+function rightHeights(H){const m=rowMax(H);return [m[2],m[1],m[0]];} /* מימין: מהחזית לאחור */
+function silhouette(heights,maxh){
+  const g=[];
+  for(let h=maxh;h>=1;h--){const row=[];for(let c=0;c<heights.length;c++)row.push(heights[c]>=h?1:0);g.push(row);}
+  return g;
+}
+function eq2(a,b){if(a.length!==b.length)return false;for(let i=0;i<a.length;i++){if(a[i].length!==b[i].length)return false;for(let j=0;j<a[i].length;j++)if(a[i][j]!==b[i][j])return false;}return true;}
+
+/* תשובות נכונות מחושבות */
+const ANS_FRONT = silhouette(frontHeights(ORIGINAL), MAXH);   // 3×4
+const ANS_RIGHT = silhouette(rightHeights(ORIGINAL), MAXH);   // 3×3
+const RM = rowMax(ORIGINAL);                                   // [3,1,2]
+const MAXFILL = ORIGINAL.map((row,r)=>row.map(()=>RM[r]));     // [[3,3,3,3],[1,1,1,1],[2,2,2,2]]
+const ORIG_TOTAL = ORIGINAL.flat().reduce((a,b)=>a+b,0);       // 18
+const MAXFILL_TOTAL = MAXFILL.flat().reduce((a,b)=>a+b,0);     // 24
+const ADD_ANSWER = MAXFILL_TOTAL - ORIG_TOTAL;                 // 6
+
+/* ---- מצב הסעיפים ---- */
+const KEYS=['a','b','g1','g2','g3'];
+const state={}; KEYS.forEach(k=>state[k]={ok:null, attempts:0});
+let modelUnlocked=false;   /* המודל התלת-ממדי נפתח כשסעיף כלשהו מגיע לניסיון 2 */
+const startTime=Date.now();
+
+/* ============================================================
+   רשתות אינטראקטיביות (LTR · עמודה שמאלית = עמודה 0)
+============================================================ */
+function buildToggleGrid(tableId, rows, cols){
+  const t=byId(tableId); t.innerHTML='';
+  for(let r=0;r<rows;r++){
+    const tr=t.insertRow();
+    for(let c=0;c<cols;c++){
+      const td=tr.insertCell(); td.dataset.r=r; td.dataset.c=c;
+      td.onclick=()=>td.classList.toggle('on');
+    }
+  }
+}
+function readToggle(tableId){
+  const t=byId(tableId), g=[];
+  for(const tr of t.rows){const row=[];for(const td of tr.cells)row.push(td.classList.contains('on')?1:0);g.push(row);}
+  return g;
+}
+function paintToggle(tableId,grid){
+  const t=byId(tableId);
+  for(let r=0;r<t.rows.length;r++)for(let c=0;c<t.rows[r].cells.length;c++)
+    t.rows[r].cells[c].classList.toggle('on', grid[r][c]===1);
+}
+function buildNumGrid(tableId, rows, cols){
+  const t=byId(tableId); t.innerHTML='';
+  for(let r=0;r<rows;r++){
+    const tr=t.insertRow();
+    for(let c=0;c<cols;c++){
+      const td=tr.insertCell(); td.className='num z0'; td.textContent='0';
+      td.onclick=()=>{let v=(+td.textContent+1)%(MAXH+1);td.textContent=v;td.classList.toggle('z0',v===0);};
+    }
+  }
+}
+function readNum(tableId){
+  const t=byId(tableId),g=[];
+  for(const tr of t.rows){const row=[];for(const td of tr.cells)row.push(+td.textContent);g.push(row);}
+  return g;
+}
+function paintNum(tableId,grid){
+  const t=byId(tableId);
+  for(let r=0;r<t.rows.length;r++)for(let c=0;c<t.rows[r].cells.length;c++){
+    const td=t.rows[r].cells[c]; td.textContent=grid[r][c]; td.classList.toggle('z0',grid[r][c]===0);
+  }
+}
+
+/* ---- אתחול רשתות ---- */
+buildToggleGrid('grid-a',3,4);
+buildToggleGrid('grid-b',3,3);
+buildNumGrid('grid-g2',3,4);
+
+
+/* ============================================================
+   מערכת דו־לשוניות: עברית / ערבית
+   ------------------------------------------------------------
+   נוסח השאלה בשתי השפות הוא נוסח הבגרות המקורי המדויק.
+   שתי השפות RTL — הרשתות נשארות dir="ltr" ללא שינוי.
+============================================================ */
+const I18N = {
+  he:{
+    /* --- כותרות ומסגרת --- */
+    title:'ראייה מרחבית · שאלון 35372 · בגרות קיץ תשפ״ה 2025 · מועד ב׳',
+    kicker:'ראייה מרחבית · שאלון 35372',
+    h1:'בגרות קיץ תשפ"ה (2025) · מועד ב\'',
+    lead:'פִּתרו את <b>כל</b> סעיפי השאלה, ואז לחצו על <b>"בדוק תשובות"</b> בתחתית העמוד. המשוב, התג ✓/✗ והעזרה בתלת־ממד יופיעו רק לאחר הבדיקה — ורק ליד סעיפים שבהם טעיתם.',
+    footer:'כלי תרגול עצמי · אינו מחליף דיון כיתתי',
+    img_alt:'סרטוט המבנה הנתון',
+
+    /* --- נוסח הבגרות --- */
+    sec_intro:'המבנה הנתון',
+    q_intro:'בסרטוט שלפניכם מוצג מבנה הבנוי מקוביות זהות. החץ בסרטוט מסמן את הכיוון של המבט מלפנים. כל קובייה במבנה מונחת על המשטח או על קובייה אחרת.',
+    sec_a:'סעיף א',  q_a:'השלימו בתבנית שלפניכם את המבט מלפנים של המבנה.',
+    sec_b:'סעיף ב',  q_b:'השלימו בתבנית שלפניכם את המבט מימין של המבנה.',
+    sec_g1:'סעיף ג(1)',
+    q_g1:'הוסיפו למבנה את מספר הקוביות הגדול ביותר האפשרי כך שהמבט מימין לא השתנה.<br>(1) כמה קוביות הוסיפו למבנה?',
+    sec_g2:'סעיף ג(2)',
+    q_g2:'הוסיפו למבנה את מספר הקוביות הגדול ביותר האפשרי כך שהמבט מימין לא השתנה.<br>(2) סרטטו תרשים מספרים של המבנה לאחר הוספת הקוביות.',
+    sec_g3:'סעיף ג(3)',
+    q_g3:'הוסיפו למבנה את מספר הקוביות הגדול ביותר האפשרי כך שהמבט מימין לא השתנה.<br>(3) איזה מבט (מלבד המבט מימין) לא השתנה לאחר הוספת הקוביות – המבט משמאל, המבט מלפנים או המבט מאחור?',
+    opt_left:'המבט משמאל', opt_front:'המבט מלפנים', opt_back:'המבט מאחור',
+
+    /* --- תוויות סעיפים --- */
+    lbl_a:'א', lbl_b:'ב', lbl_c:'ג',
+    lbl:{a:'א', b:'ב', g1:'ג(1)', g2:'ג(2)', g3:'ג(3)'},
+    sep:', ',
+
+    /* --- כפתורים --- */
+    btn_check:'בדוק תשובות',
+    btn_help_open:'צריך עזרה? פתח תלת־ממד',
+    btn_help_open_sb:'צריך עזרה? פתח תלת־ממד (סביבת חקר)',
+    btn_help_close:'הסתר תלת־ממד',
+    btn_show:'הצג תשובה נכונה',
+    btn_retry:'נסה שוב',
+    btn_top:'חזרה למעלה',
+    btn_reset_view:'איפוס תצוגה',
+    btn_undo:'בטל (Undo)',
+    btn_reset_struct:'אפס מבנה (Reset)',
+    viewer_hint:'גררו לסיבוב · גלגלת/צביטה לזום · החץ הכתום = מבט מלפנים',
+    sb_hint:'לחצו על תא כדי להוסיף קובייה לעמודה (העמודה השמאלית = עמודה 0):',
+    sb_added_tpl:'הוספת {n} קוביות',
+
+    /* --- בדיקה ומשוב --- */
+    sec_check:'בדיקת התשובות',
+    incomplete:'עדיין לא סיימתם. יש להשלים את הסעיפים: {items}.',
+    sec_ok:'הסעיף נכון.',
+    try1:'הסעיף הזה עדיין אינו נכון. חזרו אליו ונסו שוב.',
+    try2:'הסעיף הזה עדיין אינו נכון. לפני ניסיון נוסף, בדקו האם התשובה עקבית עם הנתונים שבשאלה. אפשר להיעזר במודל התלת-ממדי שניתן לסובב.',
+    try3:{
+      a:'בסעיף הזה נדרש המבט מלפנים, מכיוון החץ. בדקו שכל מה ששרטטתם משקף את מה שנראה מאותו כיוון בלבד. המודל התלת-ממדי נשאר זמין לעזרה.',
+      b:'בסעיף הזה נדרש המבט מימין. בדקו שהוא משקף את מה שנראה מצד ימין של המבנה בלבד. המודל התלת-ממדי נשאר זמין לעזרה.',
+      g1:'בסעיף הזה מותר להוסיף קוביות רק כל עוד המבט מימין נשאר כפי שהיה, ומבקשים את המספר הגדול ביותר האפשרי. בדקו שני דברים: שהמבט מימין לא השתנה, ושהוספתם את המספר הגדול ביותר שאפשר. אפשר להוסיף קוביות במודל התלת-ממדי ולבדוק את המבטים בפועל.',
+      g2:'בסעיף הזה כל משבצת בתרשים מציינת כמה קוביות עומדות במקומה. בדקו שהמספרים תואמים למבנה שהתקבל אחרי ההוספה. המודל התלת-ממדי נשאר זמין לעזרה.',
+      g3:'בסעיף הזה נדרש לזהות איזה מבט (מלבד מימין) לא השתנה לאחר ההוספה. בדקו כל אחד מהמבטים — משמאל, מלפנים ומאחור — מול המבנה לפני ההוספה ואחריה. המודל התלת-ממדי נשאר זמין לעזרה.'
+    },
+    complete_msg:'כל הסעיפים נכונים! עשיתם עבודה מצוינת בניתוח הנתונים ובהגעה לפתרון המדויק.',
+
+    /* --- סיכום --- */
+    sec_summary:'סיום השאלה',
+    reflect_q:'שאלת רפלקציה: איזה סעיף היה לך הכי מאתגר, ולמה?',
+    reflect_ph:'כתבו כאן...'
+  },
+
+  ar:{
+    /* --- כותרות ומסגרת --- */
+    title:'الرؤية المكانية · النموذج 35372 · بجروت صيف 2025 · الموعد ب',
+    kicker:'إدراك المستوى والفراغ · نموذج 35372',
+    h1:'بجروت صيف 2025 · موعد ب',
+    lead:'حُلّوا <b>جميع</b> بنود السؤال، ثمّ اضغطوا على <b>"افحصوا الإجابات"</b> في أسفل الصفحة. التغذية الراجعة، والعلامة ✓/✗، والمساعدة ثلاثيّة الأبعاد تظهر فقط بعد الفحص — وفقط بجانب البنود التي أخطأتم فيها.',
+    footer:'أداة تدريب ذاتيّ · لا تحلّ محلّ النقاش الصفّيّ',
+    img_alt:'رسم المبنى المُعطى',
+
+    /* --- نصّ الامتحان الرسميّ --- */
+    sec_intro:'المبنى المُعطى',
+    q_intro:'الرسم الذي أمامكم يعرض مبنًى مبنيًا من مكعّبات متطابقة. السهم في الرسم يشير إلى اتّجاه النظرة من الأمام. كلّ مكعّب في المبنى موضوع على السطح أو على مكعّب آخر.',
+    sec_a:'البند أ',  q_a:'أكمِلوا النظرة من الأمام للمبنى في القالب الذي أمامكم.',
+    sec_b:'البند ب',  q_b:'أكمِلوا النظرة من اليمين للمبنى في القالب الذي أمامكم.',
+    sec_g1:'البند جـ(1)',
+    q_g1:'أضافوا إلى المبنى أكبر عدد ممكن من المكعّبات، بحيث لم تتغيّر النظرة من اليمين.<br>(1) كم مكعّبًا أضافوا إلى المبنى؟',
+    sec_g2:'البند جـ(2)',
+    q_g2:'أضافوا إلى المبنى أكبر عدد ممكن من المكعّبات، بحيث لم تتغيّر النظرة من اليمين.<br>(2) ارسموا مخطّط أعداد للمبنى بعد إضافة المكعّبات.',
+    sec_g3:'البند جـ(3)',
+    q_g3:'أضافوا إلى المبنى أكبر عدد ممكن من المكعّبات، بحيث لم تتغيّر النظرة من اليمين.<br>(3) أيّة نظرة (باستثناء النظرة من اليمين) لم تتغيّر بعد إضافة المكعّبات – النظرة من اليسار أم النظرة من الأمام أم النظرة من الخلف؟',
+    opt_left:'النظرة من اليسار', opt_front:'النظرة من الأمام', opt_back:'النظرة من الخلف',
+
+    /* --- تسميات البنود --- */
+    lbl_a:'أ', lbl_b:'ب', lbl_c:'جـ',
+    lbl:{a:'أ', b:'ب', g1:'جـ(1)', g2:'جـ(2)', g3:'جـ(3)'},
+    sep:'، ',
+
+    /* --- أزرار --- */
+    btn_check:'افحصوا الإجابات',
+    btn_help_open:'هل تحتاجون مساعدة؟ افتحوا النموذج ثلاثيّ الأبعاد',
+    btn_help_open_sb:'هل تحتاجون مساعدة؟ افتحوا النموذج ثلاثيّ الأبعاد (بيئة استكشاف)',
+    btn_help_close:'إخفاء النموذج ثلاثيّ الأبعاد',
+    btn_show:'اعرضوا الإجابة الصحيحة',
+    btn_retry:'حاولوا مرّة أخرى',
+    btn_top:'العودة إلى الأعلى',
+    btn_reset_view:'إعادة ضبط العرض',
+    btn_undo:'تراجع (Undo)',
+    btn_reset_struct:'إعادة ضبط المبنى (Reset)',
+    viewer_hint:'اسحبوا للتدوير · العجلة/القرص للتكبير · السهم البرتقاليّ = النظرة من الأمام',
+    sb_hint:'اضغطوا على خانة لإضافة مكعّب إلى ذلك العمود (العمود الأيسر = العمود 0):',
+    sb_added_tpl:'أُضيف {n} مكعّبات',
+
+    /* --- الفحص والتغذية الراجعة --- */
+    sec_check:'فحص الإجابات',
+    incomplete:'لم تُكمِلوا الحلّ بعد. يجب إكمال البنود: {items}.',
+    sec_ok:'البند صحيح.',
+    try1:'هذا البند ما زال غير صحيح. عودوا إليه وحاولوا مرّة أخرى.',
+    try2:'هذا البند ما زال غير صحيح. قبل محاولة إضافية، تحقّقوا ممّا إذا كانت الإجابة متّسقة مع معطيات السؤال. يمكنكم الاستعانة بالمجسّم ثلاثيّ الأبعاد الذي يمكن تدويره.',
+    try3:{
+      a:'في هذا البند مطلوبة النظرة من الأمام، باتّجاه السهم. تحقّقوا من أنّ كلّ ما رسمتموه يعكس ما يُرى من ذلك الاتّجاه فقط. المجسّم ثلاثيّ الأبعاد متاحًا للمساعدة.',
+      b:'في هذا البند مطلوبة النظرة من اليمين. تحقّقوا من أنّها تُظهر ما يُرى من الجهة اليمنى للمبنى فقط. المجسّم ثلاثيّ الأبعاد متاحًا للمساعدة.',
+      g1:'في هذا البند يُسمح بإضافة المكعّبات فقط ما دامت النظرة من اليمين تبقى كما كانت، والمطلوب أكبر عدد ممكن. تحقّقوا من أمرين: أنّ النظرة من اليمين لم تتغيّر، وأنّكم أضفتم أكبر عدد ممكن. يمكنكم إضافة المكعّبات في المجسّم ثلاثيّ الأبعاد وفحص النظرات فعليًّا.',
+      g2:'في هذا البند تشير كلّ خانة في المخطّط إلى عدد المكعّبات القائمة في موضعها. تحقّقوا من أنّ الأعداد تُطابق المبنى الناتج بعد الإضافة. يبقى المجسّم ثلاثيّ الأبعاد متاحًا للمساعدة.',
+      g3:'في هذا البند مطلوب تحديد أيّة نظرة (باستثناء النظرة من اليمين) لم تتغيّر بعد الإضافة. تحقّقوا من كلّ نظرة — من اليسار، من الأمام، ومن الخلف — بمقارنة المبنى قبل الإضافة وبعدها. يبقى المجسّم ثلاثيّ الأبعاد متاحًا للمساعدة.'
+    },
+    complete_msg:'جميع البنود صحيحة! لقد قمتم بعمل ممتاز في تحليل المعطيات والوصول إلى الحلّ الدقيق.',
+
+    /* --- ملخّص --- */
+    sec_summary:'انتهاء السؤال',
+    reflect_q:'سؤال تأمّل: أيّ بند كان الأكثر تحدّيًا بالنسبة لكم، ولماذا؟',
+    reflect_ph:'اكتبوا هنا...'
+  }
+};
+
+let LANG = 'he';
+/* t(key) – שליפת מחרוזת בשפה הפעילה */
+function t(key){ const v = I18N[LANG][key]; return v===undefined ? '' : v; }
+
+/* החלפת שפה: מעדכן את כל הטקסטים בדף מבלי לאבד את מצב הפתרון */
+function setLang(lang){
+  if(!I18N[lang]) return;
+  LANG = lang;
+  document.documentElement.lang = lang;      /* dir נשאר rtl בשתי השפות */
+  document.title = t('title');
+
+  /* כל אלמנט עם data-i18n */
+  const nodes = document.querySelectorAll('[data-i18n]');
+  for(const el of nodes){ el.innerHTML = t(el.dataset.i18n); }
+
+  /* טקסטים שאינם innerHTML */
+  const img=byId('examImg'); if(img) img.alt=t('img_alt');
+  const ta=byId('reflect');  if(ta)  ta.placeholder=t('reflect_ph');
+
+  /* כפתורי מתג השפה */
+  byId('lang-he').classList.toggle('active', lang==='he');
+  byId('lang-ar').classList.toggle('active', lang==='ar');
+
+  /* כפתור עזרה שנפתח – יש להחזיר לו את תווית ה"הסתר" */
+  KEYS.forEach(k=>{
+    const box=byId('viewer-'+k);
+    if(box && box.classList.contains('show')){
+      const btn=byId('help-'+k).querySelector('[data-help]');
+      if(btn) btn.innerHTML=t('btn_help_close');
+    }
+  });
+
+  /* רכיבי סביבת החקר (מונה הקוביות) */
+  for(const k in HELP){ if(HELP[k].relabel) HELP[k].relabel(); }
+
+  /* הודעות דינמיות שכבר מוצגות – ציור מחדש בשפה החדשה */
+  refreshDynamic();
+  document.dispatchEvent(new CustomEvent('lab:languagechange',{detail:{lang:LANG}}));
+}
+
+/* ציור מחדש של המשוב לאחר החלפת שפה — לפי מצב הסעיפים בלבד */
+function refreshDynamic(){
+  KEYS.forEach(k=>{
+    const fb=byId('fb-'+k);
+    if(state[k].ok===null || !fb.classList.contains('show')) return;
+    showFeedback(k);
+  });
+  if(byId('summaryCard').classList.contains('show')) byId('doneMsg').innerHTML=t('complete_msg');
+}
+
+/* ============================================================
+   מנוע תלת־ממד (Canvas · אורתוגרפי · גרירה/זום)
+============================================================ */
+function makeViewer(canvas, initialH, baseH){
+  const ctx=canvas.getContext('2d');
+  let H=initialH.map(r=>r.slice());
+  let base = baseH ? baseH.map(r=>r.slice()) : null;  // קוביות שנוספו מעל המקור נצבעות אחרת
+  const def={yaw:-0.62, pitch:0.52, zoom:1};
+  let yaw=def.yaw, pitch=def.pitch, zoom=def.zoom;
+  let drag=false, lx=0, ly=0;
+
+  function rot(p){
+    let {x,y,z}=p;
+    let x1=x*Math.cos(yaw)+z*Math.sin(yaw);
+    let z1=-x*Math.sin(yaw)+z*Math.cos(yaw);
+    let y1=y;
+    let y2=y1*Math.cos(pitch)-z1*Math.sin(pitch);
+    let z2=y1*Math.sin(pitch)+z1*Math.cos(pitch);
+    return {x:x1,y:y2,z:z2};
+  }
+  function project(p,W,Ht,scale){return {sx:W/2+p.x*scale, sy:Ht/2-p.y*scale, depth:p.z};}
+  const PAL_ORIG={top:'#fbfcfe',bottom:'#9aa6b4',front:'#e3e9f1',back:'#cdd6e1',right:'#aeb9c7',left:'#c4ccd8'};
+  const PAL_ADD ={top:'#dcecff',bottom:'#5b86b0',front:'#bcdcfa',back:'#a3c6ee',right:'#6ca2db',left:'#92bdec'};
+  function cubeFaces(cx,cy,cz,added){
+    const v=(dx,dy,dz)=>({x:cx+dx,y:cy+dy,z:cz+dz});
+    const P=added?PAL_ADD:PAL_ORIG;
+    return [
+      {n:{x:0,y:1,z:0}, p:[v(-.5,.5,-.5),v(.5,.5,-.5),v(.5,.5,.5),v(-.5,.5,.5)], shade:P.top},
+      {n:{x:0,y:-1,z:0},p:[v(-.5,-.5,-.5),v(.5,-.5,-.5),v(.5,-.5,.5),v(-.5,-.5,.5)],shade:P.bottom},
+      {n:{x:0,y:0,z:1}, p:[v(-.5,-.5,.5),v(.5,-.5,.5),v(.5,.5,.5),v(-.5,.5,.5)], shade:P.front},
+      {n:{x:0,y:0,z:-1},p:[v(-.5,-.5,-.5),v(.5,-.5,-.5),v(.5,.5,-.5),v(-.5,.5,-.5)],shade:P.back},
+      {n:{x:1,y:0,z:0}, p:[v(.5,-.5,-.5),v(.5,-.5,.5),v(.5,.5,.5),v(.5,.5,-.5)], shade:P.right},
+      {n:{x:-1,y:0,z:0},p:[v(-.5,-.5,-.5),v(-.5,-.5,.5),v(-.5,.5,.5),v(-.5,.5,-.5)],shade:P.left}
+    ];
+  }
+  function draw(){
+    const dpr=window.devicePixelRatio||1;
+    const W=canvas.clientWidth, Ht=canvas.clientHeight;
+    canvas.width=W*dpr; canvas.height=Ht*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,W,Ht);
+    const cx=(COLS-1)/2, cz=(ROWS-1)/2;
+    let maxLayer=0; for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++)maxLayer=Math.max(maxLayer,H[r][c]);
+    const cy=maxLayer/2;
+    const span=Math.max(COLS,ROWS,maxLayer)+2.4;
+    const scale=Math.min(W,Ht)/span*1.05*zoom;
+
+    const faces=[];
+    (function tray(){
+      const m=0.62, yb=-0.55;
+      const corners=[{x:-cx-m,y:yb,z:-cz-m},{x:COLS-1-cx+m,y:yb,z:-cz-m},
+                     {x:COLS-1-cx+m,y:yb,z:ROWS-1-cz+m},{x:-cx-m,y:yb,z:ROWS-1-cz+m}];
+      const pr=corners.map(p=>project(rot(p),W,Ht,scale));
+      faces.push({depth:Math.min(...corners.map(p=>rot(p).z))-0.01, pts:pr, fill:'#eef2f7', stroke:'#d4dde8'});
+    })();
+    for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+      const h=H[r][c];
+      for(let y=0;y<h;y++){
+        const wx=c-cx, wy=y-cy+0.5, wz=r-cz;
+        const isAdded = base && y >= base[r][c];
+        for(const f of cubeFaces(wx,wy,wz,isAdded)){
+          const {z}=rot({x:f.n.x,y:f.n.y,z:f.n.z});
+          if(z<=0.0001) continue;                     // גיזום פאות אחוריות
+          const pr=f.p.map(p=>project(rot(p),W,Ht,scale));
+          const dep=f.p.reduce((s,p)=>s+rot(p).z,0)/4;
+          faces.push({depth:dep, pts:pr, fill:f.shade, stroke:isAdded?'#3f6ea5':'#566378'});
+        }
+      }
+    }
+    const arrow=(function(){
+      const z0=ROWS-1-cz+1.15, z1=ROWS-1-cz+0.35, xx=0; const yb=-0.5;
+      const shaft=[{x:xx,y:yb,z:z0},{x:xx,y:yb,z:z1}];
+      const head=[{x:xx-0.28,y:yb,z:z1+0.34},{x:xx,y:yb,z:z1},{x:xx+0.28,y:yb,z:z1+0.34}];
+      return {shaft:shaft.map(p=>project(rot(p),W,Ht,scale)), head:head.map(p=>project(rot(p),W,Ht,scale))};
+    })();
+
+    faces.sort((a,b)=>a.depth-b.depth);               // ציור מאחור לפנים
+    for(const f of faces){
+      ctx.beginPath(); ctx.moveTo(f.pts[0].sx,f.pts[0].sy);
+      for(let i=1;i<f.pts.length;i++)ctx.lineTo(f.pts[i].sx,f.pts[i].sy);
+      ctx.closePath();
+      ctx.fillStyle=f.fill; ctx.fill();
+      ctx.lineWidth=1; ctx.strokeStyle=f.stroke||'#566378'; ctx.stroke();
+    }
+    ctx.strokeStyle='#e8821e'; ctx.fillStyle='#e8821e'; ctx.lineWidth=3; ctx.lineJoin='round';
+    ctx.beginPath(); ctx.moveTo(arrow.shaft[0].sx,arrow.shaft[0].sy);
+    ctx.lineTo(arrow.shaft[1].sx,arrow.shaft[1].sy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(arrow.head[0].sx,arrow.head[0].sy);
+    ctx.lineTo(arrow.head[1].sx,arrow.head[1].sy); ctx.lineTo(arrow.head[2].sx,arrow.head[2].sy);
+    ctx.closePath(); ctx.fill();
+  }
+
+  function down(e){drag=true;const p=pt(e);lx=p.x;ly=p.y;}
+  function move(e){if(!drag)return;const p=pt(e);yaw+=(p.x-lx)*0.01;pitch+=(p.y-ly)*0.01;
+    pitch=Math.max(0.12,Math.min(1.35,pitch));lx=p.x;ly=p.y;draw();e.preventDefault();}
+  function up(){drag=false;}
+  function pt(e){const r=canvas.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return {x:t.clientX-r.left,y:t.clientY-r.top};}
+  function wheel(e){zoom*=(e.deltaY<0?1.1:0.9);zoom=Math.max(0.4,Math.min(3,zoom));draw();e.preventDefault();}
+  let pinch=0;
+  function tmove(e){
+    if(e.touches&&e.touches.length===2){
+      const dx=e.touches[0].clientX-e.touches[1].clientX, dy=e.touches[0].clientY-e.touches[1].clientY;
+      const d=Math.hypot(dx,dy); if(pinch){zoom*=d/pinch;zoom=Math.max(0.4,Math.min(3,zoom));draw();} pinch=d; e.preventDefault();
+    } else move(e);
+  }
+  canvas.addEventListener('mousedown',down); window.addEventListener('mousemove',move); window.addEventListener('mouseup',up);
+  canvas.addEventListener('wheel',wheel,{passive:false});
+  canvas.addEventListener('touchstart',e=>{if(e.touches.length===1)down(e);},{passive:false});
+  canvas.addEventListener('touchmove',tmove,{passive:false});
+  canvas.addEventListener('touchend',()=>{up();pinch=0;});
+
+  return {
+    draw,
+    reset(){yaw=def.yaw;pitch=def.pitch;zoom=def.zoom;draw();},
+    setH(nh){H=nh.map(r=>r.slice());draw();}
+  };
+}
+
+/* ============================================================
+   עזרי תלת־ממד לכל סעיף (נבנים פעם אחת, מצוירים בפתיחה בלבד)
+============================================================ */
+/* עזר סטטי: תצוגת מבנה לסיבוב/זום בלבד */
+function makeStatic(host, H){
+  host.innerHTML =
+    '<canvas></canvas>'+
+    '<div class="vbar">'+
+      '<button class="btn sm" data-act="rv" data-i18n="btn_reset_view"></button>'+
+      '<span class="sp" data-i18n="viewer_hint"></span>'+
+    '</div>';
+  const canvas=host.querySelector('canvas');
+  let viewer=null;
+  host.querySelector('[data-act=rv]').onclick=()=>viewer&&viewer.reset();
+  return {
+    ensureViewer(){ if(!viewer)viewer=makeViewer(canvas,H); requestAnimationFrame(()=>viewer.draw()); },
+    draw(){viewer&&viewer.draw();}
+  };
+}
+/* סביבת חקר: הוספת קוביות + עדכון תלת־ממד בזמן אמת (מצב עצמאי לכל מופע) */
+function makeSandbox(host){
+  host.innerHTML =
+    '<canvas></canvas>'+
+    '<div class="vbar" style="flex-direction:column;align-items:stretch;gap:12px">'+
+      '<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">'+
+        '<button class="btn sm" data-act="rv" data-i18n="btn_reset_view"></button>'+
+        '<button class="btn sm" data-act="undo" data-i18n="btn_undo"></button>'+
+        '<button class="btn sm ghost" data-act="rs" data-i18n="btn_reset_struct"></button>'+
+        '<span class="sp sb-count"></span>'+
+      '</div>'+
+      '<div>'+
+        '<div style="font-size:.84rem;color:var(--muted);margin-bottom:6px" data-i18n="sb_hint">'+
+          '</div>'+
+        '<div class="sandbox-grid"><table class="add"></table></div>'+
+      '</div>'+
+    '</div>';
+  const canvas=host.querySelector('canvas');
+  const table=host.querySelector('table.add');
+  const countBox=host.querySelector('.sb-count');
+  let added=ORIGINAL.map(r=>r.map(()=>0));
+  let hist=[];
+  let viewer=null;
+  const curH=()=>ORIGINAL.map((row,r)=>row.map((v,c)=>v+added[r][c]));
+  function repaint(){
+    const H=curH();
+    for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++)table.rows[r].cells[c].textContent=H[r][c];
+    renderCount();
+    if(viewer)viewer.setH(curH());
+  }
+  function renderCount(){
+    const n=added.flat().reduce((a,b)=>a+b,0);
+    countBox.innerHTML=t('sb_added_tpl').replace('{n}','<span class="counter">'+n+'</span>');
+  }
+  for(let r=0;r<ROWS;r++){const tr=table.insertRow();for(let c=0;c<COLS;c++){const td=tr.insertCell();
+    td.onclick=()=>{added[r][c]++;hist.push([r,c]);repaint();};}}
+  host.querySelector('[data-act=rv]').onclick=()=>viewer&&viewer.reset();
+  host.querySelector('[data-act=undo]').onclick=()=>{if(hist.length){const [r,c]=hist.pop();added[r][c]=Math.max(0,added[r][c]-1);repaint();}};
+  host.querySelector('[data-act=rs]').onclick=()=>{added=ORIGINAL.map(r=>r.map(()=>0));hist=[];repaint();};
+  repaint();
+  return {
+    ensureViewer(){ if(!viewer)viewer=makeViewer(canvas,curH(),ORIGINAL); requestAnimationFrame(()=>viewer.draw()); },
+    draw(){viewer&&viewer.draw();},
+    relabel(){renderCount();}
+  };
+}
+
+const HELP={};
+HELP.a  = makeStatic(byId('host-a'),  ORIGINAL);
+HELP.b  = makeStatic(byId('host-b'),  ORIGINAL);
+HELP.g1 = makeSandbox(byId('host-g1'));
+HELP.g2 = makeSandbox(byId('host-g2'));
+HELP.g3 = makeStatic(byId('host-g3'), ORIGINAL);
+
+function toggleHelp(key){
+  const box=byId('viewer-'+key);
+  const open=box.classList.toggle('show');
+  const btn=byId('help-'+key).querySelector('[data-help]');
+  if(btn)btn.innerHTML = open ? t('btn_help_close') : t(btn.dataset.i18n);
+  if(open)HELP[key].ensureViewer();
+}
+window.addEventListener('resize',()=>{for(const k in HELP)HELP[k].draw();});
+
+/* ============================================================
+   סעיף ג(3) – בחירה יחידה
+============================================================ */
+/* סדר האפשרויות זהה לנוסח הבגרות: משמאל, מלפנים, מאחור */
+const G3_OPTIONS=[{key:'left'},{key:'front'},{key:'back'}];
+let g3pick=null;
+(function buildG3(){
+  const host=byId('g3-choices');
+  G3_OPTIONS.forEach(o=>{
+    const b=document.createElement('button');
+    b.className='btn'; b.style.justifyContent='flex-start';
+    b.dataset.i18n='opt_'+o.key; b.innerHTML=t('opt_'+o.key);
+    b.onclick=()=>{
+      if(host.classList.contains('locked'))return;
+      g3pick=o.key;
+      [...host.children].forEach(x=>x.classList.remove('primary'));
+      b.classList.add('primary');
+      sectionDirty('g3');
+    };
+    host.appendChild(b);
+  });
+})();
+
+/* ============================================================
+   מצב, בדיקה כללית ומשוב
+============================================================ */
+
+/* בדיקה אם סעיף נענה (יש קלט כלשהו) */
+function isAnswered(k){
+  if(k==='a') return readToggle('grid-a').flat().some(v=>v===1);
+  if(k==='b') return readToggle('grid-b').flat().some(v=>v===1);
+  if(k==='g1'){const v=byId('g1-input').value.trim(); return v!=='' && isFinite(+v);}
+  if(k==='g2') return readNum('grid-g2').flat().some(v=>v>0);
+  if(k==='g3') return g3pick!==null;
+}
+/* הערכת נכונות */
+function evaluate(k){
+  if(k==='a') return eq2(readToggle('grid-a'),ANS_FRONT);
+  if(k==='b') return eq2(readToggle('grid-b'),ANS_RIGHT);
+  if(k==='g1') return +byId('g1-input').value===ADD_ANSWER;
+  if(k==='g2') return eq2(readNum('grid-g2'),MAXFILL);
+  if(k==='g3') return g3pick==='left';
+}
+
+function setBadge(k,ok){const b=byId('badge-'+k);b.textContent=ok?'✓':'✗';b.className='res-badge show '+(ok?'ok':'bad');}
+function clearBadge(k){const b=byId('badge-'+k);b.textContent='';b.className='res-badge';}
+
+function lockSection(k,lock){
+  if(k==='a'||k==='b'||k==='g2') byId('grid-'+k).classList.toggle('locked',lock);
+  if(k==='g1') byId('g1-input').disabled=lock;
+  if(k==='g3') byId('g3-choices').classList.toggle('locked',lock);
+}
+
+/* ניקוי התצוגה של סעיף (התג + המשוב + העזרה). מונה הניסיונות נשמר. */
+function clearSectionResult(k){
+  clearBadge(k);
+  byId('fb-'+k).className='feedback';
+  byId('help-'+k).classList.remove('show');
+  byId('viewer-'+k).classList.remove('show');
+  lockSection(k,false);
+  state[k].ok=null;   /* התצוגה מתאפסת; state[k].attempts נשמר */
+}
+
+/* עריכת סעיף לאחר בדיקה — מסתירה את המשוב הישן שלו ואת הודעת הסיום.
+   מונה הניסיונות אינו מתאפס (ההסלמה נספרת לפי מספר ההגשות). */
+function sectionDirty(k){
+  clearSectionResult(k);
+  byId('summaryCard').classList.remove('show');
+}
+
+/* מאזינים ברמת הרשת (נשמרים גם לאחר בנייה מחדש של התאים) */
+byId('grid-a').addEventListener('click',()=>sectionDirty('a'));
+byId('grid-b').addEventListener('click',()=>sectionDirty('b'));
+byId('grid-g2').addEventListener('click',()=>sectionDirty('g2'));
+byId('g1-input').addEventListener('input',()=>sectionDirty('g1'));
+
+/* טקסט המשוב של סעיף — לפי מצבו ומונה הניסיונות שלו */
+function fbBody(k){
+  const a=state[k].attempts;
+  if(a<=1) return t('try1');
+  if(a===2) return t('try2');
+  return I18N[LANG].try3[k];        /* ניסיון 3 ואילך — קבוע לאותו סעיף */
+}
+function showFeedback(k){
+  const fb=byId('fb-'+k);
+  if(state[k].ok){
+    fb.className='feedback show ok';
+    fb.innerHTML='<b>'+t('sec_ok')+'</b>';          /* "הסעיף נכון." — ללא חשיפת תשובה */
+  }else{
+    fb.className='feedback show bad';
+    fb.innerHTML=fbBody(k);                          /* סימון בינארי + טקסט לפי ניסיון */
+  }
+}
+
+/* ---- הכפתור המרכזי ---- */
+function checkAll(){
+  const missing=KEYS.filter(k=>!isAnswered(k));
+  const note=byId('incomplete-note');
+  if(missing.length){
+    missing.forEach(k=>clearSectionResult(k));
+    note.textContent=t('incomplete').replace('{items}',missing.map(k=>I18N[LANG].lbl[k]).join(t('sep')));
+    note.classList.add('show');
+    note.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  note.classList.remove('show');
+  note.textContent='';
+  KEYS.forEach(k=>{
+    const ok=evaluate(k);
+    if(ok){
+      state[k].ok=true;                    /* סעיף נכון — אין מנייה, אין חשיפת תשובה */
+      setBadge(k,true);
+      showFeedback(k);
+      byId('help-'+k).classList.remove('show');
+      byId('viewer-'+k).classList.remove('show');
+      lockSection(k,true);
+    }else{
+      state[k].ok=false;
+      state[k].attempts++;                 /* הגשה שגויה של הסעיף — קידום המונה שלו */
+      if(state[k].attempts>=2) modelUnlocked=true;  /* פתיחת המודל התלת-ממדי */
+      setBadge(k,false);
+      showFeedback(k);
+      lockSection(k,false);
+    }
+  });
+
+  /* המודל התלת-ממדי זמין ליד כל סעיף שגוי, מרגע שנפתח */
+  KEYS.forEach(k=>{
+    if(state[k].ok===false && modelUnlocked) byId('help-'+k).classList.add('show');
+  });
+
+  /* סיום השאלה — רק כשכל הסעיפים נכונים */
+  if(KEYS.every(k=>state[k].ok===true)) showComplete();
+  else byId('summaryCard').classList.remove('show');
+}
+
+/* הודעת סיום השאלה (כל הסעיפים נכונים) */
+function showComplete(){
+  byId('doneMsg').innerHTML=t('complete_msg');
+  byId('summaryCard').classList.add('show');
+  byId('summaryCard').scrollIntoView({behavior:'smooth'});
+}
+
+/* ---- אתחול שפה (ברירת מחדל: עברית) ---- */
+setLang('he');
+
+/* ---- תמונת השאלה (Base64) ---- */
+byId('examImg').src="data:image/jpeg;base64,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";
+</script>
+<script src="../../assets/lab-shell.js" data-portal-href="../../../index.html#labs"></script>
+</body>
+</html>

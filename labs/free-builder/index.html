@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>בונים בתלת-ממד</title>
+<script>(function(){var w=console.warn;console.warn=function(){try{var m=arguments[0]?(""+arguments[0]):"";if(m.indexOf("cdn.tailwindcss.com")>-1)return;}catch(e){}return w.apply(console,arguments);};})();</script>
+<script src="../assets/vendor/tailwind/tailwindcss.js"></script>
+<script src="../assets/vendor/three-r128/three.min.js"></script>
+<link rel="stylesheet" href="../assets/lab-shell.css">
+<style>
+  body { font-family: "Segoe UI", Arial, "Noto Sans Hebrew", sans-serif; }
+  select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%232563eb' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: left 0.5rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; padding-left: 2rem; -webkit-appearance:none; appearance:none; }
+  #canvas-holder { touch-action: none; cursor: grab; }
+  #canvas-holder:active { cursor: grabbing; }
+  .num-cell { -webkit-user-select:none; user-select:none; }
+</style>
+</head>
+<body class="bg-white text-slate-800 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-l from-blue-600 to-blue-500 text-white shadow-md">
+    <div class="max-w-6xl mx-auto flex items-center justify-between gap-3 px-4 py-3">
+      <div class="flex items-center gap-3">
+        <div class="bg-white/20 rounded-xl p-2 flex items-center justify-center">
+          <svg viewBox="0 0 24 24" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 12l9-5M12 12v10M12 12L3 7"/></svg>
+        </div>
+        <div>
+          <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">בונים בתלת-ממד</h1>
+          <p class="text-xs sm:text-sm text-blue-100">כלי בנייה חופשי</p>
+        </div>
+      </div>
+      <button onclick="toggleFullScreen()" class="bg-white/15 hover:bg-white/25 text-white p-2.5 rounded-xl transition-all flex items-center gap-2" title="מסך מלא">
+        <svg id="fs-icon" viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5"/><path d="M20 9V4h-5"/><path d="M4 15v5h5"/><path d="M20 15v5h-5"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Controls -->
+  <div class="max-w-6xl mx-auto w-full px-4 pt-4">
+    <div class="bg-blue-50 border border-blue-100 rounded-2xl p-3 sm:p-4 flex flex-wrap items-end gap-3 sm:gap-4">
+      <div class="flex flex-col">
+        <label class="text-xs font-bold text-blue-800 mb-1">אורך</label>
+        <select id="sel-cols" class="rounded-lg border-2 border-blue-200 bg-white text-slate-800 font-bold py-1.5 pr-3 text-sm focus:border-blue-500 focus:outline-none"></select>
+      </div>
+      <div class="flex flex-col">
+        <label class="text-xs font-bold text-blue-800 mb-1">רוחב</label>
+        <select id="sel-rows" class="rounded-lg border-2 border-blue-200 bg-white text-slate-800 font-bold py-1.5 pr-3 text-sm focus:border-blue-500 focus:outline-none"></select>
+      </div>
+      <div class="flex flex-col">
+        <label class="text-xs font-bold text-blue-800 mb-1">גובה מרבי</label>
+        <select id="sel-height" class="rounded-lg border-2 border-blue-200 bg-white text-slate-800 font-bold py-1.5 pr-3 text-sm focus:border-blue-500 focus:outline-none"></select>
+      </div>
+      <div class="flex-grow"></div>
+      <button id="btn-save" onclick="saveState()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-xl shadow-sm transition-all flex items-center gap-2 text-sm">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+        שמור מצב
+      </button>
+      <button id="btn-return-saved" onclick="returnToSaved()" class="hidden bg-white hover:bg-emerald-50 text-emerald-700 border-2 border-emerald-200 font-bold py-2 px-4 rounded-xl shadow-sm transition-all items-center gap-2 text-sm">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/></svg>
+        חזור למבנה שמור
+      </button>
+      <button id="btn-undo" onclick="undo()" class="bg-white hover:bg-slate-50 text-slate-700 border-2 border-slate-200 font-bold py-2 px-4 rounded-xl shadow-sm transition-all flex items-center gap-2 text-sm disabled:opacity-40 disabled:cursor-not-allowed">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/></svg>
+        ביטול
+      </button>
+      <button onclick="clearAll()" class="bg-white hover:bg-rose-50 text-rose-600 border-2 border-rose-200 font-bold py-2 px-4 rounded-xl shadow-sm transition-all flex items-center gap-2 text-sm">
+        <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg>
+        נקה הכל
+      </button>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <main class="max-w-6xl mx-auto w-full px-4 py-4 flex-grow">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+      <!-- 3D -->
+      <div class="lg:col-span-7 flex flex-col">
+        <div class="bg-white rounded-2xl border-2 border-slate-200 shadow-sm p-2 flex flex-col h-[360px] sm:h-[460px] lg:h-[560px]">
+          <div class="text-xs font-bold text-slate-400 text-center mb-1 flex items-center justify-center gap-1">
+            <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14-4"/><path d="M4 5v4h4"/><path d="M4 13a8 8 0 0 0 14 4"/><path d="M20 19v-4h-4"/></svg>
+            גררו כדי לסובב · גלגלת / צביטה כדי לקרב
+          </div>
+          <div id="canvas-holder" class="relative flex-grow bg-slate-50 rounded-xl overflow-hidden"></div>
+        </div>
+      </div>
+
+      <!-- Numeric grid -->
+      <div class="lg:col-span-5 flex flex-col">
+        <div class="bg-white rounded-2xl border-2 border-slate-200 shadow-sm p-4 flex flex-col">
+          <h2 class="text-base font-bold text-slate-700 text-center mb-1">תרשים מספרי</h2>
+          <p class="text-xs text-slate-400 text-center mb-3">כל תא = גובה העמודה. לחצו כדי לבנות או להוריד.</p>
+
+          <div class="flex bg-slate-100 p-1 rounded-lg border border-slate-200 mb-3 w-full justify-center gap-1">
+            <button id="tool-add" onclick="setTool('add')" class="text-xs font-bold px-3 py-1.5 rounded-md transition-all flex-1 flex items-center justify-center gap-1 bg-blue-600 text-white shadow-md">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> הוסף
+            </button>
+            <button id="tool-remove" onclick="setTool('remove')" class="text-xs font-bold px-3 py-1.5 rounded-md transition-all flex-1 flex items-center justify-center gap-1 bg-slate-100 text-slate-600 hover:bg-slate-200">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"/></svg> הורד
+            </button>
+          </div>
+
+          <div id="num-grid-holder"></div>
+
+          <div class="mt-4">
+            <button id="btn-show-count" onclick="toggleCount()" class="w-full bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200 font-bold py-2 px-4 rounded-xl transition-all flex items-center justify-center gap-2 text-sm">
+              <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              הצג מספר קוביות
+            </button>
+            <div id="count-box" class="hidden items-center justify-between bg-slate-50 rounded-xl border border-slate-200 px-4 py-2 mt-2">
+              <span class="text-xs font-bold text-slate-500">סך הקוביות</span>
+              <span id="cube-count" class="text-lg font-black text-blue-600">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+<script>
+  // ---------- State ----------
+  let rows = 3, cols = 3, maxHeight = 3;
+  let grid = [];
+  let tool = 'add';
+  let history = [];
+  let savedGrid = null;   // baseline after "save state"
+
+  function makeEmpty() { return Array(rows).fill().map(() => Array(cols).fill(0)); }
+  function cloneGrid(g) { return g.map(r => r.slice()); }
+  function countCubes(g) { let s = 0; for (let r = 0; r < g.length; r++) for (let c = 0; c < g[0].length; c++) s += g[r][c]; return s; }
+
+  // ---------- Dropdowns ----------
+  function fillSelect(id, val) {
+    const sel = document.getElementById(id);
+    sel.innerHTML = '';
+    for (let i = 2; i <= 5; i++) {
+      const o = document.createElement('option');
+      o.value = i; o.textContent = i; if (i === val) o.selected = true;
+      sel.appendChild(o);
+    }
+  }
+  function initSelects() {
+    fillSelect('sel-cols', cols);
+    fillSelect('sel-rows', rows);
+    fillSelect('sel-height', maxHeight);
+    document.getElementById('sel-cols').addEventListener('change', e => { cols = +e.target.value; resetDims(); });
+    document.getElementById('sel-rows').addEventListener('change', e => { rows = +e.target.value; resetDims(); });
+    document.getElementById('sel-height').addEventListener('change', e => { maxHeight = +e.target.value; clampToHeight(); });
+  }
+  function resetDims() {
+    grid = makeEmpty(); history = []; clearSaved();
+    renderGrid(); render3D(); updateCount(); updateUndo();
+  }
+  function clampToHeight() {
+    pushHistory();
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) if (grid[r][c] > maxHeight) grid[r][c] = maxHeight;
+    renderGrid(); render3D(); updateCount();
+  }
+
+  // ---------- Numeric grid ----------
+  function renderGrid() {
+    const holder = document.getElementById('num-grid-holder');
+    let html = `<div dir="ltr" class="grid gap-[3px] w-full p-[4px] bg-slate-300 border border-slate-400 rounded-lg shadow-inner mx-auto" style="grid-template-columns: repeat(${cols}, minmax(0,1fr)); grid-template-rows: repeat(${rows}, minmax(0,1fr)); aspect-ratio:${cols}/${rows}; max-width:${cols * 4}rem">`;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const v = grid[r][c];
+        let colors;
+        if (savedGrid) {
+          const base = savedGrid[r][c];
+          if (v > base)      colors = 'bg-emerald-100 text-emerald-800 border border-emerald-400';
+          else if (v < base) colors = 'bg-rose-100 text-rose-800 border border-rose-400';
+          else               colors = v > 0 ? 'bg-slate-100 text-slate-700 border border-slate-300' : 'bg-slate-50 text-slate-400 border border-slate-200';
+        } else {
+          colors = v > 0 ? 'bg-blue-100 text-blue-900 border border-blue-300' : 'bg-slate-50 text-slate-400 border border-slate-200';
+        }
+        html += `<div onclick="cellClick(${r},${c})" class="num-cell w-full h-full min-h-[2.4rem] text-center text-xl font-black rounded-[4px] flex items-center justify-center transition-all cursor-pointer hover:brightness-95 hover:scale-[0.97] shadow-sm ${colors}">${v}</div>`;
+      }
+    }
+    holder.innerHTML = html + '</div>';
+  }
+
+  function cellClick(r, c) {
+    pushHistory();
+    if (tool === 'add') {
+      if (grid[r][c] < maxHeight) grid[r][c]++; else history.pop();
+    } else {
+      if (grid[r][c] > 0) grid[r][c]--; else history.pop();
+    }
+    renderGrid(); render3D(); updateCount(); updateUndo();
+  }
+
+  function setTool(t) {
+    tool = t;
+    document.getElementById('tool-add').className = 'text-xs font-bold px-3 py-1.5 rounded-md transition-all flex-1 flex items-center justify-center gap-1 ' + (t === 'add' ? 'bg-blue-600 text-white shadow-md' : 'bg-slate-100 text-slate-600 hover:bg-slate-200');
+    document.getElementById('tool-remove').className = 'text-xs font-bold px-3 py-1.5 rounded-md transition-all flex-1 flex items-center justify-center gap-1 ' + (t === 'remove' ? 'bg-rose-600 text-white shadow-md' : 'bg-slate-100 text-slate-600 hover:bg-slate-200');
+  }
+
+  // ---------- Save state ----------
+  function saveState() {
+    savedGrid = cloneGrid(grid);
+    document.getElementById('btn-return-saved').classList.remove('hidden');
+    document.getElementById('btn-return-saved').classList.add('flex');
+    renderGrid(); render3D();
+  }
+  function returnToSaved() {
+    if (!savedGrid) return;
+    pushHistory();
+    grid = cloneGrid(savedGrid);
+    renderGrid(); render3D(); updateCount(); updateUndo();
+  }
+  function clearSaved() {
+    savedGrid = null;
+    const b = document.getElementById('btn-return-saved');
+    b.classList.add('hidden'); b.classList.remove('flex');
+  }
+
+  // ---------- History ----------
+  function pushHistory() { history.push(cloneGrid(grid)); if (history.length > 100) history.shift(); }
+  function undo() {
+    if (history.length === 0) return;
+    grid = history.pop();
+    // fix dims in case an undo crosses a size change (kept simple: only same-dim states are pushed)
+    if (grid.length !== rows || grid[0].length !== cols) { grid = makeEmpty(); }
+    renderGrid(); render3D(); updateCount(); updateUndo();
+  }
+  function updateUndo() { document.getElementById('btn-undo').disabled = history.length === 0; }
+
+  function clearAll() {
+    if (countCubes(grid) === 0 && !savedGrid) return;
+    pushHistory();
+    grid = makeEmpty(); clearSaved();
+    renderGrid(); render3D(); updateCount(); updateUndo();
+  }
+
+  function updateCount() { const el = document.getElementById('cube-count'); if (el) el.textContent = countCubes(grid); }
+
+  // ---------- 3D ----------
+  let scene, camera, renderer, blockGroup;
+  let camRadius = 12, camTheta = Math.PI * 0.25, camPhi = Math.PI * 0.32;   // start from the FRONT (arrow side)
+  const target = new THREE.Vector3(0, 0.8, 0);
+  const cubeMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.75, metalness: 0.05 });
+  const cubeMatAdded = new THREE.MeshStandardMaterial({ color: 0x22c55e, roughness: 0.7, metalness: 0.05 });
+  const edgeMat = new THREE.LineBasicMaterial({ color: 0x334155 });
+
+  function init3D() {
+    const holder = document.getElementById('canvas-holder');
+    const w = holder.clientWidth || 400, h = holder.clientHeight || 400;
+    scene = new THREE.Scene(); scene.background = new THREE.Color(0xffffff);
+    camera = new THREE.PerspectiveCamera(38, w / h, 0.1, 200);
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(w, h); renderer.setPixelRatio(window.devicePixelRatio || 1);
+    renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    holder.appendChild(renderer.domElement);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+    const dir = new THREE.DirectionalLight(0xffffff, 0.75); dir.position.set(6, 12, 8); dir.castShadow = true;
+    dir.shadow.mapSize.width = 1024; dir.shadow.mapSize.height = 1024; scene.add(dir);
+    scene.add(new THREE.DirectionalLight(0xbfdbfe, 0.25));
+
+    blockGroup = new THREE.Group(); scene.add(blockGroup);
+
+    setupControls(holder);
+    updateCamera();
+    window.addEventListener('resize', onResize);
+    animate();
+    render3D();
+  }
+
+  function baseGrid() {
+    const g = new THREE.Group();
+    const offX = (cols - 1) / 2, offZ = (rows - 1) / 2;
+    // outer border frame (blue) — peeks out under the base to form a visible frame
+    const frame = new THREE.Mesh(new THREE.BoxGeometry(cols + 0.35, 0.05, rows + 0.35), new THREE.MeshPhongMaterial({ color: 0x60a5fa }));
+    frame.position.set(0, -0.06, 0); frame.receiveShadow = true; g.add(frame);
+    // base slab
+    const base = new THREE.Mesh(new THREE.BoxGeometry(cols + 0.08, 0.04, rows + 0.08), new THREE.MeshPhongMaterial({ color: 0xcbd5e1 }));
+    base.position.set(0, -0.04, 0); base.receiveShadow = true; g.add(base);
+    // tiles with clear edges
+    const tileGeo = new THREE.BoxGeometry(1, 0.06, 1);
+    const tileMat = new THREE.MeshPhongMaterial({ color: 0xeef2f7 });
+    const edgeGeo = new THREE.EdgesGeometry(tileGeo);
+    const edgeMatLine = new THREE.LineBasicMaterial({ color: 0x64748b });
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const tile = new THREE.Mesh(tileGeo, tileMat);
+        tile.position.set(c - offX, -0.02, r - offZ); tile.receiveShadow = true;
+        tile.add(new THREE.LineSegments(edgeGeo, edgeMatLine));
+        g.add(tile);
+      }
+    }
+    return g;
+  }
+
+  function frontArrow() {
+    // red arrow marking the FRONT — same style as the main activity (THREE.ArrowHelper)
+    const offZ = (rows - 1) / 2;
+    const dir = new THREE.Vector3(0, 0, -1);
+    const origin = new THREE.Vector3(0, 0.06, offZ + 1.6);
+    return new THREE.ArrowHelper(dir, origin, 1.0, 0xef4444, 0.35, 0.28);
+  }
+
+  function render3D() {
+    if (!blockGroup) return;
+    while (blockGroup.children.length > 0) blockGroup.remove(blockGroup.children[0]);
+    blockGroup.add(baseGrid());
+    blockGroup.add(frontArrow());
+    const geo = new THREE.BoxGeometry(1, 1, 1);
+    const edges = new THREE.EdgesGeometry(geo);
+    const offX = (cols - 1) / 2, offZ = (rows - 1) / 2;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const height = grid[r][c];
+        const baseH = savedGrid ? savedGrid[r][c] : Infinity;
+        for (let y = 0; y < height; y++) {
+          const cube = new THREE.Mesh(geo, (savedGrid && y >= baseH) ? cubeMatAdded : cubeMat);
+          cube.position.set(c - offX, y + 0.5, r - offZ);
+          cube.castShadow = true; cube.receiveShadow = true;
+          cube.add(new THREE.LineSegments(edges, edgeMat));
+          blockGroup.add(cube);
+        }
+      }
+    }
+  }
+
+  function updateCamera() {
+    camPhi = Math.max(0.15, Math.min(Math.PI / 2 - 0.02, camPhi));
+    camera.position.x = target.x + camRadius * Math.sin(camPhi) * Math.sin(camTheta);
+    camera.position.y = target.y + camRadius * Math.cos(camPhi);
+    camera.position.z = target.z + camRadius * Math.sin(camPhi) * Math.cos(camTheta);
+    camera.lookAt(target);
+  }
+
+  function setupControls(el) {
+    let dragging = false, lx = 0, ly = 0;
+    let pinchDist = null;
+    el.addEventListener('pointerdown', e => { dragging = true; lx = e.clientX; ly = e.clientY; el.setPointerCapture(e.pointerId); });
+    el.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      const dx = e.clientX - lx, dy = e.clientY - ly; lx = e.clientX; ly = e.clientY;
+      camTheta -= dx * 0.01;
+      camPhi -= dy * 0.01;
+      updateCamera();
+    });
+    const stop = e => { dragging = false; };
+    el.addEventListener('pointerup', stop); el.addEventListener('pointercancel', stop); el.addEventListener('pointerleave', stop);
+    el.addEventListener('wheel', e => { e.preventDefault(); camRadius = Math.max(4, Math.min(30, camRadius + e.deltaY * 0.01)); updateCamera(); }, { passive: false });
+    // touch pinch
+    el.addEventListener('touchmove', e => {
+      if (e.touches.length === 2) {
+        const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        if (pinchDist != null) { camRadius = Math.max(4, Math.min(30, camRadius - (d - pinchDist) * 0.03)); updateCamera(); }
+        pinchDist = d;
+      }
+    }, { passive: true });
+    el.addEventListener('touchend', () => { pinchDist = null; });
+  }
+
+  function onResize() {
+    const holder = document.getElementById('canvas-holder');
+    const w = holder.clientWidth, h = holder.clientHeight;
+    if (w > 0 && h > 0) { camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h); }
+  }
+
+  function animate() { requestAnimationFrame(animate); if (renderer) renderer.render(scene, camera); }
+
+  // ---------- Fullscreen ----------
+  function toggleFullScreen() {
+    const el = document.documentElement;
+    if (!document.fullscreenElement) { (el.requestFullscreen || el.webkitRequestFullscreen || function(){}).call(el); }
+    else { (document.exitFullscreen || document.webkitExitFullscreen || function(){}).call(document); }
+  }
+  document.addEventListener('fullscreenchange', () => {
+    const icon = document.getElementById('fs-icon');
+    if (!icon) return;
+    icon.innerHTML = document.fullscreenElement
+      ? '<path d="M8 4v4H4"/><path d="M16 4v4h4"/><path d="M8 20v-4H4"/><path d="M16 20v-4h4"/>'
+      : '<path d="M4 9V4h5"/><path d="M20 9V4h-5"/><path d="M4 15v5h5"/><path d="M20 15v5h-5"/>';
+    setTimeout(onResize, 120);
+  });
+
+  // ---------- Cube count toggle ----------
+  let countShown = false;
+  function toggleCount() {
+    countShown = !countShown;
+    const box = document.getElementById('count-box');
+    const btn = document.getElementById('btn-show-count');
+    if (countShown) { box.classList.remove('hidden'); box.classList.add('flex'); btn.innerHTML = '<svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7c2 0 3.7.6 5.3 1.5"/><path d="M22 12s-3.5 7-10 7c-2 0-3.7-.6-5.3-1.5"/><path d="M9.5 9.5a3 3 0 0 0 4.2 4.2"/><path d="M3 3l18 18"/></svg> הסתר מספר קוביות'; updateCount(); }
+    else { box.classList.add('hidden'); box.classList.remove('flex'); btn.innerHTML = '<svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> הצג מספר קוביות'; }
+  }
+
+  // ---------- Init ----------
+  window.onload = () => {
+    grid = makeEmpty();
+    initSelects();
+    renderGrid();
+    updateCount();
+    updateUndo();
+    init3D();
+  };
+</script>
+<script src="../assets/lab-shell.js" data-portal-href="../../index.html#labs"></script>
+</body>
+</html>
