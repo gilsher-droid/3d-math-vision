@@ -545,6 +545,13 @@
   font-size: 1.35rem;
 }
 
+.labs-group-description {
+  max-width: 900px;
+  margin: -6px 0 22px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
 .lab-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
