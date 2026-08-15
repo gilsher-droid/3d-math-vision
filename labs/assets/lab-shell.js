@@ -4,6 +4,7 @@
   const script = document.currentScript;
   const portalHref = script && script.dataset.portalHref;
   const sessionNote = script && script.dataset.sessionNote;
+  const storageKey = "spatialVisionLanguage";
 
   const COPY = {
     he: {
@@ -22,6 +23,26 @@
 
   function language() {
     return document.documentElement.lang === "ar" ? "ar" : "he";
+  }
+
+  function preferredLanguage() {
+    const query = new URLSearchParams(window.location.search).get("lang");
+    if (query === "he" || query === "ar") return query;
+    return localStorage.getItem(storageKey) === "ar" ? "ar" : "he";
+  }
+
+  function persistLanguage(lang) {
+    localStorage.setItem(storageKey, lang === "ar" ? "ar" : "he");
+  }
+
+  function activateNativeLanguage(lang) {
+    if (language() === lang) return;
+    const direct = document.querySelector('[data-lang="' + lang + '"]')
+      || document.getElementById(lang === "ar" ? "btnAr" : "btnHe")
+      || document.getElementById("lang-" + lang);
+    if (direct) { direct.click(); return; }
+    const toggle = document.querySelector(".lang-toggle-btn, #lang-toggle, #langBtn");
+    if (toggle) toggle.click();
   }
 
   function positionInGrid(element) {
@@ -93,7 +114,9 @@
     if (!portalHref || document.querySelector(".portal-back-link")) return;
     const link = document.createElement("a");
     link.className = "portal-back-link";
-    link.href = portalHref;
+    const target = new URL(portalHref, window.location.href);
+    target.searchParams.set("lang", language());
+    link.href = target.pathname + target.search + target.hash;
     document.body.appendChild(link);
     refreshShellCopy();
   }
@@ -113,6 +136,9 @@
     if (link) {
       link.textContent = copy.back;
       link.setAttribute("aria-label", copy.backLabel);
+      const target = new URL(portalHref, window.location.href);
+      target.searchParams.set("lang", language());
+      link.href = target.pathname + target.search + target.hash;
     }
     if (note) note.textContent = copy.session;
     document.querySelectorAll("div[onclick], span[onclick], .num-cell, .cell[onclick]").forEach(describeInteractiveCell);
@@ -131,9 +157,21 @@
     addSessionNote();
     refreshLanguageControls();
     document.addEventListener("lab:languagechange", function () {
+      persistLanguage(language());
       refreshShellCopy();
       refreshLanguageControls();
     });
+    document.addEventListener("spatial:languagechange", function () {
+      persistLanguage(language());
+      refreshShellCopy();
+      refreshLanguageControls();
+    });
+
+    window.setTimeout(function () {
+      activateNativeLanguage(preferredLanguage());
+      refreshShellCopy();
+      refreshLanguageControls();
+    }, 0);
 
     const observer = new MutationObserver(function (records) {
       records.forEach(function (record) {

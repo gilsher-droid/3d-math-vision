@@ -400,10 +400,28 @@
   gap: 8px;
 }
 
-.language-menu span {
+.language-menu span,
+.language-menu button {
   display: block;
   padding: 9px 10px;
   border-radius: 10px;
+}
+
+.language-menu button {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  text-align: start;
+}
+
+.language-menu button:hover,
+.language-menu button:focus-visible,
+.language-menu button.active {
+  background: var(--blue-light);
+  color: var(--blue-dark);
 }
 
 .active-language {

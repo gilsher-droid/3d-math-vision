@@ -38,6 +38,37 @@
   text-align: center;
 }
 
+.spatial-language-switcher {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 10000;
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.3rem;
+  border: 1px solid rgba(148, 163, 184, 0.55);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16);
+}
+
+.spatial-language-switcher button {
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #334155;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.35rem 0.65rem;
+}
+
+.spatial-language-switcher button.active {
+  background: #1d4ed8;
+  color: #fff;
+}
+
 :where(button, a, input, select, textarea, [role="button"]):focus-visible {
   outline: 3px solid var(--lab-focus) !important;
   outline-offset: 3px !important;

@@ -2106,8 +2106,19 @@
                     try {
                         const doc = frame.contentDocument;
                         if (doc && doc.body) {
+                            if (window.SpatialVisionI18n) window.SpatialVisionI18n.translateRoot(doc);
                             if (window.ResizeObserver) { new ResizeObserver(function () { sizeTestFrame(); }).observe(doc.body); }
                             if (window.MutationObserver) { new MutationObserver(function () { clearTimeout(window.__tfsize); window.__tfsize = setTimeout(sizeTestFrame, 60); }).observe(doc.body, { childList: true, subtree: true, attributes: true }); }
+                            if (window.MutationObserver && window.SpatialVisionI18n) {
+                                new MutationObserver(function (records) {
+                                    records.forEach(function (record) {
+                                        record.addedNodes.forEach(function (node) {
+                                            if (node.nodeType === 1) window.SpatialVisionI18n.translateRoot(node);
+                                            if (node.nodeType === 3) window.SpatialVisionI18n.translateRoot(node.parentElement);
+                                        });
+                                    });
+                                }).observe(doc.body, { childList: true, subtree: true });
+                            }
                         }
                     } catch (e) {}
                     setTimeout(sizeTestFrame, 250);
@@ -2119,6 +2130,12 @@
             window.scrollTo(0, 0);
         }
         window.addEventListener("resize", sizeTestFrame);
+        document.addEventListener("spatial:languagechange", function () {
+            const frame = document.getElementById("test-frame");
+            if (frame && frame.contentDocument && window.SpatialVisionI18n) {
+                window.SpatialVisionI18n.translateRoot(frame.contentDocument);
+            }
+        });
         window.addEventListener("message", function (e) {
             if (e && e.data && typeof e.data.__testHeight === "number" && e.data.__testHeight > 0) {
                 const frame = document.getElementById("test-frame");
@@ -2219,6 +2236,8 @@
       else init();
     })();
     </script>
+    <script src="../../translations/views-lab-ar.js"></script>
+    <script src="../../i18n.js" data-show-switcher="true"></script>
     <script src="../assets/lab-shell.js" data-portal-href="../../index.html#labs"></script>
 </body>
 </html>

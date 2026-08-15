@@ -32,13 +32,13 @@
   </nav>
 
   <div class="language-switcher">
-    <button class="language-button" type="button">
+    <button class="language-button" type="button" data-current-language aria-haspopup="true" aria-expanded="false">
       🌐 עברית ▾
     </button>
 
     <div class="language-menu">
-      <span class="active-language">עברית ✓</span>
-      <span class="coming-soon">العربية — בקרוב</span>
+      <button type="button" data-set-language="he">עברית</button>
+      <button type="button" data-set-language="ar">العربية</button>
     </div>
   </div>
 </header>
@@ -163,13 +163,13 @@ Spatial Vision הוא פורטל מידע והוראה למורים למתמטי
   <h3 class="labs-group-title">כלי חקר ובנייה</h3>
   <div class="lab-grid lab-grid-featured">
     <article class="lab-card featured">
-      <div class="lab-card-top"><span class="lab-icon" aria-hidden="true">👁️</span><span class="lab-badge">עברית</span></div>
+      <div class="lab-card-top"><span class="lab-icon" aria-hidden="true">👁️</span><span class="lab-badge bilingual">עברית · العربية</span></div>
       <h4>מעבדת המבטים</h4>
       <p>מעבר בין מבנה תלת־ממדי למבטים הדו־ממדיים שלו, דרך חקר מונחה, תרגול התאמה וציור, ומשימה מסכמת.</p>
       <a class="lab-link" href="labs/views-lab/index.html">פתיחת המעבדה <span aria-hidden="true">←</span></a>
     </article>
     <article class="lab-card featured">
-      <div class="lab-card-top"><span class="lab-icon" aria-hidden="true">🧊</span><span class="lab-badge">עברית</span></div>
+      <div class="lab-card-top"><span class="lab-icon" aria-hidden="true">🧊</span><span class="lab-badge bilingual">עברית · العربية</span></div>
       <h4>בונים בתלת־ממד</h4>
       <p>כלי חופשי לבניית מבנים מקוביות דרך תרשים מספרי.</p>
       <a class="lab-link" href="labs/free-builder/index.html">פתיחת המעבדה <span aria-hidden="true">←</span></a>
@@ -696,17 +696,21 @@ target="_blank">
     גרסת בטא – יולי 2026
   </p>
 </footer>
+<script src="translations/portal-ar.js"></script>
+<script src="i18n.js"></script>
 <script>
   const languageButton = document.querySelector('.language-button');
   const languageMenu = document.querySelector('.language-menu');
 
   languageButton.addEventListener('click', function () {
     languageMenu.classList.toggle('open');
+    languageButton.setAttribute('aria-expanded', String(languageMenu.classList.contains('open')));
   });
 
   document.addEventListener('click', function (event) {
     if (!event.target.closest('.language-switcher')) {
       languageMenu.classList.remove('open');
+      languageButton.setAttribute('aria-expanded', 'false');
     }
   });
 </script>
