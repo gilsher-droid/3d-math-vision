@@ -28,6 +28,7 @@
   }
 
   function translateTextNode(node) {
+    if (node.parentElement && node.parentElement.closest("[data-i18n-fixed]")) return;
     if (!originalText.has(node)) originalText.set(node, node.nodeValue);
     const source = originalText.get(node);
     if (!normalize(source)) return;
@@ -35,6 +36,7 @@
   }
 
   function translateAttributes(element) {
+    if (element.closest("[data-i18n-fixed]")) return;
     if (!originalAttributes.has(element)) originalAttributes.set(element, {});
     const originals = originalAttributes.get(element);
     observedAttributes.forEach(function (name) {
@@ -52,6 +54,7 @@
       acceptNode: function (node) {
         const parent = node.parentElement;
         if (!parent || /^(SCRIPT|STYLE|NOSCRIPT)$/i.test(parent.tagName)) return NodeFilter.FILTER_REJECT;
+        if (parent.closest("[data-i18n-fixed]")) return NodeFilter.FILTER_REJECT;
         return NodeFilter.FILTER_ACCEPT;
       },
     });
