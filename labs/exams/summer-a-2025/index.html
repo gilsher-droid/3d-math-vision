@@ -449,6 +449,7 @@ function T(key){ var d=I18N[LANG]||I18N.he; return (key in d)?d[key]:(I18N.he[ke
 
 function applyLang(lang){
   LANG=(lang==='ar')?'ar':'he';
+  document.title=T('app.title');
   if(document.documentElement){
     document.documentElement.setAttribute('lang', LANG==='ar'?'ar':'he');
     document.documentElement.setAttribute('dir','rtl');   /* שתי השפות RTL */
