@@ -693,3 +693,21 @@
   .lab-card { min-height: 0; }
   .catalog-link { width: 100%; box-sizing: border-box; text-align: center; }
 }
+
+.institutional-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  margin-top: 18px;
+}
+
+.institutional-links a {
+  color: #ffffff;
+  font-weight: 700;
+  text-underline-offset: 4px;
+}
+
+.institutional-links a:hover,
+.institutional-links a:focus-visible {
+  color: #bfdbfe;
+}
